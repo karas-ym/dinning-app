@@ -44,7 +44,7 @@ function Order() {
                         return <div>待配送</div>
                     }
                     else if (item.sendStatus === 2) {
-                        return <div>已打包</div>
+                        return <div>配送中</div>
                     }
                     else {
                         return <div>已配送</div>
@@ -97,43 +97,35 @@ function Order() {
                 />
 
                 <div className="card-container">
-                    <Tabs type="card">
-                        <TabPane tab="全部订单" key="1">
-                            <List itemLayout="vertical" size="large" dataSource={listData}
-                                renderItem={item => (
-                                    <List.Item
-                                        key={item.id}
-                                        onClick={() => {
-                                            value.setOrderDetail(item)
-                                            history.push("/order/" + item.id)
-                                        }}
-                                        extra={
-                                            <Space direction='vertical' size={10}>
-                                                {orderStatus(item)}
-                                                <div>￥{item.total}</div>
-                                            </Space>
-                                        }
-                                    >
-                                        <List.Item.Meta
-                                            title={<span>{item.shop.name}</span>}
-                                            description={
-                                                item.orderItemDtoList.map((product) => {
-                                                    return (
-                                                        <div key={product.id}>{product.productName} x {product.qty}</div>
-                                                    )
-                                                })
-                                            }
-                                        />
-                                    </List.Item>
-                                )}
+                    <List itemLayout="vertical" size="large" dataSource={listData}
+                        renderItem={item => (
+                            <List.Item
+                                key={item.id}
+                                onClick={() => {
+                                    value.setOrderDetail(item)
+                                    history.push("/order/" + item.id)
+                                }}
+                                extra={
+                                    <Space direction='vertical' size={10}>
+                                        {orderStatus(item)}
+                                        <div>￥{item.total}</div>
+                                    </Space>
+                                }
                             >
-                            </List>
-                        </TabPane>
-
-                        <TabPane tab="退款" key="2">
-
-                        </TabPane>
-                    </Tabs>
+                                <List.Item.Meta
+                                    title={<span className='shopname'>{item.shop.name}</span>}
+                                    description={
+                                        item.orderItemDtoList.map((product) => {
+                                            return (
+                                                <div key={product.id}>{product.productName} x {product.qty}</div>
+                                            )
+                                        })
+                                    }
+                                />
+                            </List.Item>
+                        )}
+                    >
+                    </List>
                 </div>
 
             </div>

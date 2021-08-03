@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import qs from 'qs'
 import { Button, PageHeader, List, Space, message } from 'antd'
 import { useHistory, useParams } from 'react-router-dom';
 import url from '../../api'
@@ -34,7 +33,7 @@ function Payment() {
             if (res.data.code !== 'SUCCESS') {
                 console.log(res.data.message)
             } else {
-                console.log(res.data.code)
+                console.log(res.data.message)
                 setOrderDetail(res.data.data[0])
                 setHospital(res.data.data[0].hospital)
                 setLocation(res.data.data[0].location)
@@ -73,28 +72,9 @@ function Payment() {
         })
     }
 
-    // 取消订单
+    // 取消
     const handleCancel = () => {
-        let data = {
-            orderId: orderDetail.id
-        }
-        console.log(data)
-        axios({
-            method: "post",
-            url: url + '/api/order/cancel',
-            headers: { token },
-            data: qs.stringify(data)
-        }).then((res) => {
-            console.log('cancel:', res.data)
-            if (res.data.code !== 'SUCCESS') {
-                message.error(res.data.message)
-            } else {
-                message.success(res.data.message)
-                history.push('/order')
-            }
-        }).catch((error) => {
-            console.log(error)
-        })
+        history.goBack()
     }
 
     return (
@@ -105,7 +85,7 @@ function Payment() {
                 onBack={() => {
                     history.push('/product')
                 }}
-                title="订单支付"
+                title="确认订单"
             />
 
             <List>

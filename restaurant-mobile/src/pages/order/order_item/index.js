@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 import qs from 'qs'
 import './style.css'
-import { PageHeader, List, Button, Layout, Input, Form, Rate } from 'antd'
+import { PageHeader, List, Button, Layout, Input, Form, Rate, message, Space } from 'antd'
 import { useHistory, useParams } from 'react-router-dom';
 
 import url from '../../../api'
@@ -63,7 +63,7 @@ function OrderItem() {
                         return <div>待配送</div>
                     }
                     else if (item.sendStatus === 2) {
-                        return <div>已打包</div>
+                        return <div>配送中</div>
                     }
                     else {
                         return <div>已配送</div>
@@ -118,6 +118,29 @@ function OrderItem() {
         })
     }
 
+    const handleCancel = () => {
+        let data = {
+            orderId: orderDetail.id
+        }
+        console.log(data)
+        axios({
+            method: "post",
+            url: url + '/api/order/cancel',
+            headers: { token },
+            data: qs.stringify(data)
+        }).then((res) => {
+            console.log('cancel:', res.data)
+            if (res.data.code !== 'SUCCESS') {
+                message.error(res.data.message)
+            } else {
+                message.success(res.data.message)
+                history.push('/order')
+            }
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
+
     return (
         <div className="OrderItem">
             <PageHeader
@@ -156,50 +179,61 @@ function OrderItem() {
                     <List.Item extra={<div>合计 ￥{orderDetail.total}</div>}></List.Item>
 
                     {
-                        orderDetail.paymentStatus && orderDetail.status === 1 ?
-                            <Button type='primary' shape='round'
-                                className="check-btn"
-                                onClick={() => {
-                                    history.push('/payment/' + 13)
-                                }}>继续支付</Button> : null
+                        orderDetail.paymentStatus === 1 && orderDetail.status === 1 ?
+                            <Space size={0} className='btn-wrap'>
+                                <Button size='middle' shape='round' onClick={handleCancel}>取消订单</Button>
+                                <Button type='primary' shape='round'
+                                    className="check-btn"
+                                    onClick={() => {
+                                        history.push('/payment/' + 13)
+                                    }}>继续支付</Button>
+                            </Space> : null
                     }
 
                     {
-                        orderDetail.status === 2 ? <List.Item>
-                            {/* <Button size='small' onClick={showDrawer}>去评价</Button> */}
-                            {/* <Drawer
+                        orderDetail.paymentStatus !== 1 && orderDetail.status === 1 ?
+                            <Space size={0} className='btn-wrap'>
+                                <Button size='middle' shape='round' onClick={handleCancel}>取消订单</Button>
+                            </Space> : null
+                    }
+
+                    {
+                        orderDetail.status === 3 && orderDetail.evaluation === '' && orderDetail.evaluationPoint === '0' ?
+                            <List.Item>
+                                {/* <Button size='small' onClick={showDrawer}>去评价</Button> */}
+                                {/* <Drawer
                                 title="评价"
                                 placement="bottom"
                                 closable={false}
                                 onClose={onClose}
                                 visible={visible}
                             > */}
-                            <Form.Item>
-                                整体评分
-                                <Rate defaultValue={orderDetail.evaluationPoint} onChange={(value) => { setPoint(value) }} />
-                            </Form.Item>
-                            <Form.Item>
-                                评价内容
-                                <TextArea
-                                    value={cmt}
-                                    rows={4}
-                                    onChange={(e) => { setCmt(e.target.value) }}
-                                />
-                            </Form.Item>
-                            <Form.Item>
-                                <Button type="primary" onClick={handleCmt}>
-                                    提交
-                                </Button>
-                            </Form.Item>
-                            {/* </Drawer> */}
-                        </List.Item> : null
+                                <Form.Item>
+                                    整体评分
+                                    <Rate defaultValue={orderDetail.evaluationPoint} onChange={(value) => { setPoint(value) }} />
+                                </Form.Item>
+                                <Form.Item>
+                                    评价内容
+                                    <TextArea
+                                        value={cmt}
+                                        rows={4}
+                                        onChange={(e) => { setCmt(e.target.value) }}
+                                    />
+                                </Form.Item>
+                                <Form.Item>
+                                    <Button type="primary" onClick={handleCmt}>
+                                        提交
+                                    </Button>
+                                </Form.Item>
+                                {/* </Drawer> */}
+                            </List.Item> : null
                     }
 
                 </List>
 
             </Content>
 
-        </div>
+        </div >
     )
 }
 
