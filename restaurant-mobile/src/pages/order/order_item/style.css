@@ -1,0 +1,25 @@
+@import '~antd/dist/antd.css';
+
+.OrderItem{
+    padding-bottom: 50px;
+}
+
+.OrderItem .ant-layout-content{
+    background-color: #fff;
+    overflow: hidden;
+}
+
+.OrderItem .ant-layout-content .ant-steps{
+    padding: 20px 0;
+}
+
+.OrderItem .check-btn{
+    margin: 20px;
+    float: right;
+}
+
+.OrderItem .ant-list-header{
+    font-size: 16px;
+    font-weight: 600;
+    margin-left: 20px;
+}

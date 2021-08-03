@@ -1,0 +1,29 @@
+@import '~antd/dist/antd.css';
+
+.Home{
+    background: none;
+}
+
+.Home .header{
+    background: none;
+    text-align: center;
+}
+
+.Home .ant-layout-content{
+    background-color: #fff;
+    padding: 20px;
+}
+
+.Home .header .ant-page-header-heading{
+    margin-left: 84px;
+}
+
+/* .Home .ant-btn{
+    position: absolute;
+    top: 80%;
+    left: 42%;
+} */
+
+.Home .ant-space{
+    width: 100%;
+}

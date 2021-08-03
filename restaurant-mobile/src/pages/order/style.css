@@ -1,0 +1,27 @@
+@import '~antd/dist/antd.css';
+
+.Order{
+    padding-bottom: 50px;
+}
+
+.Order .card-container > .ant-tabs-card .ant-tabs-content > .ant-tabs-tabpane{
+    padding: 0;
+}
+
+.Order .ant-list-vertical .ant-list-item-main{
+    min-width: 180px;
+}
+
+.Order .card-container .ant-list-split .ant-list-item {
+    border-bottom: 4px solid #f0f0f0;
+}
+
+.Order .ant-modal-content{
+    text-align: center;
+    background: transparent;
+    box-shadow: none;
+}
+
+.card-container{
+    padding: 0 2px;
+}

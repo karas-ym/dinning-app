@@ -1,0 +1,23 @@
+@import '~antd/dist/antd.css';
+
+.Payment{
+    padding: 4px;
+}
+
+.Payment .content-row{
+    width: 100%;
+    background-color: #fff;
+    border-radius: 6px;
+    font-size: 16px;
+    padding: 10px 20px;
+    margin-bottom: 6px;
+}
+
+.Payment .list-row{
+    background-color: #fff;
+}
+
+.Payment .btn-wrap{
+    float: right;
+    margin: 10px;
+}
