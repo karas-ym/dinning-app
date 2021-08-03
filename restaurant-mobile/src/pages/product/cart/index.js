@@ -138,6 +138,8 @@ function Cart(props) {
         }
 
         setPriceSum(e.target.checked ? total : 0)
+
+        console.log(checkedList)
     };
 
     // 计算总价
@@ -156,7 +158,7 @@ function Cart(props) {
     const checkout = () => {
 
         let data = {
-            cartIdArr: productList.join(','),
+            cartIdArr: checkedList.join(','),
             day: value.date,
             slot: slot,
             locationId: 1,

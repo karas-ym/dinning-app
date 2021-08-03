@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios'
-import { Form, Input, Button, PageHeader, Tabs } from 'antd';
+import { Form, Input, Button, PageHeader, Tabs, message } from 'antd';
 import './style.css'
 import { useHistory } from 'react-router-dom';
+import url from '../../api'
 
 const { TabPane } = Tabs
 
@@ -16,18 +17,18 @@ function Login() {
     let history = useHistory()
 
     const onFinish = (values) => {
-        console.log('Success:', values);
+        message.success('Success:', values);
     };
 
     const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
+        message.error('Failed:', errorInfo);
     };
 
     const handleLogin = () => {
 
         axios({
             method: "get",
-            url: 'http://47.118.78.54:8001/api/token/create',
+            url: url + '/api/token/create',
             params: {
                 mobile: mobile,
                 password: password,
@@ -39,7 +40,7 @@ function Login() {
                 onFinishFailed(res.data.message)
             } else {
                 window.localStorage.setItem('token', res.data.data.token)
-                onFinish(res.data.message)
+                message.success(res.data.message)
                 history.push('/profile')
             }
         }).catch((error) => {

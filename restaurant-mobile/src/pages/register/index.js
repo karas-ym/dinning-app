@@ -18,12 +18,11 @@ function Register() {
     let history = useHistory()
 
     const onFinish = (values) => {
-        console.log('Success:', values);
+        message.success('Success:', values);
     };
 
     const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-        message(errorInfo)
+        message.error('Failed:', errorInfo);
     };
 
     // 提交注册

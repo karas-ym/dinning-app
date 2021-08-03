@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import qs from 'qs'
-import { Button, PageHeader, List, Space } from 'antd'
+import { Button, PageHeader, List, Space, message } from 'antd'
 import { useHistory, useParams } from 'react-router-dom';
 import url from '../../api'
 import './style.css'
@@ -57,7 +57,6 @@ function Payment() {
             headers: { token },
             params: {
                 number: orderDetail.number
-                // number: 11
             },
             data: formData
         }).then((res) => {
@@ -84,16 +83,14 @@ function Payment() {
             method: "post",
             url: url + '/api/order/cancel',
             headers: { token },
-            // params: {
-            //     orderId: orderDetail.id
-            // },
             data: qs.stringify(data)
         }).then((res) => {
             console.log('cancel:', res.data)
             if (res.data.code !== 'SUCCESS') {
-                console.log(res.data.message)
+                message.error(res.data.message)
             } else {
-                console.log(res.data.code)
+                message.success(res.data.message)
+                history.push('/order')
             }
         }).catch((error) => {
             console.log(error)
