@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .App .footer{
     display: flex;
     width: 100%;
@@ -16,3 +17,8 @@
     text-decoration: none;
     color: #333;
 }
+=======
+.App {
+  text-align: center;
+}
+>>>>>>> 89e8912489ed41eed17ff2bd855ef2f577acb7d7

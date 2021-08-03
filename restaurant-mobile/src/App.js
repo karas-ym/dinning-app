@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
+=======
+>>>>>>> 89e8912489ed41eed17ff2bd855ef2f577acb7d7
 import './App.css';
 import { HashRouter, Switch, Route, Link } from "react-router-dom"
 
