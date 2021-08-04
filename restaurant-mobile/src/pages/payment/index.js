@@ -82,9 +82,7 @@ function Payment() {
 
             <PageHeader
                 className=""
-                onBack={() => {
-                    history.push('/product')
-                }}
+                onBack={handleCancel}
                 title="确认订单"
             />
 
