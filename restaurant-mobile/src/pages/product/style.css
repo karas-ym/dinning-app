@@ -49,10 +49,14 @@
     margin-top: 10px;
 }
 
-.Product .add-icon{
+.Product .ant-list-item{
     position: relative;
-    top: 50px;
-    left: 20px;
+}
+
+.Product .add-icon{
+    position: absolute;
+    bottom: 20px;
+    left: 50px;
 }
 
 .card-container > .ant-tabs-card .ant-tabs-content > .ant-tabs-tabpane {

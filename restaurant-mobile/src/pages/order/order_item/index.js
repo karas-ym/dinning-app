@@ -73,7 +73,6 @@ function OrderItem() {
                 } else {
                     return <div>未支付</div>
                 }
-                break
             case 2:
                 return '已取消'
             case 3:
@@ -185,7 +184,7 @@ function OrderItem() {
                                 <Button type='primary' shape='round'
                                     className="check-btn"
                                     onClick={() => {
-                                        history.push('/payment/' + 13)
+                                        history.push('/payment/' + orderId.id)
                                     }}>继续支付</Button>
                             </Space> : null
                     }

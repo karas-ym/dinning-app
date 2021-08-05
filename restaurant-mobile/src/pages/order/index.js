@@ -1,20 +1,18 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios'
 import { useHistory } from 'react-router-dom';
-import { PageHeader, Tabs, List, Space, Button, Result } from 'antd'
+import { PageHeader, List, Space, Button, Result } from 'antd'
 import './style.css'
 
 import url from '../../api'
 import { OrderContext } from '../../App'
-
-const { TabPane } = Tabs
 
 function Order() {
 
     let history = useHistory()
     let value = useContext(OrderContext)
     let token = window.localStorage.getItem('token')
-
+    
     const [listData, setListData] = useState([])
 
     useEffect(() => {
@@ -54,7 +52,6 @@ function Order() {
                 } else {
                     return <div>未支付</div>
                 }
-                break
             case 2:
                 return '已取消'
             case 3:

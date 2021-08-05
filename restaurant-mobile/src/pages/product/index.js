@@ -39,7 +39,7 @@ function Product() {
 
     let [listData, setListData] = useState([])
     let [categoryId, setCategoryId] = useState(0)
-    let [count, setCount] = useState(0)
+    // let [count, setCount] = useState(0)
 
     // 商品列表
     const getProduct = (tagId) => {
@@ -54,7 +54,7 @@ function Product() {
         axios({
             method: "get",
             url: url + '/api/product/list',
-            header: { token },
+            // header: { token },
             params: {
                 weekday: value.weekday,
                 slot: slot,
@@ -115,7 +115,7 @@ function Product() {
         axios({
             method: "get",
             url: url + '/api/category/list',
-            headers: { token },
+            // headers: { token },
             params: {
                 shopId: value.shop
             }
@@ -154,7 +154,6 @@ function Product() {
 
     // 选择标签
     let [selectedTags, setSelectedTags] = useState([])
-    let [tagId, setTagId] = useState(0)
 
     const handleTag = (tag, checked) => {
         const nextSelectedTags = checked ? [...selectedTags, tag] : selectedTags.filter(t => t !== tag);
@@ -203,11 +202,12 @@ function Product() {
                             </div>
                         ]}
                         extra={<div className='tags'>{
-                            item.tags.map((i) => {
-                                return (
-                                    <Tag key={i}>{i}</Tag>
-                                )
-                            })
+                            item.tags !== null ?
+                                item.tags.map((i) => {
+                                    return (
+                                        <Tag key={i}>{i}</Tag>
+                                    )
+                                }) : null
                         }</div>}
                     >
                         <List.Item.Meta

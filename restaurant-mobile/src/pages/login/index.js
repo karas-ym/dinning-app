@@ -10,19 +10,10 @@ const { TabPane } = Tabs
 
 function Login() {
 
-    let [nickname, setNickname] = useState('')
     let [password, setPassword] = useState('')
     let [mobile, setMobile] = useState('')
 
     let history = useHistory()
-
-    const onFinish = (values) => {
-        message.success('Success:', values);
-    };
-
-    const onFinishFailed = (errorInfo) => {
-        message.error('Failed:', errorInfo);
-    };
 
     const handleLogin = () => {
 
@@ -32,12 +23,11 @@ function Login() {
             params: {
                 mobile: mobile,
                 password: password,
-                nickname:nickname
             }
         }).then((res) => {
             console.log(res.data)
             if (res.data.code !== 'SUCCESS') {
-                onFinishFailed(res.data.message)
+                message.error(res.data.message)
             } else {
                 window.localStorage.setItem('token', res.data.data.token)
                 message.success(res.data.message)
@@ -62,69 +52,32 @@ function Login() {
             <div className="main">
                 <div className="card-container">
 
-                    <Tabs type="card">
+                    <Form
+                        name="login-mobile"
+                        onFinish={handleLogin}
+                    >
+                        <Form.Item
+                            label="手机号"
+                            name="mobile"
+                            rules={[{ required: true, message: '请输入手机号' }]}
+                        >
+                            <Input onChange={(e) => { setMobile(e.target.value) }} />
+                        </Form.Item>
 
-                        <TabPane tab="手机号登录" key="1">
-                            <Form
-                                name="login-mobile"
-                                onFinish={onFinish}
-                                onFinishFailed={onFinishFailed}
-                            >
-                                <Form.Item
-                                    label="手机号"
-                                    name="mobile"
-                                    rules={[{ required: true, message: '请输入手机号' }]}
-                                >
-                                    <Input onChange={(e) => { setMobile(e.target.value) }} />
-                                </Form.Item>
+                        <Form.Item
+                            label="密码"
+                            name="password"
+                            rules={[{ required: true, message: '请输入密码' }]}
+                        >
+                            <Input.Password onChange={(e) => { setPassword(e.target.value) }} />
+                        </Form.Item>
 
-                                <Form.Item
-                                    label="密码"
-                                    name="password"
-                                    rules={[{ required: true, message: '请输入密码' }]}
-                                >
-                                    <Input.Password onChange={(e) => { setPassword(e.target.value) }} />
-                                </Form.Item>
-
-                                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                                    <Button type="primary" htmlType="submit" onClick={handleLogin}>
-                                        提交
-                                    </Button>
-                                </Form.Item>
-                            </Form>
-                        </TabPane>
-
-                        <TabPane tab="用户名登录" key="2">
-                            <Form
-                                name="login-username"
-                                onFinish={onFinish}
-                                onFinishFailed={onFinishFailed}
-                            >
-                                <Form.Item
-                                    label="用户名"
-                                    name="username"
-                                    rules={[{ required: true, message: '请输入用户名' }]}
-                                >
-                                    <Input onChange={(e) => { setNickname(e.target.value) }} />
-                                </Form.Item>
-
-                                <Form.Item
-                                    label="密码"
-                                    name="password"
-                                    rules={[{ required: true, message: '请输入密码' }]}
-                                >
-                                    <Input.Password onChange={(e) => { setPassword(e.target.value) }} />
-                                </Form.Item>
-
-                                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                                    <Button type="primary" htmlType="submit" onClick={handleLogin}>
-                                        提交
-                                    </Button>
-                                </Form.Item>
-                            </Form>
-                        </TabPane>
-
-                    </Tabs>
+                        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                            <Button type="primary" htmlType="submit">
+                                提交
+                            </Button>
+                        </Form.Item>
+                    </Form>
 
                 </div>
 

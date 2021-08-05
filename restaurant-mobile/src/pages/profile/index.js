@@ -123,157 +123,146 @@ function Profile() {
         history.push('/')
     }
 
+    return (
+        <div className="Profile">
+            <PageHeader
+                backIcon="false"
+                title="个人中心"
+            />
 
-    // if (token === null) {
-    //     return (
-    //         <div className="nologin">
-    //             <div>
-    //                 <Button type='primary' size='large' onClick={() => {
-    //                     history.push('/login')
-    //                 }}>登录</Button>
+            <div className="content">
+                <Space direction='vertical' align='center'>
+                    <Avatar
+                        src={token !== null ? 'http://' + user.avatar : 'http://47.118.78.54:8001/image/9.jpeg'}
+                        size={80}
+                    />
+                    <Upload
+                        name='avatar'
+                        customRequest={updateAvatar}
+                        showUploadList={false}
+                    >
+                        <Button size='small' icon={<CameraOutlined />}>上传头像</Button>
+                    </Upload>
 
-    //                 <Button type='default' size='large' onClick={() => {
-    //                     history.push('/register')
-    //                 }}>注册</Button>
-    //             </div>
-    //         </div>
-    //     )
-    // } else {
-        return (
-            <div className="Profile">
-                <PageHeader
-                    backIcon="false"
-                    title="个人中心"
-                />
+                </Space>
 
-                <div className="content">
-                    <Space direction='vertical' align='center'>
-                        <Avatar
-                            src={ token !== null ? 'http://' + user.avatar : 'http://47.118.78.54:8001/image/9.jpeg'}
-                            size={80}
-                        />
-                        <Upload
-                            name='avatar'
-                            customRequest={updateAvatar}
-                            showUploadList={false}
-                        >
-                            <Button size='small' icon={<CameraOutlined />}>上传头像</Button>
-                        </Upload>
+                <Collapse bordered={false} expandIconPosition='right' className='list-row' ghost>
+                    <Panel header={
+                        <div>
+                            昵称
+                            <Space className="info-right">{user.nickname}</Space>
+                        </div>
+                    } key="1">
+                        <Form>
+                            <Form.Item
+                                label="用户名"
+                                name="nickname"
+                                rules={[{ required: true, message: '请输入用户名' }]}
+                            >
+                                <div>
+                                    <Input style={{ width: 280 }} onChange={(e) => { setNickname(e.target.value) }} />
+                                    <Button size='middle' onClick={handleUpdate}>提交</Button>
+                                </div>
+                            </Form.Item>
+                        </Form>
+                    </Panel>
 
+                    <Panel header={
+                        <div>
+                            手机号
+                            <Space className="info-right">{user.mobile}</Space>
+                        </div>
+                    } key="2">
+                        <Form>
+                            <Form.Item
+                                label="手机号"
+                                name="mobile"
+                                rules={[{ required: true, message: '请输入手机号' }]}
+                            >
+                                <div>
+                                    <Input style={{ width: 200 }} onChange={(e) => { setMobile(e.target.value) }} />
+                                    <Captcha value={mobile}></Captcha>
+                                </div>
+                            </Form.Item>
+
+                            <Form.Item
+                                label="验证码"
+                                name="smsCode"
+                                rules={[{ required: true, message: '请输入验证码' }]}
+                            >
+                                <div>
+                                    <Input style={{ width: 100 }} />
+                                    <Button size='middle' onClick={handleUpdate}>提交</Button>
+                                </div>
+                            </Form.Item>
+                        </Form>
+                    </Panel>
+
+                    <Panel header="更改密码" key="3">
+                        <Form >
+                            <Form.Item
+                                label="密码"
+                                name="password"
+                                rules={[{ required: true, message: '请输入密码' }]}
+                            >
+                                <Input.Password />
+                            </Form.Item>
+
+                            <Form.Item
+                                label="密码确认"
+                                name="confirm-password"
+                                dependencies={['password']}
+                                hasFeedback
+                                rules={[{ required: true, message: '请再次输入密码' },
+                                ({ getFieldValue }) => ({
+                                    validator(_, value) {
+                                        if (!value || getFieldValue('password') === value) {
+                                            return Promise.resolve();
+                                        }
+                                        return Promise.reject(new Error('输入密码不一致'));
+                                    },
+                                }),
+                                ]}
+                            >
+                                <Input.Password onChange={(e) => { setPassword(e.target.value) }} />
+                            </Form.Item>
+
+                            <Form.Item>
+                                <Button htmlType="submit" onClick={handleUpdate}>
+                                    提交
+                                </Button>
+                            </Form.Item>
+                        </Form>
+                    </Panel>
+                </Collapse>
+
+                {
+                    token === null ?
+                        <Button className="logout" size="large" type='primary' onClick={() => { history.push('/login') }}>登录</Button>
+                        :
+                        <Button className="logout" size="large" type='primary' onClick={showDrawer}>退出账号</Button>
+                }
+
+                <Drawer
+                    placement="bottom"
+                    onClose={onClose}
+                    visible={visible}
+                    closable={false}
+                    height={150}
+                    className='drawer'
+                >
+
+                    <Space direction='vertical' align='center' style={{ width: '100%' }} size={20}>
+                        <Button size="large" type='link' onClick={handleLogout} >退出登录</Button>
+                        <Button size="large" type='link' onClick={onClose} >取消</Button>
                     </Space>
 
-                    <Collapse bordered={false} expandIconPosition='right' className='list-row' ghost>
-                        <Panel header={
-                            <div>
-                                昵称
-                                <Space className="info-right">{user.nickname}</Space>
-                            </div>
-                        } key="1">
-                            <Form>
-                                <Form.Item
-                                    label="用户名"
-                                    name="nickname"
-                                    rules={[{ required: true, message: '请输入用户名' }]}
-                                >
-                                    <div>
-                                        <Input style={{ width: 280 }} onChange={(e) => { setNickname(e.target.value) }} />
-                                        <Button size='middle' onClick={handleUpdate}>提交</Button>
-                                    </div>
-                                </Form.Item>
-                            </Form>
-                        </Panel>
+                </Drawer>
+            </div>
 
-                        <Panel header={
-                            <div>
-                                手机号
-                                <Space className="info-right">{user.mobile}</Space>
-                            </div>
-                        } key="2">
-                            <Form>
-                                <Form.Item
-                                    label="手机号"
-                                    name="mobile"
-                                    rules={[{ required: true, message: '请输入手机号' }]}
-                                >
-                                    <div>
-                                        <Input style={{ width: 200 }} onChange={(e) => { setMobile(e.target.value) }} />
-                                        <Captcha value={mobile}></Captcha>
-                                    </div>
-                                </Form.Item>
+        </div >
+    )
 
-                                <Form.Item
-                                    label="验证码"
-                                    name="smsCode"
-                                    rules={[{ required: true, message: '请输入验证码' }]}
-                                >
-                                    <div>
-                                        <Input style={{ width: 100 }} />
-                                        <Button size='middle' onClick={handleUpdate}>提交</Button>
-                                    </div>
-                                </Form.Item>
-                            </Form>
-                        </Panel>
-
-                        <Panel header="更改密码" key="3">
-                            <Form >
-                                <Form.Item
-                                    label="密码"
-                                    name="password"
-                                    rules={[{ required: true, message: '请输入密码' }]}
-                                >
-                                    <Input.Password />
-                                </Form.Item>
-
-                                <Form.Item
-                                    label="密码确认"
-                                    name="confirm-password"
-                                    dependencies={['password']}
-                                    hasFeedback
-                                    rules={[{ required: true, message: '请再次输入密码' },
-                                    ({ getFieldValue }) => ({
-                                        validator(_, value) {
-                                            if (!value || getFieldValue('password') === value) {
-                                                return Promise.resolve();
-                                            }
-                                            return Promise.reject(new Error('输入密码不一致'));
-                                        },
-                                    }),
-                                    ]}
-                                >
-                                    <Input.Password onChange={(e) => { setPassword(e.target.value) }} />
-                                </Form.Item>
-
-                                <Form.Item>
-                                    <Button htmlType="submit" onClick={handleUpdate}>
-                                        提交
-                                    </Button>
-                                </Form.Item>
-                            </Form>
-                        </Panel>
-                    </Collapse>
-
-                    <Button className="logout" size="large" type='primary' onClick={showDrawer}>退出账号</Button>
-
-                    <Drawer
-                        placement="bottom"
-                        onClose={onClose}
-                        visible={visible}
-                        closable={false}
-                        height={150}
-                        className='drawer'
-                    >
-
-                        <Space direction='vertical' align='center' style={{ width: '100%' }} size={20}>
-                            <Button size="large" type='link' onClick={handleLogout} >退出登录</Button>
-                            <Button size="large" type='link' onClick={onClose} >取消</Button>
-                        </Space>
-
-                    </Drawer>
-                </div>
-
-            </div >
-        )
-    
 
 }
 

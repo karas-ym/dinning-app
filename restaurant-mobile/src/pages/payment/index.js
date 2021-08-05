@@ -33,7 +33,7 @@ function Payment() {
             if (res.data.code !== 'SUCCESS') {
                 console.log(res.data.message)
             } else {
-                console.log(res.data.message)
+                console.log(res.data.code)
                 setOrderDetail(res.data.data[0])
                 setHospital(res.data.data[0].hospital)
                 setLocation(res.data.data[0].location)
@@ -43,9 +43,11 @@ function Payment() {
         })
     }, [id, token]);
 
+    console.log(orderDetail.number)
+
     const handlePayment = () => {
-        // const urlCallBack = url + '/postpay'
-        const urlCallBack = 'http://47.118.78.54:8001/swagger-ui/'
+        const urlCallBack = url + '/postpay'
+        // const urlCallBack = 'http://47.118.78.54:8001/swagger-ui/'
         const formData = new FormData();
         formData.append('url', urlCallBack)
         console.log('formdata:', formData)
@@ -61,10 +63,9 @@ function Payment() {
         }).then((res) => {
             console.log('payment:', res.data)
             if (res.data.code !== 'SUCCESS') {
-                console.log(res.data.message)
+                message.error(res.data.message)
             } else {
                 console.log(res.data.code)
-                // history.push(res.data.data.payUrl)
                 window.location.href = res.data.data.payUrl
             }
         }).catch((error) => {

@@ -10,6 +10,7 @@ import Profile from './pages/profile'
 import OrderItem from './pages/order/order_item'
 import Payment from './pages/payment'
 import Postpay from './pages/postpay'
+import ShopList from './temp'
 
 export const TimeContext = React.createContext()
 
@@ -44,6 +45,8 @@ function App() {
               <Route path="/register" component={Register}></Route>
 
               <Route path="/profile" component={Profile}></Route>
+
+              <Route path="/shops" component={ShopList}></Route>
 
             </Switch>
 

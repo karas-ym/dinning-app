@@ -46,7 +46,7 @@ function Postpay() {
         }).catch((error) => {
             console.log(error)
         })
-    }, [token, timer])
+    }, [token, value.orderDetail.id])
 
     return (
         <>

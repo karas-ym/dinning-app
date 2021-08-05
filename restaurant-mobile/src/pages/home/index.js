@@ -86,7 +86,7 @@ function Home() {
 
     const orderDi = () => {
         if (dateNow === d) {
-            return h < 16 ? false : true
+            return h < 20 ? false : true
         } else {
             return false
         }
@@ -140,7 +140,9 @@ function Home() {
                         {
                             shopList.map((item) => {
                                 return (
-                                    <Option key={item.id} value={item.id}>{item.name}</Option>
+                                    item.status === 1 ?
+                                        <Option key={item.id} value={item.id}>{item.name}</Option>
+                                        : null
                                 )
                             })
                         }

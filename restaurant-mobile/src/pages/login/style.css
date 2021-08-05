@@ -1,23 +1,8 @@
 @import '~antd/dist/antd.css';
 
-.card-container > .ant-tabs-card .ant-tabs-content > .ant-tabs-tabpane{
+.card-container{
     background-color: #fff;
     padding: 16px;
-}
-
-.card-container > .ant-tabs-card > .ant-tabs-nav{
-    margin-bottom: 0;
-}
-
-.card-container > .ant-tabs-card .ant-tabs-tab,
-[data-theme='compact'] .card-container > .ant-tabs-card .ant-tabs-tab {
-    background: transparent;
-    border-color: transparent;
-}
-.card-container > .ant-tabs-card .ant-tabs-tab-active,
-[data-theme='compact'] .card-container > .ant-tabs-card .ant-tabs-tab-active {
-    background: #fff;
-    border-color: #fff;
 }
 
 .card-container .ant-form-item .ant-btn{
