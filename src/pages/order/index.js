@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios'
 import { useHistory } from 'react-router-dom';
-import { PageHeader, List, Space, Button, Result } from 'antd'
+import { PageHeader, List, Space, Button, Result, message } from 'antd'
 import './style.css'
 
 import url from '../../api'
@@ -24,12 +24,12 @@ function Order() {
         }).then((res) => {
             console.log('order:', res.data)
             if (res.data.code !== 'SUCCESS') {
-                console.log(res.data.message)
+                // console.log(res.data.message)
             } else {
                 setListData(res.data.data.orderDetailDto)
             }
         }).catch((error) => {
-            console.log(error)
+            message.error(error)
         })
 
     }, [token])
@@ -72,12 +72,11 @@ function Order() {
 
                 <Result
                     title="您还未登录"
-                    key={token}
                     extra={[
-                        <Button type='primary' size='large' onClick={() => {
+                        <Button type='primary' size='large' key ='login' onClick={() => {
                             history.push('/login')
                         }}>登录</Button>,
-                        <Button type='default' size='large' onClick={() => {
+                        <Button type='default' size='large' key='register' onClick={() => {
                             history.push('/register')
                         }}>注册</Button>
                     ]}

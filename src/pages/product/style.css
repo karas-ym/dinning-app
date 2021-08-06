@@ -3,7 +3,7 @@
 .Product .header{
     position: fixed;
     top: 0;
-    background-color: #fafafa;
+    background-color: #f3f4f5;
     width: 100%;
     z-index: 2;
 }
@@ -12,8 +12,26 @@
     margin: 60px 0;
 }
 
+.Product .main .tags-wrap{
+    width: 100%;
+    background-color: #f3f4f5;
+    line-height:50px;
+    height: 50px;
+    position: fixed;
+}
+
+.Product .main .tags-checkbox{
+    background-color: #fff;
+    padding: 2px 12px;
+    border-radius: 4px;
+}
+
+.Product .main .card-container{
+    padding-top: 50px;
+}
+
 .Product .ant-list-lg .ant-list-item{
-    padding: 16px 0;
+    padding: 16px 10px;
 }
 
 .Product .count .ant-badge-count{
@@ -32,7 +50,12 @@
 }
 
 .Product .ant-tabs-nav{
-    /* position: fixed; */
+    position: fixed;
+
+}
+
+.Product .card-container .ant-tabs-content-holder{
+    padding-left: 90px;
 }
 
 .Product .ant-image-img{
@@ -55,7 +78,13 @@
 
 .Product .add-icon{
     position: absolute;
-    bottom: 20px;
+    top: 40px;
+    left: 50px;
+}
+
+.Product .add-icon-adjust{
+    position: absolute;
+    top: 20px;
     left: 50px;
 }
 

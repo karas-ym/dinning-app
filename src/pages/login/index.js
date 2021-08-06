@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios'
-import { Form, Input, Button, PageHeader, Tabs, message } from 'antd';
+import { Form, Input, Button, PageHeader, message, Divider } from 'antd';
 import './style.css'
 import { useHistory } from 'react-router-dom';
 import url from '../../api'
-
-const { TabPane } = Tabs
-
 
 function Login() {
 
@@ -27,7 +24,7 @@ function Login() {
         }).then((res) => {
             console.log(res.data)
             if (res.data.code !== 'SUCCESS') {
-                message.error(res.data.message)
+                message.info(res.data.message)
             } else {
                 window.localStorage.setItem('token', res.data.data.token)
                 message.success(res.data.message)
@@ -53,6 +50,7 @@ function Login() {
                 <div className="card-container">
 
                     <Form
+                        size='large'
                         name="login-mobile"
                         onFinish={handleLogin}
                     >
@@ -72,8 +70,22 @@ function Login() {
                             <Input.Password onChange={(e) => { setPassword(e.target.value) }} />
                         </Form.Item>
 
-                        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                            <Button type="primary" htmlType="submit">
+                        <Form.Item style={{ textAlign: 'center' }}>
+                            <Button type="link" size='middle' className='option' onClick={() => {
+                                history.push('/register')
+                            }}>
+                                去注册
+                            </Button>
+                            <Divider type="vertical" style={{ fontSize: '18px', borderLeft: '2px solid #888' }} />
+                            <Button type="link" size='middle' className='option' onClick={() => {
+                                history.push()
+                            }}>
+                                找回密码
+                            </Button>
+                        </Form.Item>
+
+                        <Form.Item>
+                            <Button type="primary" htmlType="submit" className='submit'>
                                 提交
                             </Button>
                         </Form.Item>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 import qs from 'qs'
 import { useHistory } from 'react-router-dom'
-import { Button, Avatar, PageHeader, Space, Input, Upload, Form, Drawer, Collapse } from 'antd'
+import { Button, Avatar, PageHeader, Space, Input, Upload, Form, Drawer, Collapse, message } from 'antd'
 import { CameraOutlined } from '@ant-design/icons';
 
 import './style.css'
@@ -23,14 +23,6 @@ function Profile() {
     let [mobile, setMobile] = useState(null)
     let [password, setPassword] = useState(null)
 
-    const onFinish = (values) => {
-        console.log('Success:', values);
-    };
-
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-    };
-
     // 获取用户信息
     const getProfile = () => {
 
@@ -39,16 +31,16 @@ function Profile() {
             url: url + '/api/user/whoami',
             headers: { token }
         }).then((res) => {
-            console.log('profile:', res.data)
+            console.log('profile:', res.data) // 测试
             if (res.data.code !== 'SUCCESS') {
-                onFinishFailed(res.data.message)
+                message.info('')
             } else {
-                onFinish(res.data.message)
+                // message.success('登录成功')
                 window.localStorage.setItem('id', res.data.data.id)
                 setUser(res.data.data)
             }
         }).catch((error) => {
-            console.log(error)
+            message.error(String(error))
         })
     }
 
@@ -69,13 +61,13 @@ function Profile() {
         }).then((res) => {
             console.log(res.data)
             if (res.data.code !== 'SUCCESS') {
-                onFinishFailed(res.data.message)
+                message.info(res.data.message)
             } else {
-                onFinish(res.data.message)
+                message.success('上传成功')
                 getProfile()
             }
         }).catch((error) => {
-            console.log(error)
+            message.error(String(error))
         })
     }
 
@@ -87,7 +79,8 @@ function Profile() {
             mobile
         }
 
-        console.log(data)
+        // test
+        console.log('更新信息',data)
 
         axios({
             method: "post",
@@ -97,13 +90,13 @@ function Profile() {
         }).then((res) => {
             console.log(res.data)
             if (res.data.code !== 'SUCCESS') {
-                onFinishFailed(res.data.message)
+                message.info(res.data.message)
             } else {
-                onFinish(res.data.message)
+                message.success('更新成功')
                 getProfile()
             }
         }).catch((error) => {
-            console.log(error)
+            message.error(String(error))
         })
     }
 

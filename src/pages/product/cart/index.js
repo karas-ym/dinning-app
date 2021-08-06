@@ -163,7 +163,7 @@ function Cart(props) {
             slot: slot,
             locationId: 1,
             userId: userId,
-            shopId: 2
+            shopId: props.value
         }
 
         console.log('check-data:', data)

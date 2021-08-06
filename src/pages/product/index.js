@@ -2,11 +2,12 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import qs from 'qs'
 import { Link, useHistory } from 'react-router-dom'
-import { List, PageHeader, Image, Layout, Tabs, Tag } from 'antd'
+import { List, PageHeader, Image, Layout, Tabs, Tag, message } from 'antd'
 import { PlusCircleFilled } from '@ant-design/icons'
 import './style.css'
 import { TimeContext } from '../../App';
 import Cart from './cart'
+import TagBar from './components/tag-bar.js'
 import url from '../../api'
 
 const { Header, Content } = Layout
@@ -20,8 +21,13 @@ function Product() {
     let [render, setRender] = useState(false)
 
     let history = useHistory()
-
     let value = useContext(TimeContext)
+
+    let [listData, setListData] = useState([])
+    let [categoryId, setCategoryId] = useState(0)
+    let [categories, setCategories] = useState([])
+    let [tags, setTags] = useState([])
+    let [selectedTags, setSelectedTags] = useState([])
 
     const getSlot = (time) => {
         switch (time) {
@@ -37,8 +43,6 @@ function Product() {
 
     let slot = getSlot(value.time)
 
-    let [listData, setListData] = useState([])
-    let [categoryId, setCategoryId] = useState(0)
     // let [count, setCount] = useState(0)
 
     // 商品列表
@@ -54,7 +58,6 @@ function Product() {
         axios({
             method: "get",
             url: url + '/api/product/list',
-            // header: { token },
             params: {
                 weekday: value.weekday,
                 slot: slot,
@@ -95,7 +98,7 @@ function Product() {
         }).then((res) => {
             console.log('addCart:', res.data)
             if (res.data.code !== 'SUCCESS') {
-                console.log(res.data.message)
+                message.info(res.data.message)
             } else {
                 setRender(!render)
                 // setCount(count + 1)
@@ -105,17 +108,11 @@ function Product() {
         })
     }
 
-    // 增减购物车商品
-
-
     // 获取分类
-    let [categories, setCategories] = useState([])
-
     const getCategories = () => {
         axios({
             method: "get",
             url: url + '/api/category/list',
-            // headers: { token },
             params: {
                 shopId: value.shop
             }
@@ -133,8 +130,6 @@ function Product() {
     }
 
     // 获取标签
-    let [tags, setTags] = useState([])
-
     const getTags = () => {
         axios({
             method: "get",
@@ -153,8 +148,6 @@ function Product() {
     }
 
     // 选择标签
-    let [selectedTags, setSelectedTags] = useState([])
-
     const handleTag = (tag, checked) => {
         const nextSelectedTags = checked ? [...selectedTags, tag] : selectedTags.filter(t => t !== tag);
         // console.log('已选标签: ', tag.id);
@@ -167,10 +160,9 @@ function Product() {
         getProduct()
         getCategories()
         getTags()
-
     }, [categoryId])
 
-
+    // 商品列表
     const productList = () => {
         return (
             <List size="large" dataSource={listData} itemLayout='horizontal'
@@ -179,26 +171,11 @@ function Product() {
                         actions={[
                             <div>
                                 <PlusCircleFilled
-                                    className='add-icon'
+                                    className={item.tags !== null ? 'add-icon' : 'add-icon-adjust'}
                                     style={{ color: '#1890ff', fontSize: '18px' }}
                                     onClick={() => {
                                         addCart(item.id, item.shopId)
                                     }} />
-
-                                {/* <Space>
-                                    <MinusCircleTwoTone style={{ fontSize: '16px' }}
-                                        onClick={() => {
-                                            updateCart(item.cart.productId, item.cart.id, item.cart.qty - 1, item.cart.shopId)
-                                        }}
-                                    />
-                                    <InputNumber min={0} value={item.cart.qty} style={{ width: '25px' }} size='small' />
-                                    <PlusCircleTwoTone style={{ fontSize: '16px' }}
-                                        onClick={() => {
-                                            updateCart(item.cart.productId, item.cart.id, item.cart.qty + 1, item.cart.shopId)
-                                        }}
-                                    />
-                                </Space> */}
-
                             </div>
                         ]}
                         extra={<div className='tags'>{
@@ -236,12 +213,13 @@ function Product() {
             />
 
             <Content className='main'>
-                <Header style={{ backgroundColor: '#fafafa' }}>
-                    <span style={{ marginRight: 8 }}>标签:</span>
+                {/* <TagBar value={setSelectedTags}></TagBar> */}
+                <Header className='tags-wrap' >
                     {
                         tags.map((tag) => {
                             return (
                                 <CheckableTag
+                                    className='tags-checkbox'
                                     key={tag.id}
                                     checked={selectedTags.indexOf(tag) > -1}
                                     onChange={checked => handleTag(tag, checked)}
@@ -274,11 +252,11 @@ function Product() {
                         }
                     </Tabs>
 
-                    <Cart value={render}></Cart>
+                    <Cart value={value.shop} render={render}></Cart>
 
                 </div>
             </Content>
-        </div>
+        </div >
     )
 }
 
