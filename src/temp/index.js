@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'
-// import './style.css'
+import './style.css'
 import url from '../api'
 import cover from '../cover/food.png'
 
-import { Card, Col, Row, Input } from 'antd';
+import { PageHeader, List, Image } from 'antd';
+import { useHistory } from 'react-router-dom';
 
-const { Meta } = Card;
 
 
 function Add_comments() {
+
+    let history = useHistory()
+
 
     // 获取商店列表
     let [shopList, setShopList] = useState([])
@@ -39,28 +42,33 @@ function Add_comments() {
     }, [])
 
     return (
-        <div>
+        <div className='Shop-list'>
 
-            <Row gutter={16}>
-                <Col span={12}>
-                    <Card
-                        // style={{ width: 200 }}
-                        size='large'
-                        cover={<img alt="example" src={cover} />}
+            <PageHeader
+                onBack={() => {
+                    history.push('/')
+                }}
+                title="商家列表"
+                className='header'
+            />
+
+
+            <List size="large" dataSource={shopList} itemLayout='horizontal' split
+                // style={{ backgroundColor: '#fcfcfc' }}
+                renderItem={(item) => (
+                    <List.Item key={item.id}
+                        style={{ backgroundColor: '#fcfcfc' }}
+                        className='list-row'
                     >
-                        <Meta title="Europe Street beat" description="www.instagram.com" />
-                    </Card>
-                </Col>
-                <Col span={12}>
-                    <Card
-                        // style={{ width: 200 }}
-                        size='large'
-                        cover={<img alt="example" src={cover} />}
-                    >
-                        <Meta title="Europe Street beat" description="www.instagram.com" />
-                    </Card>
-                </Col>
-            </Row>
+                        <List.Item.Meta
+                            avatar={<Image src={cover} width={80} className='shop-cover' />}
+                            title={<div className='shop-name'>{item.name}</div>}
+                        />
+                    </List.Item>
+                )}
+            >
+            </List>
+
 
         </div >
     )

@@ -12,7 +12,7 @@ function Order() {
     let history = useHistory()
     let value = useContext(OrderContext)
     let token = window.localStorage.getItem('token')
-    
+
     const [listData, setListData] = useState([])
 
     useEffect(() => {
@@ -61,72 +61,76 @@ function Order() {
     }
 
 
-    if (token === null) {
-        return (
-            <>
-                <PageHeader
-                    className="header"
-                    backIcon="false"
-                    title="订单信息"
-                />
 
-                <Result
-                    title="您还未登录"
-                    extra={[
-                        <Button type='primary' size='large' key ='login' onClick={() => {
-                            history.push('/login')
-                        }}>登录</Button>,
-                        <Button type='default' size='large' key='register' onClick={() => {
-                            history.push('/register')
-                        }}>注册</Button>
-                    ]}
-                />
-            </>
-        )
-    } else {
-        return (
-            <div className="Order">
-                <PageHeader
-                    className="header"
-                    backIcon="false"
-                    title="订单信息"
-                />
+    return (
+        <>
+            <PageHeader
+                className="header"
+                backIcon="false"
+                title="订单信息"
+            />
 
-                <div className="card-container">
-                    <List itemLayout="vertical" size="large" dataSource={listData}
-                        renderItem={item => (
-                            <List.Item
-                                key={item.id}
-                                onClick={() => {
-                                    value.setOrderDetail(item)
-                                    history.push("/order/" + item.id)
-                                }}
-                                extra={
-                                    <Space direction='vertical' size={10}>
-                                        {orderStatus(item)}
-                                        <div>￥{item.total}</div>
-                                    </Space>
-                                }
+            {
+                token === null || token === '' ?
+                    <>
+                        {/* <PageHeader
+                            className="header"
+                            backIcon="false"
+                            title="订单信息"
+                        /> */}
+
+                        <Result
+                            title="您还未登录"
+                            extra={[
+                                <Button type='primary' size='large' key='login' onClick={() => {
+                                    history.push('/login')
+                                }}>登录</Button>,
+                                <Button type='default' size='large' key='register' onClick={() => {
+                                    history.push('/register')
+                                }}>注册</Button>
+                            ]}
+                        />
+                    </>
+                    :
+                    <div className="Order">
+
+                        <div className="card-container">
+                            <List itemLayout="vertical" size="large" dataSource={listData}
+                                renderItem={item => (
+                                    <List.Item
+                                        key={item.id}
+                                        onClick={() => {
+                                            value.setOrderDetail(item)
+                                            history.push("/order/" + item.id)
+                                        }}
+                                        extra={
+                                            <Space direction='vertical' size={10}>
+                                                {orderStatus(item)}
+                                                <div>￥{item.total}</div>
+                                            </Space>
+                                        }
+                                    >
+                                        <List.Item.Meta
+                                            title={<span className='shopname'>{item.shop.name}</span>}
+                                            description={
+                                                item.orderItemDtoList.map((product) => {
+                                                    return (
+                                                        <div key={product.id}>{product.productName} x {product.qty}</div>
+                                                    )
+                                                })
+                                            }
+                                        />
+                                    </List.Item>
+                                )}
                             >
-                                <List.Item.Meta
-                                    title={<span className='shopname'>{item.shop.name}</span>}
-                                    description={
-                                        item.orderItemDtoList.map((product) => {
-                                            return (
-                                                <div key={product.id}>{product.productName} x {product.qty}</div>
-                                            )
-                                        })
-                                    }
-                                />
-                            </List.Item>
-                        )}
-                    >
-                    </List>
-                </div>
+                            </List>
+                        </div>
 
-            </div>
-        )
-    }
+                    </div>
+            }
+        </>
+
+    )
 }
 
 export default Order

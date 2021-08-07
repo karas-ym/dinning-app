@@ -2,8 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import qs from 'qs'
 import { Link, useHistory } from 'react-router-dom'
-import { List, PageHeader, Image, Layout, Tabs, Tag, message } from 'antd'
-import { PlusCircleFilled } from '@ant-design/icons'
+import { List, PageHeader, Image, Layout, Tabs, Tag, message, InputNumber, Space } from 'antd'
+import { PlusCircleFilled, MinusCircleTwoTone, PlusCircleTwoTone } from '@ant-design/icons'
 import './style.css'
 import { TimeContext } from '../../App';
 import Cart from './cart'
@@ -23,11 +23,15 @@ function Product() {
     let history = useHistory()
     let value = useContext(TimeContext)
 
+    let [shopId, setShopId] = useState(value.shop)
+
     let [listData, setListData] = useState([])
     let [categoryId, setCategoryId] = useState(0)
     let [categories, setCategories] = useState([])
     let [tags, setTags] = useState([])
     let [selectedTags, setSelectedTags] = useState([])
+
+    let [count, setCount] = useState(1)
 
     const getSlot = (time) => {
         switch (time) {
@@ -43,16 +47,14 @@ function Product() {
 
     let slot = getSlot(value.time)
 
-    // let [count, setCount] = useState(0)
-
     // 商品列表
     const getProduct = (tagId) => {
         let data = {
-            weekday: value.weekday,
+            weekday: Number(value.weekday),
             slot: slot,
             categoryId: Number(categoryId),
             tagId: tagId,
-            shopId: value.shop
+            shopId: shopId
         }
         console.log('data', data)
         axios({
@@ -170,12 +172,25 @@ function Product() {
                     <List.Item key={item.id}
                         actions={[
                             <div>
-                                <PlusCircleFilled
-                                    className={item.tags !== null ? 'add-icon' : 'add-icon-adjust'}
-                                    style={{ color: '#1890ff', fontSize: '18px' }}
-                                    onClick={() => {
-                                        addCart(item.id, item.shopId)
-                                    }} />
+                                {
+                                    count === 0 ?
+                                        <PlusCircleFilled
+                                            className={item.tags !== null ? 'add-icon' : 'add-icon-adjust'}
+                                            style={{ color: '#1890ff', fontSize: '18px' }}
+                                            onClick={() => {
+                                                addCart(item.id, item.shopId)
+                                            }} />
+                                        :
+                                        <Space className={item.tags !== null ? 'add-icon update-qty' : 'add-icon-adjust update-qty'}>
+                                            <MinusCircleTwoTone style={{ fontSize: '16px' }}
+
+                                            />
+                                            <InputNumber min={0} value={count} style={{ width: '25px' }} size='small' />
+                                            <PlusCircleTwoTone style={{ fontSize: '16px' }}
+
+                                            />
+                                        </Space>
+                                }
                             </div>
                         ]}
                         extra={<div className='tags'>{

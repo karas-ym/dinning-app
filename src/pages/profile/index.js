@@ -33,7 +33,7 @@ function Profile() {
         }).then((res) => {
             console.log('profile:', res.data) // 测试
             if (res.data.code !== 'SUCCESS') {
-                message.info('')
+                message.info(res.data.message)
             } else {
                 // message.success('登录成功')
                 window.localStorage.setItem('id', res.data.data.id)
@@ -230,7 +230,7 @@ function Profile() {
                 </Collapse>
 
                 {
-                    token === null ?
+                    token === null || token === '' ?
                         <Button className="logout" size="large" type='primary' onClick={() => { history.push('/login') }}>登录</Button>
                         :
                         <Button className="logout" size="large" type='primary' onClick={showDrawer}>退出账号</Button>

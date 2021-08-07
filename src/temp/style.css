@@ -1,0 +1,16 @@
+@import '~antd/dist/antd.css';
+
+.Shop-list .shop-name{
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.Shop-list .shop-cover{
+    height: 60px;
+    border-radius: 4px;
+}
+
+.Shop-list .list-row{
+    margin: 6px 8px;
+    border-radius: 8px;
+}
