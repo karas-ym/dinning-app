@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
 import qs from 'qs'
-import { useHistory } from 'react-router-dom'
-import { List, InputNumber, Button, Drawer, Badge, Checkbox, Space, Divider } from 'antd'
-import { ShoppingCartOutlined, MinusCircleTwoTone, PlusCircleTwoTone } from '@ant-design/icons';
+import {useHistory} from 'react-router-dom'
+import {List, InputNumber, Button, Drawer, Badge, Checkbox, Space, Divider, message} from 'antd'
+import {ShoppingCartOutlined, MinusCircleTwoTone, PlusCircleTwoTone} from '@ant-design/icons';
 import './style.css'
 
-import { TimeContext } from '../../../App';
-import { OrderContext } from '../../../App'
+import {TimeContext} from '../../../App';
+import {OrderContext} from '../../../App'
 
 import url from '../../../api'
 
@@ -55,20 +55,18 @@ function Cart(props) {
         axios({
             method: "get",
             url: url + '/api/cart/list',
-            headers: { token },
-            params: {
-                userId: userId
-            },
-        }).then((res) => {
-            console.log('cart:', res.data)
-            if (res.data.code !== 'SUCCESS') {
-                console.log(res.data.message)
-            } else {
-                setListCart(res.data.data)
-            }
-        }).catch((error) => {
-            console.log(error)
+            headers: {token},
         })
+            .then((res) => {
+                if (res.data.code !== 'SUCCESS') {
+                    message.error(res.data.message)
+                } else {
+                    setListCart(res.data.data)
+                }
+            })
+            .catch((error) => {
+                message.error(error.toString())
+            })
     }, [render, userId, token, props]);
 
     // 增减购物车商品
@@ -82,12 +80,10 @@ function Cart(props) {
             shopId: shopId
         }
 
-        console.log('update:', data)
-
         axios({
             method: "post",
             url: url + '/api/cart/update',
-            headers: { token },
+            headers: {token},
             data: qs.stringify(data)
         }).then((res) => {
             console.log('addCart:', res.data)
@@ -98,6 +94,7 @@ function Cart(props) {
             }
         }).catch((error) => {
             console.log(error)
+            message.error(error.toString())
         })
     }
 
@@ -153,7 +150,6 @@ function Cart(props) {
     }
 
 
-
     // 创建订单 跳转支付
     const checkout = () => {
 
@@ -171,7 +167,7 @@ function Cart(props) {
         axios({
             method: "post",
             url: url + '/api/order/create',
-            headers: { token },
+            headers: {token},
             data: qs.stringify(data)
         }).then((res) => {
             console.log('check:', res.data)
@@ -182,17 +178,16 @@ function Cart(props) {
                 history.push("/payment/" + res.data.data[0].id)
             }
         }).catch((error) => {
-            console.log(error)
+            message.error(error.toString())
         })
 
     }
 
 
-
     return (
         <div className='Cart'>
             <Badge count={listCart.length} className="cart">
-                <Button type="primary" shape="round" onClick={showDrawer} icon={<ShoppingCartOutlined />}>
+                <Button type="primary" shape="round" onClick={showDrawer} icon={<ShoppingCartOutlined/>}>
                     购物车
                 </Button>
             </Badge>
@@ -201,56 +196,52 @@ function Cart(props) {
                 title="购物车"
                 placement="right"
                 onClose={onClose}
-                visible={visible}
-            >
+                visible={visible}>
 
                 <Checkbox indeterminate={indeterminate} onChange={onCheckAllChange} checked={checkAll}>
                     全选
                 </Checkbox>
-                <Divider />
+
+                <Divider/>
 
                 <List size="small" dataSource={listCart}
-                    renderItem={(item) => (
-                        <List.Item  
-                            key={item.cart.id}
-                            actions={[
-                                <Space>
-                                    <MinusCircleTwoTone style={{ fontSize: '16px' }}
-                                        onClick={() => {
-                                            updateCart(item.cart.productId, item.cart.id, item.cart.qty - 1, item.cart.shopId)
-                                            if (checkedList.indexOf(item.cart.id) > -1) {
-                                                handleCheck(item.productDetail.product.price, 1, false)
-                                            }
-                                        }}
-                                    />
-                                    <InputNumber min={0} value={item.cart.qty} style={{ width: '25px' }} size='small' />
-                                    <PlusCircleTwoTone style={{ fontSize: '16px' }}
-                                        onClick={() => {
-                                            updateCart(item.cart.productId, item.cart.id, item.cart.qty + 1, item.cart.shopId)
-                                            if (checkedList.indexOf(item.cart.id) > -1) {
-                                                handleCheck(item.productDetail.product.price, 1, true)
-                                            }
-                                        }}
-                                    />
-                                </Space>
-                            ]}
-                        >
-                            <List.Item.Meta
-                                avatar={
-                                    <Checkbox
-                                        checked={checkedList.indexOf(item.cart.id) > -1 ? true : false}
-                                        onChange={(e) => {
-                                            selectProduct(item.cart.id, e.target.checked)
-                                            handleCheck(item.productDetail.product.price, item.cart.qty, e.target.checked)
-                                            onChange(e.target.checked, item.cart.id)
-                                        }}></Checkbox>
-                                }
-                                title={<span>{item.productDetail.product.name}</span>}
-                                description={<span> ￥{item.productDetail.product.price}</span>}
-                            />
-                        </List.Item>
-                    )}
-                >
+                      renderItem={(item) => (
+                          <List.Item
+                              key={item.cart.id}
+                              actions={[
+                                  <Space>
+                                      <MinusCircleTwoTone style={{fontSize: '16px'}}
+                                                          onClick={() => {
+                                                              updateCart(item.cart.productId, item.cart.id, item.cart.qty - 1, item.cart.shopId)
+                                                              if (checkedList.indexOf(item.cart.id) > -1) {
+                                                                  handleCheck(item.productDetail.product.price, 1, false)
+                                                              }
+                                                          }}/>
+                                      <InputNumber min={0} value={item.cart.qty} style={{width: '25px'}} size='small'/>
+                                      <PlusCircleTwoTone style={{fontSize: '16px'}}
+                                                         onClick={() => {
+                                                             updateCart(item.cart.productId, item.cart.id, item.cart.qty + 1, item.cart.shopId)
+                                                             if (checkedList.indexOf(item.cart.id) > -1) {
+                                                                 handleCheck(item.productDetail.product.price, 1, true)
+                                                             }
+                                                         }}/>
+                                  </Space>
+                              ]}>
+                              <List.Item.Meta
+                                  avatar={
+                                      <Checkbox
+                                          checked={checkedList.indexOf(item.cart.id) > -1 ? true : false}
+                                          onChange={(e) => {
+                                              selectProduct(item.cart.id, e.target.checked)
+                                              handleCheck(item.productDetail.product.price, item.cart.qty, e.target.checked)
+                                              onChange(e.target.checked, item.cart.id)
+                                          }}>
+                                      </Checkbox>
+                                  }
+                                  title={<span>{item.productDetail.product.name}</span>}
+                                  description={<span> ￥{item.productDetail.product.price}</span>}/>
+                          </List.Item>
+                      )}>
                     <List.Item>合计: {priceSum}</List.Item>
                 </List>
 

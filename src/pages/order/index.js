@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios'
-import { useHistory } from 'react-router-dom';
-import { PageHeader, List, Space, Button, Result, message } from 'antd'
+import {useHistory} from 'react-router-dom';
+import {PageHeader, List, Space, Button, Result, message} from 'antd'
 import './style.css'
 
 import url from '../../api'
-import { OrderContext } from '../../App'
+import {OrderContext} from '../../App'
 
 function Order() {
 
@@ -16,23 +16,28 @@ function Order() {
     const [listData, setListData] = useState([])
 
     useEffect(() => {
+        if (token !== '') {
+            getOrderList()
+        }
+    }, [])
 
+    const getOrderList = () => {
         axios({
             method: "get",
             url: url + '/api/order/userOrderList',
-            headers: { token },
+            headers: {token},
         }).then((res) => {
             console.log('order:', res.data)
             if (res.data.code !== 'SUCCESS') {
-                // console.log(res.data.message)
+                message.error(res.data.message)
             } else {
                 setListData(res.data.data.orderDetailDto)
             }
-        }).catch((error) => {
-            message.error(error)
         })
-
-    }, [token])
+            .catch((error) => {
+                message.error(error.toString())
+            })
+    }
 
     const orderStatus = (item) => {
         switch (item.status) {
@@ -40,11 +45,9 @@ function Order() {
                 if (item.paymentStatus === 2) {
                     if (item.sendStatus === 1) {
                         return <div>待配送</div>
-                    }
-                    else if (item.sendStatus === 2) {
+                    } else if (item.sendStatus === 2) {
                         return <div>配送中</div>
-                    }
-                    else {
+                    } else {
                         return <div>已配送</div>
                     }
                 } else if (item.paymentStatus === 3) {
@@ -59,7 +62,6 @@ function Order() {
             default:
         }
     }
-
 
 
     return (
@@ -96,32 +98,33 @@ function Order() {
 
                         <div className="card-container">
                             <List itemLayout="vertical" size="large" dataSource={listData}
-                                renderItem={item => (
-                                    <List.Item
-                                        key={item.id}
-                                        onClick={() => {
-                                            value.setOrderDetail(item)
-                                            history.push("/order/" + item.id)
-                                        }}
-                                        extra={
-                                            <Space direction='vertical' size={10}>
-                                                {orderStatus(item)}
-                                                <div>￥{item.total}</div>
-                                            </Space>
-                                        }
-                                    >
-                                        <List.Item.Meta
-                                            title={<span className='shopname'>{item.shop.name}</span>}
-                                            description={
-                                                item.orderItemDtoList.map((product) => {
-                                                    return (
-                                                        <div key={product.id}>{product.productName} x {product.qty}</div>
-                                                    )
-                                                })
-                                            }
-                                        />
-                                    </List.Item>
-                                )}
+                                  renderItem={item => (
+                                      <List.Item
+                                          key={item.id}
+                                          onClick={() => {
+                                              value.setOrderDetail(item)
+                                              history.push("/order/" + item.id)
+                                          }}
+                                          extra={
+                                              <Space direction='vertical' size={10}>
+                                                  {orderStatus(item)}
+                                                  <div>￥{item.total}</div>
+                                              </Space>
+                                          }
+                                      >
+                                          <List.Item.Meta
+                                              title={<span className='shopname'>{item.shop.name}</span>}
+                                              description={
+                                                  item.orderItemDtoList.map((product) => {
+                                                      return (
+                                                          <div
+                                                              key={product.id}>{product.productName} x {product.qty}</div>
+                                                      )
+                                                  })
+                                              }
+                                          />
+                                      </List.Item>
+                                  )}
                             >
                             </List>
                         </div>

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import { Button, PageHeader, List, Space, message } from 'antd'
-import { useHistory, useParams } from 'react-router-dom';
+import {Button, PageHeader, List, Space, message} from 'antd'
+import {useHistory, useParams} from 'react-router-dom';
 import url from '../../api'
 import './style.css'
 
@@ -24,7 +24,7 @@ function Payment() {
         axios({
             method: "get",
             url: url + '/api/order/detail',
-            headers: { token },
+            headers: {token},
             params: {
                 orderId: Number(id.orderId)
             }
@@ -55,7 +55,7 @@ function Payment() {
         axios({
             method: "post",
             url: url + '/api/pay/url',
-            headers: { token },
+            headers: {token},
             params: {
                 number: orderDetail.number
             },
@@ -92,7 +92,7 @@ function Payment() {
                     <List.Item.Meta
                         title='配送地点'
                         description={hospital.name + ' ' + location.department + ' ' +
-                            location.room + '-' + location.bunk}
+                        location.room + '-' + location.bunk}
                     />
                 </List.Item>
                 <List.Item className='content-row'>

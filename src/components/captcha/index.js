@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import axios from 'axios'
 import qs from 'qs'
-import { Input, Button, message, Modal, Image, Space } from 'antd';
+import {Input, Button, message, Modal, Image, Space} from 'antd';
 import url from '../../api'
-import { useHistory } from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 
 function Captcha(props) {
 
@@ -54,17 +54,15 @@ function Captcha(props) {
         axios({
             method: "post",
             url: url + '/api/sms',
-            data: qs.stringify({ mobile: props.value })
+            data: qs.stringify({mobile: props.value})
         }).then((res) => {
             console.log(res.data)
             if (res.data.code === 'ERROR') {
                 message.info(res.data.message)
-            }
-            else if (res.data.code === 'SMS_EXCEPTION') {
+            } else if (res.data.code === 'SMS_EXCEPTION') {
                 showModal()
                 handleCaptcha()
-            }
-            else {
+            } else {
                 console.log(res.data.message)
                 setSmsStaus(false)
                 countdown()
@@ -114,18 +112,20 @@ function Captcha(props) {
                 {!smsStatus ? cd + "s 后重新发送" : '发送验证码'}
             </Button>
             <Modal title="图片验证" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}
-                closable={false}
-                footer={null}
-                centered
-                width={300}
+                   closable={false}
+                   footer={null}
+                   centered
+                   width={300}
             >
                 <Space direction='vertical' size={20}>
                     <Space>
-                        <Image width={150} src={captchaUrl} />
+                        <Image width={150} src={captchaUrl}/>
                         <Button type='link' onClick={handleCaptcha}>换一张</Button>
                     </Space>
                     <Space size={20}>
-                        <Input style={{ width: '80px' }} size='large' onChange={(e) => { setCode(e.target.value) }}></Input>
+                        <Input style={{width: '80px'}} size='large' onChange={(e) => {
+                            setCode(e.target.value)
+                        }}></Input>
                         <Button type='primary' onClick={submit}>验证</Button>
                     </Space>
                 </Space>

@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import axios from 'axios'
-import { Result, Button } from 'antd';
-import { useHistory } from 'react-router-dom';
+import {Result, Button} from 'antd';
+import {useHistory} from 'react-router-dom';
 
 import url from '../../api'
-import { OrderContext } from '../../App'
+import {OrderContext} from '../../App'
 
 function Postpay() {
 
@@ -30,7 +30,7 @@ function Postpay() {
         axios({
             method: "get",
             url: url + '/api/order/detail',
-            headers: { token },
+            headers: {token},
             params: {
                 orderId: value.orderDetail.id
             }

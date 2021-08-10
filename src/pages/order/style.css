@@ -1,11 +1,11 @@
 @import '~antd/dist/antd.css';
 
-.Order{
+.Order {
     padding: 4px;
     padding-bottom: 50px;
 }
 
-.Order .ant-list-vertical .ant-list-item-main{
+.Order .ant-list-vertical .ant-list-item-main {
     min-width: 180px;
 }
 
@@ -13,22 +13,22 @@
     border-bottom: 6px solid #f0f0f0;
 }
 
-.Order .ant-modal-content{
+.Order .ant-modal-content {
     text-align: center;
     background: transparent;
     box-shadow: none;
 }
 
-.Order .card-container{
+.Order .card-container {
     background-color: #fff;
     border-radius: 4px;
 }
 
-.Order .ant-list-item-extra{
+.Order .ant-list-item-extra {
     text-align: right;
 }
 
-.Order .card-container .shopname{
+.Order .card-container .shopname {
     display: inline-block;
     font-weight: 600;
     color: #444;

@@ -1,12 +1,12 @@
 @import '~antd/dist/antd.css';
 
-.Register .card-container{
+.Register .card-container {
     width: 100%;
     position: relative;
     background-color: #fff;
     padding: 10px;
 }
 
-.Register .card-container .submit-btn{
+.Register .card-container .submit-btn {
     left: 160px;
 }

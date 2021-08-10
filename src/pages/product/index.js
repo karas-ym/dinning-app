@@ -1,40 +1,36 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
 import qs from 'qs'
-import { Link, useHistory } from 'react-router-dom'
-import { List, PageHeader, Image, Layout, Tabs, Tag, message, InputNumber, Space } from 'antd'
-import { PlusCircleFilled, MinusCircleTwoTone, PlusCircleTwoTone } from '@ant-design/icons'
+import {useHistory} from 'react-router-dom'
+import {List, PageHeader, Image, Layout, Tabs, Tag, message, InputNumber, Space, Typography, Button, Badge} from 'antd'
+import {MinusCircleTwoTone, PlusCircleTwoTone, ShoppingCartOutlined, PlusCircleFilled} from '@ant-design/icons'
 import './style.css'
-import { TimeContext } from '../../App';
+import {TimeContext} from '../../App';
 import Cart from './cart'
-import TagBar from './components/tag-bar.js'
 import url from '../../api'
 
-const { Header, Content } = Layout
-const { TabPane } = Tabs
-const { CheckableTag } = Tag
+const {Header, Content} = Layout
+const {TabPane} = Tabs
+const {CheckableTag} = Tag
 
-function Product() {
-
+function Product(props) {
+    const {Text} = Typography;
     let token = window.localStorage.getItem('token')
-    let userId = Number(window.localStorage.getItem('id'))
     let [render, setRender] = useState(false)
 
-    let history = useHistory()
+    // let history = useHistory()
     let value = useContext(TimeContext)
 
-    let [shopId, setShopId] = useState(value.shop)
-
     let [listData, setListData] = useState([])
+    let [cartqty, setCartqty] = useState([])
     let [categoryId, setCategoryId] = useState(0)
     let [categories, setCategories] = useState([])
     let [tags, setTags] = useState([])
     let [selectedTags, setSelectedTags] = useState([])
 
-    let [count, setCount] = useState(1)
 
-    const getSlot = (time) => {
-        switch (time) {
+    const getSlot = (slot) => {
+        switch (slot) {
             case '早餐':
                 return 1
             case '午餐':
@@ -45,68 +41,66 @@ function Product() {
         }
     }
 
-    let slot = getSlot(value.time)
+
+    const searchParams = new URLSearchParams(props.location.search.substring(1))
+    let id = searchParams.get("id")
+    let slot = searchParams.get("slot")
+    let data = searchParams.get("time")
+    let weekday = new Date(searchParams.get("time")).getDay()
+
 
     // 商品列表
-    const getProduct = (tagId) => {
-        let data = {
-            weekday: Number(value.weekday),
-            slot: slot,
-            categoryId: Number(categoryId),
-            tagId: tagId,
-            shopId: shopId
-        }
-        console.log('data', data)
+    const getProduct = (value) => {
         axios({
             method: "get",
             url: url + '/api/product/list',
             params: {
-                weekday: value.weekday,
-                slot: slot,
+                weekday: weekday === 0 ? 7 : weekday,
+                slot: getSlot(slot),
                 categoryId: Number(categoryId),
-                tagId: tagId,
-                shopId: value.shop
+                tagId: value,
+                shopId: id
             }
-        }).then((res) => {
-            console.log('product:', res.data)
-            if (res.data.code !== 'SUCCESS') {
-                console.log(res.data.message)
-            } else {
-                setListData(res.data.data.productDtos)
-                console.log(res.data.code)
-            }
-        }).catch((error) => {
-            console.log(error)
         })
+            .then((res) => {
+                console.log(res)
+                if (res.data.code !== 'SUCCESS') {
+
+                } else {
+                    setListData(res.data.data.productDtos)
+                }
+            })
+            .catch((error) => {
+                message.error(error.toString())
+            })
+        getCategories()
+        getTags()
     }
 
     // 加入购物车
-    const addCart = (productId, shopId) => {
+    const addCart = (productId, shopId, num) => {
 
         let data = {
             productId: productId,
-            qty: 1,
-            userId: userId,
+            qty: num,
             shopId: shopId
         }
 
-        console.log(data)
-
         axios({
             method: "post",
-            url: url + '/api/cart/create',
-            headers: { token },
+            url: url + '/api/cart/update',
+            headers: {token},
             data: qs.stringify(data)
         }).then((res) => {
-            console.log('addCart:', res.data)
-            if (res.data.code !== 'SUCCESS') {
+            if (res.data.code === 'ERROR') {
                 message.info(res.data.message)
             } else {
                 setRender(!render)
                 // setCount(count + 1)
+                cartList()
             }
         }).catch((error) => {
-            console.log(error)
+            message.error(error.toString())
         })
     }
 
@@ -116,18 +110,15 @@ function Product() {
             method: "get",
             url: url + '/api/category/list',
             params: {
-                shopId: value.shop
+                shopId: id
             }
         }).then((res) => {
-            console.log('categoryList:', res.data)
             if (res.data.code !== 'SUCCESS') {
-                console.log(res.data.message)
             } else {
                 setCategories(res.data.data)
-                console.log(res.data.code)
             }
         }).catch((error) => {
-            console.log(error)
+            message.error(error.toString())
         })
     }
 
@@ -137,22 +128,44 @@ function Product() {
             method: "get",
             url: url + '/api/tag/list',
         }).then((res) => {
-            console.log('tags:', res.data)
             if (res.data.code !== 'SUCCESS') {
 
             } else {
                 setTags(res.data.data)
-                console.log(res.data.code)
             }
         }).catch((error) => {
-            console.log(error)
+            message.error(error.toString())
         })
     }
+
+    //获取购物车列表
+    function cartList() {
+        axios({
+            method: "get",
+            url: url + '/api/cart/list',
+            headers: {token},
+        })
+            .then((res) => {
+                console.log('购物车', res.data.data)
+                setCartqty(res.data.data)
+            })
+            .catch((error) => {
+                message.error(error.toString())
+            })
+    }
+
+    for (let i = 0; i < listData.length; i++) {
+        for (let j = 0; j < cartqty.length; j++) {
+            if (cartqty[j].cart.productId === listData[i].id) {
+                listData[i].count=cartqty[j].cart.qty
+            }
+        }
+    }
+
 
     // 选择标签
     const handleTag = (tag, checked) => {
         const nextSelectedTags = checked ? [...selectedTags, tag] : selectedTags.filter(t => t !== tag);
-        // console.log('已选标签: ', tag.id);
         setSelectedTags(nextSelectedTags);
         // checked ? setTagId(tag.id) : setTagId(0)
         checked ? getProduct(tag.id) : getProduct(0)
@@ -160,58 +173,106 @@ function Product() {
 
     useEffect(() => {
         getProduct()
-        getCategories()
-        getTags()
-    }, [categoryId])
+        cartList()
+    }, [])
+
 
     // 商品列表
     const productList = () => {
         return (
-            <List size="large" dataSource={listData} itemLayout='horizontal'
-                renderItem={(item) => (
-                    <List.Item key={item.id}
-                        actions={[
-                            <div>
-                                {
-                                    count === 0 ?
-                                        <PlusCircleFilled
-                                            className={item.tags !== null ? 'add-icon' : 'add-icon-adjust'}
-                                            style={{ color: '#1890ff', fontSize: '18px' }}
-                                            onClick={() => {
-                                                addCart(item.id, item.shopId)
-                                            }} />
-                                        :
-                                        <Space className={item.tags !== null ? 'add-icon update-qty' : 'add-icon-adjust update-qty'}>
-                                            <MinusCircleTwoTone style={{ fontSize: '16px' }}
+            <List size="large"
+                  dataSource={listData}
+                  itemLayout='horizontal'
+                  renderItem={(item) => {
+                      return (
+                          <List.Item key={item.id}
+                                     actions={[
+                                         <div>
+                                             {
+                                                 token === '' ?
+                                                     <PlusCircleFilled
+                                                         className={item.tags !== null ? 'add-icon' : 'add-icon-adjust'}
+                                                         style={{color: '#1890ff', fontSize: '18px'}}
+                                                         onClick={() => {
+                                                             addCart(item.id, item.shopId)
+                                                         }}/>
+                                                     :
+                                                     <Space
+                                                         className={item.tags !== null ? 'add-icon update-qty' : 'add-icon-adjust update-qty'}>
+                                                         <MinusCircleTwoTone style={{fontSize: '16px'}}
+                                                                             onClick={() => {
+                                                                                 for (let i = 0; i < listData.length; i++) {
+                                                                                     if (listData[i].count <= 0) {
+                                                                                         return;
+                                                                                     } else {
+                                                                                         if (item.id === listData[i].id) {
+                                                                                             listData[i].count = (listData[i].count || 0) - 1
+                                                                                             addCart(item.id, id, listData[i].count)
+                                                                                         }
+                                                                                     }
+                                                                                 }
+                                                                                 setListData([...listData])
+                                                                                 console.log('-商品', item.count)
 
-                                            />
-                                            <InputNumber min={0} value={count} style={{ width: '25px' }} size='small' />
-                                            <PlusCircleTwoTone style={{ fontSize: '16px' }}
-
-                                            />
-                                        </Space>
-                                }
-                            </div>
-                        ]}
-                        extra={<div className='tags'>{
-                            item.tags !== null ?
-                                item.tags.map((i) => {
-                                    return (
-                                        <Tag key={i}>{i}</Tag>
-                                    )
-                                }) : null
-                        }</div>}
-                    >
-                        <List.Item.Meta
-                            avatar={<Image src={"http://" + item.cover} width={80} />}
-                            title={<Link to={"/order/" + item.id}>{item.name}</Link>}
-                            description={<div>￥{item.price}</div>}
-                        />
-                    </List.Item>
-                )}
-            >
+                                                                             }}/>
+                                                         <InputNumber value={item.count || 0}
+                                                                      maxLength={2}
+                                                                      style={{width: '30px'}}
+                                                                      size='small'
+                                                                      onChange={(value) => {
+                                                                          for (let i = 0; i < listData.length; i++) {
+                                                                              if (item.id === listData[i].id) {
+                                                                                  listData[i].count = value
+                                                                                  addCart(item.id, item.shopId, value)
+                                                                              }
+                                                                          }
+                                                                          setListData([...listData])
+                                                                      }}/>
+                                                         <PlusCircleTwoTone style={{fontSize: '16px'}}
+                                                                            onClick={() => {
+                                                                                for (let i = 0; i < listData.length; i++) {
+                                                                                    if (item.id === listData[i].id) {
+                                                                                        listData[i].count = (listData[i].count || 0) + 1
+                                                                                        addCart(item.id, item.shopId, listData[i].count)
+                                                                                    }
+                                                                                }
+                                                                                setListData([...listData])
+                                                                            }}/>
+                                                     </Space>
+                                             }
+                                         </div>
+                                     ]}
+                                     extra={<div className='tags'>{
+                                         item.tags !== null ?
+                                             item.tags.map((i) => {
+                                                 return (
+                                                     <Tag key={i}>{i}</Tag>
+                                                 )
+                                             }) : null
+                                     }</div>}>
+                              <List.Item.Meta
+                                  onClick={() => {
+                                      props.history.push("/order/" + item.id)
+                                  }}
+                                  avatar={<Image src={"http://" + item.cover} width={80}/>}
+                                  title={<Text strong>{item.name}</Text>}
+                                  description={<Text type="secondary">￥{item.price}</Text>}/>
+                          </List.Item>
+                      )
+                  }}>
             </List>
         )
+    }
+
+    function cart() {
+        axios({
+            method: "get",
+            url: url + '/api/cart/list',
+            headers: {token}
+        })
+            .then(res => {
+                console.log(res)
+            })
     }
 
 
@@ -220,16 +281,23 @@ function Product() {
             <PageHeader
                 ghost={false}
                 onBack={() => {
-                    history.push('/')
+                    window.history.back()
                 }}
                 title="商品列表"
-                subTitle={<div>  日期 {value.date} 时段 {value.time} 星期 {value.weekday}</div>}
+                subTitle={
+                    <Space>
+                        <div> 日期:{data}</div>
+                        |
+                        <div> 时段:{slot}</div>
+                        |
+                        <div>星期:{weekday}</div>
+                    </Space>
+                }
                 className='header'
             />
 
             <Content className='main'>
-                {/* <TagBar value={setSelectedTags}></TagBar> */}
-                <Header className='tags-wrap' >
+                <Header className='tags-wrap'>
                     {
                         tags.map((tag) => {
                             return (
@@ -237,8 +305,7 @@ function Product() {
                                     className='tags-checkbox'
                                     key={tag.id}
                                     checked={selectedTags.indexOf(tag) > -1}
-                                    onChange={checked => handleTag(tag, checked)}
-                                >
+                                    onChange={checked => handleTag(tag, checked)}>
                                     {tag.name}
                                 </CheckableTag>
                             )
@@ -248,30 +315,43 @@ function Product() {
 
                 <div className='card-container'>
                     <Tabs type='card'
-                        tabPosition='left'
-                        defaultActiveKey={0}
-                        onChange={(activeKey) => { setCategoryId(activeKey) }}
-                        tabBarStyle={{ width: '90px' }}
-                    >
+                          tabPosition='left'
+                          defaultActiveKey={0}
+                          onChange={(activeKey) => {
+                              setCategoryId(activeKey)
+                          }}
+                          tabBarStyle={{width: '90px'}}>
+
                         <TabPane tab='全部' key={0}>
                             {productList()}
                         </TabPane>
+
                         {
                             categories.map(item => {
                                 return (
-                                    <TabPane tab={item.name} key={item.id} >
+                                    <TabPane tab={item.name} key={item.id}>
                                         {productList()}
                                     </TabPane>
                                 )
                             })
                         }
                     </Tabs>
-
-                    <Cart value={value.shop} render={render}></Cart>
-
+                    {token !== '' ?
+                        <Cart value={value.shop} render={render}/>
+                        :
+                        <Badge className="cart">
+                            <Button
+                                type="primary"
+                                shape="round"
+                                onClick={cart}
+                                icon={<ShoppingCartOutlined/>}>
+                                购物车
+                            </Button>
+                        </Badge>
+                    }
                 </div>
             </Content>
-        </div >
+        </div>
     )
 }
 

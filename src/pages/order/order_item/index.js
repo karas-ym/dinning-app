@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios'
 import qs from 'qs'
 import './style.css'
-import { PageHeader, List, Button, Layout, Input, Form, Rate, message, Space } from 'antd'
-import { useHistory, useParams } from 'react-router-dom';
+import {PageHeader, List, Button, Layout, Input, Form, Rate, message, Space} from 'antd'
+import {useHistory, useParams} from 'react-router-dom';
 
 import url from '../../../api'
 
-const { Content } = Layout
-const { TextArea } = Input;
+const {Content} = Layout
+const {TextArea} = Input;
 
 function OrderItem() {
 
@@ -32,7 +32,7 @@ function OrderItem() {
         axios({
             method: "get",
             url: url + '/api/order/detail',
-            headers: { token },
+            headers: {token},
             params: {
                 orderId: Number(orderId.id)
             }
@@ -61,11 +61,9 @@ function OrderItem() {
                 if (item.paymentStatus === 2) {
                     if (item.sendStatus === 1) {
                         return <div>待配送</div>
-                    }
-                    else if (item.sendStatus === 2) {
+                    } else if (item.sendStatus === 2) {
                         return <div>配送中</div>
-                    }
-                    else {
+                    } else {
                         return <div>已配送</div>
                     }
                 } else if (item.paymentStatus === 3) {
@@ -102,7 +100,7 @@ function OrderItem() {
         axios({
             method: "post",
             url: url + '/api/order/evaluate',
-            headers: { token },
+            headers: {token},
             data: qs.stringify(data)
         }).then((res) => {
             console.log('订单详情:', res.data)
@@ -125,7 +123,7 @@ function OrderItem() {
         axios({
             method: "post",
             url: url + '/api/order/cancel',
-            headers: { token },
+            headers: {token},
             data: qs.stringify(data)
         }).then((res) => {
             console.log('cancel:', res.data)
@@ -145,7 +143,7 @@ function OrderItem() {
             <PageHeader
                 className="header"
                 onBack={() => {
-                    history.push('/order')
+                    window.history.back()
                 }}
                 title={
                     <div>{orderStatus(orderDetail)}</div>
@@ -182,10 +180,10 @@ function OrderItem() {
                             <Space size={0} className='btn-wrap'>
                                 <Button size='middle' shape='round' onClick={handleCancel}>取消订单</Button>
                                 <Button type='primary' shape='round'
-                                    className="check-btn"
-                                    onClick={() => {
-                                        history.push('/payment/' + orderId.id)
-                                    }}>继续支付</Button>
+                                        className="check-btn"
+                                        onClick={() => {
+                                            history.push('/payment/' + orderId.id)
+                                        }}>继续支付</Button>
                             </Space> : null
                     }
 
@@ -209,14 +207,18 @@ function OrderItem() {
                             > */}
                                 <Form.Item>
                                     整体评分
-                                    <Rate defaultValue={orderDetail.evaluationPoint} onChange={(value) => { setPoint(value) }} />
+                                    <Rate defaultValue={orderDetail.evaluationPoint} onChange={(value) => {
+                                        setPoint(value)
+                                    }}/>
                                 </Form.Item>
                                 <Form.Item>
                                     评价内容
                                     <TextArea
                                         value={cmt}
                                         rows={4}
-                                        onChange={(e) => { setCmt(e.target.value) }}
+                                        onChange={(e) => {
+                                            setCmt(e.target.value)
+                                        }}
                                     />
                                 </Form.Item>
                                 <Form.Item>
@@ -232,7 +234,7 @@ function OrderItem() {
 
             </Content>
 
-        </div >
+        </div>
     )
 }
 

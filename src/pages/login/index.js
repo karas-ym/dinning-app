@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import axios from 'axios'
-import { Form, Input, Button, PageHeader, message, Divider } from 'antd';
+import {Form, Input, Button, PageHeader, message, Divider} from 'antd';
 import './style.css'
-import { useHistory } from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import url from '../../api'
 
 function Login() {
@@ -41,7 +41,7 @@ function Login() {
             <PageHeader
                 className="header"
                 onBack={() => {
-                    history.push('/profile')
+                    window.history.back()
                 }}
                 title="用户登录"
             />
@@ -57,26 +57,30 @@ function Login() {
                         <Form.Item
                             label="手机号"
                             name="mobile"
-                            rules={[{ required: true, message: '请输入手机号' }]}
+                            rules={[{required: true, message: '请输入手机号'}]}
                         >
-                            <Input onChange={(e) => { setMobile(e.target.value) }} />
+                            <Input onChange={(e) => {
+                                setMobile(e.target.value)
+                            }}/>
                         </Form.Item>
 
                         <Form.Item
                             label="密码"
                             name="password"
-                            rules={[{ required: true, message: '请输入密码' }]}
+                            rules={[{required: true, message: '请输入密码'}]}
                         >
-                            <Input.Password onChange={(e) => { setPassword(e.target.value) }} />
+                            <Input.Password onChange={(e) => {
+                                setPassword(e.target.value)
+                            }}/>
                         </Form.Item>
 
-                        <Form.Item style={{ textAlign: 'center' }}>
+                        <Form.Item style={{textAlign: 'center'}}>
                             <Button type="link" size='middle' className='option' onClick={() => {
                                 history.push('/register')
                             }}>
                                 去注册
                             </Button>
-                            <Divider type="vertical" style={{ fontSize: '18px', borderLeft: '2px solid #888' }} />
+                            <Divider type="vertical" style={{fontSize: '18px', borderLeft: '2px solid #888'}}/>
                             <Button type="link" size='middle' className='option' onClick={() => {
                                 history.push()
                             }}>

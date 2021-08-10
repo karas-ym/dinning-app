@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios'
 import './style.css'
 import url from '../api'
 import cover from '../cover/food.png'
 
-import { PageHeader, List, Image } from 'antd';
-import { useHistory } from 'react-router-dom';
-
+import {PageHeader, List, Image} from 'antd';
+import {useHistory} from 'react-router-dom';
 
 
 function Add_comments() {
@@ -55,22 +54,22 @@ function Add_comments() {
 
             <List size="large" dataSource={shopList} itemLayout='horizontal' split
                 // style={{ backgroundColor: '#fcfcfc' }}
-                renderItem={(item) => (
-                    <List.Item key={item.id}
-                        style={{ backgroundColor: '#fcfcfc' }}
-                        className='list-row'
-                    >
-                        <List.Item.Meta
-                            avatar={<Image src={cover} width={80} className='shop-cover' />}
-                            title={<div className='shop-name'>{item.name}</div>}
-                        />
-                    </List.Item>
-                )}
+                  renderItem={(item) => (
+                      <List.Item key={item.id}
+                                 style={{backgroundColor: '#fcfcfc'}}
+                                 className='list-row'
+                      >
+                          <List.Item.Meta
+                              avatar={<Image src={cover} width={80} className='shop-cover'/>}
+                              title={<div className='shop-name'>{item.name}</div>}
+                          />
+                      </List.Item>
+                  )}
             >
             </List>
 
 
-        </div >
+        </div>
     )
 }
 

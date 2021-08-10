@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import axios from 'axios'
 import qs from 'qs'
-import { Form, Input, Button, PageHeader, message } from 'antd';
+import {Form, Input, Button, PageHeader, message} from 'antd';
 import './style.css'
-import { useHistory } from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import url from '../../api'
 import Captcha from '../../components/captcha';
 
@@ -73,26 +73,32 @@ function Register() {
                     <Form.Item
                         label="用户名"
                         name="nickname"
-                        rules={[{ required: true, message: '请输入用户名' }]}
+                        rules={[{required: true, message: '请输入用户名'}]}
                     >
-                        <Input onChange={(e) => { setNickname(e.target.value) }} />
+                        <Input onChange={(e) => {
+                            setNickname(e.target.value)
+                        }}/>
                     </Form.Item>
 
                     <Form.Item
                         label="手机号"
                         name="mobile"
-                        rules={[{ required: true, message: '请输入手机号' }]}
+                        rules={[{required: true, message: '请输入手机号'}]}
                     >
-                        <Input onChange={(e) => { setMobile(e.target.value) }} />
+                        <Input onChange={(e) => {
+                            setMobile(e.target.value)
+                        }}/>
                     </Form.Item>
 
                     <Form.Item
                         label="验证码"
                         name="smsCode"
-                        rules={[{ required: true, message: '请输入验证码' }]}
+                        rules={[{required: true, message: '请输入验证码'}]}
                     >
                         <div>
-                            <Input style={{ width: 100 }} onChange={(e) => { setSmsCode(e.target.value) }} />
+                            <Input style={{width: 100}} onChange={(e) => {
+                                setSmsCode(e.target.value)
+                            }}/>
                             <Captcha value={mobile}></Captcha>
                         </div>
                     </Form.Item>
@@ -100,9 +106,9 @@ function Register() {
                     <Form.Item
                         label="密码"
                         name="password"
-                        rules={[{ required: true, message: '请输入密码' }]}
+                        rules={[{required: true, message: '请输入密码'}]}
                     >
-                        <Input.Password />
+                        <Input.Password/>
                     </Form.Item>
 
                     <Form.Item
@@ -110,22 +116,24 @@ function Register() {
                         name="confirm-password"
                         dependencies={['password']}
                         hasFeedback
-                        rules={[{ required: true, message: '请再次输入密码' },
-                        ({ getFieldValue }) => ({
-                            validator(_, value) {
-                                if (!value || getFieldValue('password') === value) {
-                                    return Promise.resolve();
-                                }
-                                return Promise.reject(new Error('输入密码不一致'));
-                            },
-                        }),
+                        rules={[{required: true, message: '请再次输入密码'},
+                            ({getFieldValue}) => ({
+                                validator(_, value) {
+                                    if (!value || getFieldValue('password') === value) {
+                                        return Promise.resolve();
+                                    }
+                                    return Promise.reject(new Error('输入密码不一致'));
+                                },
+                            }),
                         ]}
                     >
-                        <Input.Password onChange={(e) => { setPassword(e.target.value) }} />
+                        <Input.Password onChange={(e) => {
+                            setPassword(e.target.value)
+                        }}/>
                     </Form.Item>
 
                     <Form.Item>
-                        <Button className="submit-btn" type="primary" htmlType="submit" onClick={handleSubmit} >
+                        <Button className="submit-btn" type="primary" htmlType="submit" onClick={handleSubmit}>
                             提交
                         </Button>
                     </Form.Item>

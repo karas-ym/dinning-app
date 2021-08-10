@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import './App.css';
-import { HashRouter, Switch, Route, Link } from "react-router-dom"
+import {HashRouter, Switch, Route, Link} from "react-router-dom"
 import Home from './pages/home'
 import Product from './pages/product'
 import Order from './pages/order'
@@ -18,49 +18,49 @@ export const OrderContext = React.createContext()
 
 function App() {
 
-  let [date, setDate] = useState(null)
-  let [time, setTime] = useState(null)
-  let [weekday, setWeekday] = useState(null)
-  let [orderDetail, setOrderDetail] = useState({})
-  let [shop, setShop] = useState(null)
+    let [date, setDate] = useState(null)
+    let [time, setTime] = useState(null)
+    let [weekday, setWeekday] = useState(null)
+    let [orderDetail, setOrderDetail] = useState({})
+    let [shop, setShop] = useState(null)
 
-  return (
-    <OrderContext.Provider value={{ orderDetail, setOrderDetail }}>
-      <TimeContext.Provider value={{ date, setDate, time, setTime, weekday, setWeekday, shop, setShop }}>
-        <HashRouter>
-          <div className="App">
-            <Switch>
-              <Route exact path="/" component={Home}></Route>
+    return (
+        <OrderContext.Provider value={{orderDetail, setOrderDetail}}>
+            <TimeContext.Provider value={{date, setDate, time, setTime, weekday, setWeekday, shop, setShop}}>
+                <HashRouter>
+                    <div className="App">
+                        <Switch>
+                            <Route exact path="/" component={Home}/>
 
-              <Route path="/product" component={Product}></Route>
+                            <Route path="/product" component={Product}/>
 
-              <Route exact path="/payment/:orderId" component={Payment}></Route>
-              <Route path="/postpay" component={Postpay}></Route>
+                            <Route exact path="/payment/:orderId" component={Payment}/>
+                            <Route path="/postpay" component={Postpay}/>
 
-              <Route exact path="/order" component={Order}></Route>
-              <Route path="/order/:id" component={OrderItem}></Route>
+                            <Route exact path="/order" component={Order}/>
+                            <Route path="/order/:id" component={OrderItem}/>
 
-              <Route path="/login" component={Login}></Route>
+                            <Route path="/login" component={Login}/>
 
-              <Route path="/register" component={Register}></Route>
+                            <Route path="/register" component={Register}/>
 
-              <Route path="/profile" component={Profile}></Route>
+                            <Route path="/profile" component={Profile}/>
 
-              <Route path="/shops" component={ShopList}></Route>
+                            <Route path="/shops" component={ShopList}/>
 
-            </Switch>
+                        </Switch>
 
-            <div className="footer">
-              <Link to={'/'}>首页</Link>
-              <Link to={'/order'}>订单</Link>
-              <Link to={'/profile'}>我的</Link>
-            </div>
+                        <div className="footer">
+                            <Link to={'/'}>首页</Link>
+                            <Link to={'/order'}>订单</Link>
+                            <Link to={'/profile'}>我的</Link>
+                        </div>
 
-          </div>
-        </HashRouter>
-      </TimeContext.Provider>
-    </OrderContext.Provider>
-  )
+                    </div>
+                </HashRouter>
+            </TimeContext.Provider>
+        </OrderContext.Provider>
+    )
 }
 
 export default App

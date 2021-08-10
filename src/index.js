@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import { render } from "react-dom";
-import { message } from 'antd'
+import {render} from "react-dom";
+import {message} from 'antd'
 import './index.css';
 import App from './App';
 
@@ -10,9 +10,8 @@ import App from './App';
 axios.interceptors.response.use(function (response) {
     //对响应数据做点什么
     if (response.data.code === "INVALID_TOKEN") {
-        message.info(response.data.message);
-        window.localStorage.setItem('token', '')
-        
+        message.error(response.data.message);
+        window.location.href = '/#/login'
     }
     return response;
 }, function (error) {
@@ -20,4 +19,4 @@ axios.interceptors.response.use(function (response) {
     return Promise.reject(error);
 });
 
-render(<App />, document.getElementById("root"))
+render(<App/>, document.getElementById("root"))

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios'
-import { Drawer, Tag, Button } from 'antd'
+import {Drawer, Tag, Button} from 'antd'
 
 import url from '../../../api'
 
-const { CheckableTag } = Tag
+const {CheckableTag} = Tag
 
 function TagBar(props) {
 

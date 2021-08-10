@@ -1,21 +1,22 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom'
-import { Layout, PageHeader, Button, DatePicker, Radio, Space, message, Select } from 'antd'
+import {useHistory} from 'react-router-dom'
+import {Layout, PageHeader, Button, DatePicker, Radio, Space, message, Select} from 'antd'
 import moment from 'moment';
 import './style.css'
-import { TimeContext } from '../../App';
+import {TimeContext} from '../../App';
 import url from '../../api'
 
-const { Header, Content } = Layout
-const { Option } = Select;
+const {Header, Content} = Layout
+const {Option} = Select;
 
 function Home() {
 
     let history = useHistory()
 
     let [date, setDate] = useState(null)    // 
-    let [time, setTime] = useState(null)    // 时段 1 2 4, 
+    let [time, setTime] = useState(null)    // 时段 1 2 4,
+    let [selectShop, setSelectShop] = useState() //
 
     let value = useContext(TimeContext)
 
@@ -54,8 +55,6 @@ function Home() {
 
     // 可选日期范围
     function disabledDate(current) {
-        // Can not select days before today and today
-        // return current || current < moment().endOf('day');
         return current > moment().add(2, "day") || current < moment().startOf('day');
     }
 
@@ -101,26 +100,33 @@ function Home() {
             url: url + '/api/shop/list',
             params: {
                 hospitalId: 1
+
             }
         }).then((res) => {
-            console.log('shop:', res.data)
-            if (res.data.code !== 'SUCCESS') {
-                console.log(res.data.message)
+            if (res.data.code === 'ERROR') {
+                message.error(res.data.message)
             } else {
-                console.log(res.data.code)
                 setShopList(res.data.data)
+                setSelectShop(res.data.data[0].name);
+                setShopId(res.data.data[0].id)
             }
-        }).catch((error) => {
-            console.log(error)
         })
+            .catch((error) => {
+                message.error(error.toString())
+            })
     }
 
+
+    const [shopId, setShopId] = useState()
     const handleShop = (e) => {
-        value.setShop(e)
+        setShopId(e)
     }
+
+    const dateFormat = 'YYYY-MM-DD';
 
     useEffect(() => {
         getShop()
+        setDate(moment(new Date().toLocaleDateString()).format('YYYY-MM-DD'))
     }, [])
 
     return (
@@ -129,14 +135,14 @@ function Home() {
             <Header className="header">
                 <PageHeader
                     className=""
-                    title="订餐首页"
-                />
+                    title="订餐首页"/>
             </Header>
 
             <Content>
                 <Space direction="vertical" align="center" size={30}>
 
-                    <Select placeholder="选择店铺" style={{ width: 120 }} onChange={handleShop}>
+                    <Select placeholder="选择店铺" defaultValue={selectShop} key={selectShop} style={{width: 120}}
+                            onChange={handleShop}>
                         {
                             shopList.map((item) => {
                                 return (
@@ -153,15 +159,14 @@ function Home() {
                         disabledDate={disabledDate}
                         locale='ch'
                         onChange={onChangeDate}
-                        allowClear="true"
-                    />
+                        defaultValue={moment(new Date().toLocaleDateString(), dateFormat)} format={dateFormat}
+                        allowClear/>
 
                     <Radio.Group buttonStyle="solid"
-                        onChange={(e) => {
-                            setTime(e.target.value)
-                            value.setTime(e.target.value)
-                        }}
-                    >
+                                 onChange={(e) => {
+                                     setTime(e.target.value)
+                                     value.setTime(e.target.value)
+                                 }}>
                         <Radio.Button value="早餐" disabled={orderBr()}>早餐</Radio.Button>
                         <Radio.Button value="午餐" disabled={orderLu()}>午餐</Radio.Button>
                         <Radio.Button value="晚餐" disabled={orderDi()}>晚餐</Radio.Button>
@@ -171,9 +176,9 @@ function Home() {
                     <div>预定时段: {time}</div>
 
                     <Button type="primary" onClick={() => {
-                        if (date !== null && time !== null && value.shop !== null) {
-                            history.push('/product')
-                        } else if (value.shop === null) {
+                        if (date !== null && time !== null && shopId !== null) {
+                            history.push('/product?id=' + shopId + '&slot=' + time + '&time=' + date)
+                        } else if (shopId === null) {
                             message.info('请选择店铺')
                         } else {
                             message.info('请选择订餐时间')
@@ -182,7 +187,7 @@ function Home() {
                 </Space>
             </Content>
 
-        </Layout >
+        </Layout>
     )
 }
 

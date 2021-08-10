@@ -1,6 +1,6 @@
 @import '~antd/dist/antd.css';
 
-.Product .header{
+.Product .header {
     position: fixed;
     top: 0;
     background-color: #f3f4f5;
@@ -8,109 +8,113 @@
     z-index: 2;
 }
 
-.Product .main{
+.Product .main {
     margin: 60px 0;
 }
 
-.Product .main .tags-wrap{
+.Product .main .tags-wrap {
     width: 100%;
     background-color: #f3f4f5;
-    line-height:50px;
+    line-height: 50px;
     height: 50px;
     position: fixed;
     z-index: 2;
 }
 
-.Product .main .tags-checkbox{
+.Product .main .tags-checkbox {
     background-color: #fff;
     padding: 2px 12px;
     border-radius: 4px;
 }
 
-.Product .main .card-container{
+.Product .main .card-container {
     padding-top: 50px;
 }
 
-.Product .ant-list-lg .ant-list-item{
+.Product .ant-list-lg .ant-list-item {
     padding: 16px 10px;
 }
 
-.Product .count .ant-badge-count{
+.Product .count .ant-badge-count {
     color: #666;
     background-color: #fff;
 }
 
-.Product .cart{
+.Product .cart {
     position: fixed;
     top: 85%;
     right: 20px;
 }
 
-.Product .ant-list-item-action>li{
+.Product .ant-list-item-action > li {
     width: 100px;
 }
 
-.Product .ant-tabs-nav{
+.Product .ant-tabs-nav {
     position: fixed;
 
 }
 
-.Product .card-container .ant-tabs-content-holder{
+.Product .card-container .ant-tabs-content-holder {
     padding-left: 90px;
 }
 
-.Product .ant-image-img{
+.Product .ant-image-img {
     height: 50px;
 }
 
-.Product .ant-col{
+.Product .ant-col {
     display: inline-block;
 }
 
-.Product .tags{
+.Product .tags {
     display: block;
     width: 100%;
     margin-top: 10px;
 }
 
-.Product .add-icon{
+.Product .add-icon {
     position: absolute;
     top: 40px;
     left: 50px;
 }
 
-.Product .add-icon-adjust{
+.Product .add-icon-adjust {
     position: absolute;
     top: 20px;
     left: 50px;
 }
 
-.Product .update-qty{
+.Product .update-qty {
     left: 24px;
 }
 
 .card-container > .ant-tabs-card .ant-tabs-content > .ant-tabs-tabpane {
     background: #fff;
 }
+
 .card-container > .ant-tabs-card > .ant-tabs-nav::before {
     display: none;
 }
+
 .card-container > .ant-tabs-card .ant-tabs-tab,
 [data-theme='compact'] .card-container > .ant-tabs-card .ant-tabs-tab {
     background: transparent;
     border-color: transparent;
 }
+
 .card-container > .ant-tabs-card .ant-tabs-tab-active,
 [data-theme='compact'] .card-container > .ant-tabs-card .ant-tabs-tab-active {
     background: #fff;
     border-color: #fff;
 }
+
 #components-tabs-demo-card-top .code-box-demo {
     padding: 24px;
     overflow: hidden;
     background: #f5f5f5;
 }
 
-.card-container > .ant-tabs-card .ant-tabs-content > .ant-tabs-tabpane{
+.card-container > .ant-tabs-card .ant-tabs-content > .ant-tabs-tabpane {
     padding: 0;
 }
