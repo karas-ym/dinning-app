@@ -24,7 +24,6 @@ function Cart(props) {
     let orderContext = useContext(OrderContext)
 
 
-
     const getSlot = (time) => {
         switch (time) {
             case '早餐':
@@ -100,8 +99,11 @@ function Cart(props) {
     let [productList, setProductList] = useState([])
     const selectProduct = (id, checked) => {
         const idList = checked ? [...productList, id] : productList.filter(i => i !== id);
+        console.log('pid: ', idList);
         setProductList(idList);
     }
+
+    const [disabled, setDisabled] = useState(true)
 
     // 选中商品控制
     let [checkedList, setCheckedList] = useState([]);
@@ -109,7 +111,14 @@ function Cart(props) {
     let [checkAll, setCheckAll] = useState(false);
 
     const onChange = (value, id) => {
+
         const list = value ? [...checkedList, id] : checkedList.filter(i => i !== id);
+
+        if (list.length > 0) {
+            setDisabled(false)
+        } else {
+            setDisabled(true)
+        }
 
         setCheckedList(list);
         setIndeterminate(!!list.length && list.length < listCart.length);
@@ -132,6 +141,7 @@ function Cart(props) {
 
         setPriceSum(e.target.checked ? total : 0)
 
+        console.log(checkedList)
     };
 
     // 计算总价
@@ -229,6 +239,7 @@ function Cart(props) {
                                               selectProduct(item.cart.id, e.target.checked)
                                               handleCheck(item.productDetail.product.price, item.cart.qty, e.target.checked)
                                               onChange(e.target.checked, item.cart.id)
+
                                           }}>
                                       </Checkbox>
                                   }
@@ -236,10 +247,10 @@ function Cart(props) {
                                   description={<span> ￥{item.productDetail.product.price}</span>}/>
                           </List.Item>
                       )}>
-                    <List.Item>合计: {priceSum}</List.Item>
+                    <List.Item>合计: {priceSum} ￥</List.Item>
                 </List>
 
-                <Button onClick={checkout}>去结算</Button>
+                <Button onClick={checkout} disabled={disabled}>去结算</Button>
             </Drawer>
         </div>
     )

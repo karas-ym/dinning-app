@@ -125,7 +125,7 @@ function Captcha(props) {
                     <Space size={20}>
                         <Input style={{width: '80px'}} size='large' onChange={(e) => {
                             setCode(e.target.value)
-                        }}></Input>
+                        }}/>
                         <Button type='primary' onClick={submit}>验证</Button>
                     </Space>
                 </Space>

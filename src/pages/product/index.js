@@ -76,6 +76,13 @@ function Product(props) {
             })
         getCategories()
         getTags()
+        for (let i = 0; i < listData.length; i++) {
+            for (let j = 0; j < cartqty.length; j++) {
+                if (cartqty[j].cart.productId === listData[i].id) {
+                    listData[i].count = cartqty[j].cart.qty
+                }
+            }
+        }
     }
 
     // 加入购物车
@@ -150,7 +157,6 @@ function Product(props) {
             headers: {token},
         })
             .then((res) => {
-                console.log('购物车', res.data.data)
                 setCartqty(res.data.data)
             })
             .catch((error) => {
@@ -158,13 +164,7 @@ function Product(props) {
             })
     }
 
-    for (let i = 0; i < listData.length; i++) {
-        for (let j = 0; j < cartqty.length; j++) {
-            if (cartqty[j].cart.productId === listData[i].id) {
-                listData[i].count = cartqty[j].cart.qty
-            }
-        }
-    }
+
 
 
     // 选择标签
@@ -208,17 +208,15 @@ function Product(props) {
                                                          <MinusCircleTwoTone style={{fontSize: '16px'}}
                                                                              onClick={() => {
                                                                                  for (let i = 0; i < listData.length; i++) {
-                                                                                     if (listData[i].count <= 0) {
-                                                                                         return;
-                                                                                     } else {
-                                                                                         if (item.id === listData[i].id) {
-                                                                                             listData[i].count = (listData[i].count || 0) - 1
-                                                                                             addCart(item.id, id, listData[i].count)
+                                                                                     if (item.id === listData[i].id) {
+                                                                                         if (item.count < 1) {
+                                                                                             return;
                                                                                          }
+                                                                                         listData[i].count = (listData[i].count || 1) - 1
+                                                                                         addCart(item.id, id, listData[i].count)
                                                                                      }
                                                                                  }
                                                                                  setListData([...listData])
-                                                                                 console.log('-商品', item.count)
 
                                                                              }}/>
                                                          <InputNumber value={item.count || 0}
