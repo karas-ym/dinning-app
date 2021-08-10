@@ -93,7 +93,6 @@ function Home() {
 
     // 获取商店列表
     let [shopList, setShopList] = useState([])
-
     const getShop = () => {
         axios({
             method: "get",
@@ -102,15 +101,16 @@ function Home() {
                 hospitalId: 1
 
             }
-        }).then((res) => {
-            if (res.data.code === 'ERROR') {
-                message.error(res.data.message)
-            } else {
-                setShopList(res.data.data)
-                setSelectShop(res.data.data[0].name);
-                setShopId(res.data.data[0].id)
-            }
         })
+            .then((res) => {
+                if (res.data.code === 'ERROR') {
+                    message.error(res.data.message)
+                } else if (res.data.code === 'SUCCESS') {
+                    setShopList(res.data.data)
+                    setSelectShop(res.data.data[0].name);
+                    setShopId(res.data.data[0].id)
+                }
+            })
             .catch((error) => {
                 message.error(error.toString())
             })

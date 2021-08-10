@@ -33,7 +33,7 @@ function Profile() {
             console.log('profile:', res.data) // 测试
             if (res.data.code !== 'SUCCESS') {
                 message.info(res.data.message)
-            } else {
+            } else if (res.data.code === 'SUCCESS') {
                 message.success('登录成功')
                 window.localStorage.setItem('id', res.data.data.id)
                 setUser(res.data.data)
@@ -44,7 +44,7 @@ function Profile() {
     }
 
     useEffect(() => {
-        if (token !== '') {
+        if (token !== null) {
             getProfile()
         }
     }, [])
@@ -61,9 +61,9 @@ function Profile() {
             data: formData
         }).then((res) => {
             console.log(res.data)
-            if (res.data.code !== 'SUCCESS') {
-                message.info(res.data.message)
-            } else {
+            if (res.data.code === 'ERROR') {
+                message.error(res.data.message)
+            } else if (res.data.code === 'SUCCESS') {
                 message.success('上传成功')
                 getProfile()
             }
@@ -87,11 +87,10 @@ function Profile() {
             data: qs.stringify(data),
         }).then((res) => {
             console.log(res.data)
-            if (res.data.code !== 'SUCCESS') {
-                message.info(res.data.message)
-            } else {
-                message.success('更新成功')
+            if (res.data.code === 'SUCCESS') {
                 getProfile()
+            } else if (res.data.code === 'ERROR') {
+                message.error(res.data.message)
             }
         }).catch((error) => {
             message.error(String(error))
@@ -226,7 +225,7 @@ function Profile() {
                 </Collapse>
 
                 {
-                    token === '' ?
+                    token === null ?
                         <Button className="logout" size="large" type='primary' onClick={() => {
                             history.push('/login')
                         }}>登录</Button>

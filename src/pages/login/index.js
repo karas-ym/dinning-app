@@ -31,6 +31,7 @@ function Login() {
                 history.push('/profile')
             }
         }).catch((error) => {
+
             console.log(error)
         })
 

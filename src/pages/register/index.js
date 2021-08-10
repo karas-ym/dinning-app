@@ -21,9 +21,6 @@ function Register() {
         message.success('Success:', values);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        message.error('Failed:', errorInfo);
-    };
 
     // 提交注册
     const handleSubmit = () => {
@@ -39,18 +36,20 @@ function Register() {
             method: "post",
             url: url + '/api/user/create',
             data: qs.stringify(data)
-        }).then((res) => {
-            console.log(res.data)
-            if (res.data.code !== 'SUCCESS') {
-                onFinishFailed(res.data.message)
-            } else {
-                window.localStorage.setItem('token', res.data.data.token)
-                onFinish(res.data.message)
-                history.push('/profile')
-            }
-        }).catch((error) => {
-            console.log(error)
         })
+            .then((res) => {
+                console.log(res.data)
+                if (res.data.code === 'ERROR') {
+                    message.error(res.data.message)
+                } else if (res.data.code === 'SUCCESS') {
+                    window.localStorage.setItem('token', res.data.data.token)
+                    onFinish(res.data.message)
+                    history.push('/profile')
+                }
+            })
+            .catch((error) => {
+                message.error(error.toString())
+            })
 
     }
 
@@ -66,15 +65,11 @@ function Register() {
             <div className="card-container">
                 <Form
                     name="register"
-                    onFinish={onFinish}
-                    onFinishFailed={onFinishFailed}
-                >
-
+                    onFinish={onFinish}>
                     <Form.Item
                         label="用户名"
                         name="nickname"
-                        rules={[{required: true, message: '请输入用户名'}]}
-                    >
+                        rules={[{required: true, message: '请输入用户名'}]}>
                         <Input onChange={(e) => {
                             setNickname(e.target.value)
                         }}/>
@@ -83,8 +78,7 @@ function Register() {
                     <Form.Item
                         label="手机号"
                         name="mobile"
-                        rules={[{required: true, message: '请输入手机号'}]}
-                    >
+                        rules={[{required: true, message: '请输入手机号'}]}>
                         <Input onChange={(e) => {
                             setMobile(e.target.value)
                         }}/>
@@ -93,8 +87,7 @@ function Register() {
                     <Form.Item
                         label="验证码"
                         name="smsCode"
-                        rules={[{required: true, message: '请输入验证码'}]}
-                    >
+                        rules={[{required: true, message: '请输入验证码'}]}>
                         <div>
                             <Input style={{width: 100}} onChange={(e) => {
                                 setSmsCode(e.target.value)
@@ -106,7 +99,12 @@ function Register() {
                     <Form.Item
                         label="密码"
                         name="password"
-                        rules={[{required: true, message: '请输入密码'}]}
+                        rules={[
+                            {required: true, message: '请输入密码'},
+                            {
+                                pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z\\W]{6,18}$/,
+                                message: '请输入6-20位（包含字母数字）!',
+                            },]}
                     >
                         <Input.Password/>
                     </Form.Item>
@@ -117,6 +115,10 @@ function Register() {
                         dependencies={['password']}
                         hasFeedback
                         rules={[{required: true, message: '请再次输入密码'},
+                            {
+                                pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z\\W]{6,18}$/,
+                                message: '请输入6-20位（包含字母数字）!',
+                            },
                             ({getFieldValue}) => ({
                                 validator(_, value) {
                                     if (!value || getFieldValue('password') === value) {

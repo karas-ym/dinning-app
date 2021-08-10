@@ -64,7 +64,8 @@ function Product(props) {
         })
             .then((res) => {
                 console.log(res)
-                if (res.data.code !== 'SUCCESS') {
+                if (res.data.code === 'ERROR') {
+                    message.error(res.data.data.message)
 
                 } else {
                     setListData(res.data.data.productDtos)
@@ -94,7 +95,7 @@ function Product(props) {
         }).then((res) => {
             if (res.data.code === 'ERROR') {
                 message.info(res.data.message)
-            } else {
+            } else if (res.data.code === 'SUCCESS') {
                 setRender(!render)
                 // setCount(count + 1)
                 cartList()
@@ -112,14 +113,17 @@ function Product(props) {
             params: {
                 shopId: id
             }
-        }).then((res) => {
-            if (res.data.code !== 'SUCCESS') {
-            } else {
-                setCategories(res.data.data)
-            }
-        }).catch((error) => {
-            message.error(error.toString())
         })
+            .then((res) => {
+                if (res.data.code === 'ERROR') {
+                    message.error(res.data.message)
+                } else if (res.data.code === 'SUCCESS') {
+                    setCategories(res.data.data)
+                }
+            })
+            .catch((error) => {
+                message.error(error.toString())
+            })
     }
 
     // 获取标签
@@ -128,9 +132,9 @@ function Product(props) {
             method: "get",
             url: url + '/api/tag/list',
         }).then((res) => {
-            if (res.data.code !== 'SUCCESS') {
-
-            } else {
+            if (res.data.code === 'ERROR') {
+                message.error(res.data.message);
+            } else if (res.data.code === 'SUCCESS') {
                 setTags(res.data.data)
             }
         }).catch((error) => {
@@ -157,7 +161,7 @@ function Product(props) {
     for (let i = 0; i < listData.length; i++) {
         for (let j = 0; j < cartqty.length; j++) {
             if (cartqty[j].cart.productId === listData[i].id) {
-                listData[i].count=cartqty[j].cart.qty
+                listData[i].count = cartqty[j].cart.qty
             }
         }
     }
@@ -173,8 +177,10 @@ function Product(props) {
 
     useEffect(() => {
         getProduct()
-        cartList()
-    }, [])
+        if (window.localStorage.getItem('token') !== null) {
+            cartList()
+        }
+    }, [categoryId])
 
 
     // 商品列表
@@ -189,7 +195,7 @@ function Product(props) {
                                      actions={[
                                          <div>
                                              {
-                                                 token === '' ?
+                                                 token === null ?
                                                      <PlusCircleFilled
                                                          className={item.tags !== null ? 'add-icon' : 'add-icon-adjust'}
                                                          style={{color: '#1890ff', fontSize: '18px'}}
@@ -318,6 +324,7 @@ function Product(props) {
                           tabPosition='left'
                           defaultActiveKey={0}
                           onChange={(activeKey) => {
+                              console.log(activeKey)
                               setCategoryId(activeKey)
                           }}
                           tabBarStyle={{width: '90px'}}>
@@ -336,7 +343,7 @@ function Product(props) {
                             })
                         }
                     </Tabs>
-                    {token !== '' ?
+                    {token !== null ?
                         <Cart value={value.shop} render={render}/>
                         :
                         <Badge className="cart">

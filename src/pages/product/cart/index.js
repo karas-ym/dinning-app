@@ -6,7 +6,6 @@ import {List, InputNumber, Button, Drawer, Badge, Checkbox, Space, Divider, mess
 import {ShoppingCartOutlined, MinusCircleTwoTone, PlusCircleTwoTone} from '@ant-design/icons';
 import './style.css'
 
-import {TimeContext} from '../../../App';
 import {OrderContext} from '../../../App'
 
 import url from '../../../api'
@@ -21,8 +20,13 @@ function Cart(props) {
     let history = useHistory()
 
     // 获取订餐的日期和时段
-    let value = useContext(TimeContext)
     let orderContext = useContext(OrderContext)
+
+
+    const searchParams = new URLSearchParams(props.location.search.substring(1))
+    let id = searchParams.get("id")
+    let slot = searchParams.get("slot")
+    let data = searchParams.get("time")
 
 
     const getSlot = (time) => {
@@ -37,7 +41,6 @@ function Cart(props) {
         }
     }
 
-    let slot = getSlot(value.time)
 
     // 购物车是否可见
     let [visible, setVisible] = useState(false);
@@ -87,13 +90,12 @@ function Cart(props) {
             data: qs.stringify(data)
         }).then((res) => {
             console.log('addCart:', res.data)
-            if (res.data.code !== 'SUCCESS') {
-                console.log(res.data.message)
+            if (res.data.code === 'ERROR') {
+                message.error(res.data.message)
             } else {
                 setRender(!render)
             }
         }).catch((error) => {
-            console.log(error)
             message.error(error.toString())
         })
     }
@@ -155,31 +157,30 @@ function Cart(props) {
 
         let data = {
             cartIdArr: checkedList.join(','),
-            day: value.date,
-            slot: slot,
+            day: data,
+            slot: getSlot(slot),
             locationId: 1,
-            userId: userId,
-            shopId: props.value
+            shopId: id
         }
-
-        console.log('check-data:', data)
 
         axios({
             method: "post",
             url: url + '/api/order/create',
             headers: {token},
             data: qs.stringify(data)
-        }).then((res) => {
-            console.log('check:', res.data)
-            if (res.data.code !== 'SUCCESS') {
-                console.log(res.data.message)
-            } else {
-                orderContext.setOrderDetail(res.data.data[0])
-                history.push("/payment/" + res.data.data[0].id)
-            }
-        }).catch((error) => {
-            message.error(error.toString())
         })
+            .then((res) => {
+                console.log('check:', res.data)
+                if (res.data.code === 'ERROR') {
+                    message.error(res.data.message)
+                } else if (res.data.code === 'SUCCESS') {
+                    orderContext.setOrderDetail(res.data.data[0])
+                    history.push("/payment/" + res.data.data[0].id)
+                }
+            })
+            .catch((error) => {
+                message.error(error.toString())
+            })
 
     }
 

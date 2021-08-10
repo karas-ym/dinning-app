@@ -16,7 +16,7 @@ function Order() {
     const [listData, setListData] = useState([])
 
     useEffect(() => {
-        if (token !== '') {
+        if (token !== null) {
             getOrderList()
         }
     }, [])
@@ -73,7 +73,7 @@ function Order() {
             />
 
             {
-                token === null || token === '' ?
+                token === null ?
                     <>
                         {/* <PageHeader
                             className="header"
