@@ -58,7 +58,7 @@ function Captcha(props) {
         }).then((res) => {
             console.log(res.data)
             if (res.data.code === 'ERROR') {
-                message.info(res.data.message)
+                message.error(res.data.message)
             } else if (res.data.code === 'SMS_EXCEPTION') {
                 showModal()
                 handleCaptcha()

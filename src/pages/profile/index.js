@@ -11,7 +11,7 @@ import Captcha from '../../components/captcha';
 
 const {Panel} = Collapse;
 
-function Profile() {
+function Profile(props) {
 
     let token = window.localStorage.getItem('token')
 
@@ -110,7 +110,8 @@ function Profile() {
 
     const handleLogout = () => {
         window.localStorage.removeItem('token')
-        history.push('/profile')
+        props.history.push('/#/profile')
+        setVisible(false);
     }
 
     return (
@@ -240,7 +241,6 @@ function Profile() {
                     closable={false}
                     height={150}
                     className='drawer'>
-
                     <Space direction='vertical' align='center' style={{width: '100%'}} size={20}>
                         <Button size="large" type='link' onClick={handleLogout}>退出登录</Button>
                         <Button size="large" type='link' onClick={onClose}>取消</Button>

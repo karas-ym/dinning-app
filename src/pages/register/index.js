@@ -59,8 +59,7 @@ function Register() {
                 onBack={() => {
                     history.push('/profile')
                 }}
-                title="用户注册"
-            />
+                title="用户注册"/>
 
             <div className="card-container">
                 <Form
@@ -70,7 +69,7 @@ function Register() {
                         label="用户名"
                         name="nickname"
                         rules={[{required: true, message: '请输入用户名'}]}>
-                        <Input onChange={(e) => {
+                        <Input allowClear onChange={(e) => {
                             setNickname(e.target.value)
                         }}/>
                     </Form.Item>
@@ -78,8 +77,12 @@ function Register() {
                     <Form.Item
                         label="手机号"
                         name="mobile"
-                        rules={[{required: true, message: '请输入手机号'}]}>
-                        <Input onChange={(e) => {
+                        rules={[{required: true, message: '请输入手机号'},
+                            {
+                                pattern: /^[1][0-9]{10}$/,
+                                message: '请输入正确手机号!',
+                            },]}>
+                        <Input allowClear onChange={(e) => {
                             setMobile(e.target.value)
                         }}/>
                     </Form.Item>
@@ -89,7 +92,7 @@ function Register() {
                         name="smsCode"
                         rules={[{required: true, message: '请输入验证码'}]}>
                         <div>
-                            <Input style={{width: 100}} onChange={(e) => {
+                            <Input allowClear style={{width: 100}} onChange={(e) => {
                                 setSmsCode(e.target.value)
                             }}/>
                             <Captcha value={mobile}></Captcha>
@@ -106,7 +109,7 @@ function Register() {
                                 message: '请输入6-20位（包含字母数字）!',
                             },]}
                     >
-                        <Input.Password/>
+                        <Input.Password allowClear/>
                     </Form.Item>
 
                     <Form.Item
@@ -129,7 +132,7 @@ function Register() {
                             }),
                         ]}
                     >
-                        <Input.Password onChange={(e) => {
+                        <Input.Password allowClear onChange={(e) => {
                             setPassword(e.target.value)
                         }}/>
                     </Form.Item>
