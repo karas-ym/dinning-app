@@ -38,7 +38,7 @@ function Payment() {
                 setLocation(res.data.data[0].location)
             }
         }).catch((error) => {
-            console.log(error)
+            message.error(error.toString())
         })
     }, [id, token]);
 
