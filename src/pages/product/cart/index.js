@@ -99,7 +99,6 @@ function Cart(props) {
     let [productList, setProductList] = useState([])
     const selectProduct = (id, checked) => {
         const idList = checked ? [...productList, id] : productList.filter(i => i !== id);
-        console.log('pid: ', idList);
         setProductList(idList);
     }
 
@@ -153,7 +152,6 @@ function Cart(props) {
             sum = parseFloat((sum + (qty * price)).toFixed(10))
             :
             sum = parseFloat((sum - (qty * price)).toFixed(10));
-        console.log('total: ', sum);
         setPriceSum(sum);
     }
 

@@ -67,7 +67,9 @@ function Product(props) {
                     message.error(res.data.data.message)
 
                 } else {
-                    setListData(res.data.data.productDtos)
+                    if (window.localStorage.getItem('token') !== null) {
+                        cartList(res.data.data.productDtos)
+                    }
                 }
             })
             .catch((error) => {
@@ -97,7 +99,7 @@ function Product(props) {
             } else if (res.data.code === 'SUCCESS') {
                 setRender(!render)
                 // setCount(count + 1)
-                cartList()
+                cartList(listData)
             }
         }).catch((error) => {
             message.error(error.toString())
@@ -142,26 +144,28 @@ function Product(props) {
     }
 
     //获取购物车列表
-    function cartList() {
+    function cartList(listData) {
         axios({
             method: "get",
             url: url + '/api/cart/list',
             headers: {token},
         })
             .then((res) => {
-                setCartqty(res.data.data)
+                cartqty = res.data.data
+                setCartqty(cartqty)
+                for (let i = 0; i < listData.length; i++) {
+                    listData[i].count = 0
+                    for (let j = 0; j < cartqty.length; j++) {
+                        if (cartqty[j].cart.productId === listData[i].id) {
+                            listData[i].count = cartqty[j].cart.qty
+                        }
+                    }
+                }
+                setListData([...listData])
             })
             .catch((error) => {
                 message.error(error.toString())
             })
-    }
-
-    for (let i = 0; i < listData.length; i++) {
-        for (let j = 0; j < cartqty.length; j++) {
-            if (cartqty[j].cart.productId === listData[i].id) {
-                listData[i].count = cartqty[j].cart.qty
-            }
-        }
     }
 
 
@@ -175,9 +179,7 @@ function Product(props) {
 
     useEffect(() => {
         getProduct()
-        if (window.localStorage.getItem('token') !== null) {
-            cartList()
-        }
+
     }, [categoryId])
 
 
@@ -205,20 +207,22 @@ function Product(props) {
                                                          className={item.tags !== null ? 'add-icon update-qty' : 'add-icon-adjust update-qty'}>
                                                          <MinusCircleTwoTone style={{fontSize: '16px'}}
                                                                              onClick={() => {
+                                                                                 console.log(1234)
                                                                                  for (let i = 0; i < listData.length; i++) {
                                                                                      if (item.id === listData[i].id) {
-                                                                                         listData[i].count = (listData[i].count || 1) - 1
-                                                                                         addCart(item.id, id, listData[i].count)
-                                                                                         console.log(item.count)
-                                                                                         if (listData[i].count < 0) {
-                                                                                             return;
+                                                                                         if (listData[i].count <= 0) {
+                                                                                             return
                                                                                          }
+                                                                                         listData[i].count = listData[i].count - 1
+                                                                                         addCart(item.id, id, listData[i].count)
+                                                                                         console.log(listData[i].count)
+                                                                                         break
                                                                                      }
                                                                                  }
                                                                                  setListData([...listData])
                                                                              }}/>
                                                          <InputNumber value={item.count || 0}
-                                                                      maxLength={2}
+                                                             // maxLength={2}
                                                                       style={{width: '30px'}}
                                                                       size='small'
                                                                       onChange={(value) => {
@@ -229,7 +233,8 @@ function Product(props) {
                                                                               }
                                                                           }
                                                                           setListData([...listData])
-                                                                      }}/>
+                                                                      }}
+                                                         />
                                                          <PlusCircleTwoTone style={{fontSize: '16px'}}
                                                                             onClick={() => {
                                                                                 for (let i = 0; i < listData.length; i++) {
