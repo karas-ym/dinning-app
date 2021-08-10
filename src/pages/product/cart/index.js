@@ -221,6 +221,7 @@ function Cart(props) {
                                   <Space>
                                       <MinusCircleTwoTone style={{fontSize: '16px'}}
                                                           onClick={() => {
+                                                              props.setIII(item.cart.qty)
                                                               updateCart(item.cart.productId, item.cart.id, item.cart.qty - 1, item.cart.shopId)
                                                               if (checkedList.indexOf(item.cart.id) > -1) {
                                                                   handleCheck(item.productDetail.product.price, 1, false)
@@ -229,6 +230,7 @@ function Cart(props) {
                                       <InputNumber min={0} value={item.cart.qty} style={{width: '25px'}} size='small'/>
                                       <PlusCircleTwoTone style={{fontSize: '16px'}}
                                                          onClick={() => {
+                                                             props.setIII(item.cart.qty)
                                                              updateCart(item.cart.productId, item.cart.id, item.cart.qty + 1, item.cart.shopId)
                                                              if (checkedList.indexOf(item.cart.id) > -1) {
                                                                  handleCheck(item.productDetail.product.price, 1, true)

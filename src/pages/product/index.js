@@ -27,6 +27,7 @@ function Product(props) {
     let [categories, setCategories] = useState([])
     let [tags, setTags] = useState([])
     let [selectedTags, setSelectedTags] = useState([])
+    let [num, setNum] = useState()
 
 
     const getSlot = (slot) => {
@@ -186,8 +187,11 @@ function Product(props) {
 
     useEffect(() => {
         getProduct()
+    }, [categoryId, num])
 
-    }, [categoryId])
+    const iii = (i) => {
+        setNum(i)
+    }
 
 
     // 商品列表
@@ -352,7 +356,7 @@ function Product(props) {
                     </Tabs>
                     {token !== null ?
                         <Cart value={value.shop} slot={slot} shopId={id} date={date} render={render}
-                              click={() => 1111}/>
+                              setIII={iii}/>
                         :
                         <Badge className="cart">
                             <Button
