@@ -34,7 +34,6 @@ function Profile(props) {
             if (res.data.code !== 'SUCCESS') {
                 message.info(res.data.message)
             } else if (res.data.code === 'SUCCESS') {
-                message.success('登录成功')
                 window.localStorage.setItem('id', res.data.data.id)
                 setUser(res.data.data)
             }

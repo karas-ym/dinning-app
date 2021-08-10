@@ -21,19 +21,20 @@ function Login() {
                 mobile: mobile,
                 password: password,
             }
-        }).then((res) => {
-            console.log(res.data)
-            if (res.data.code !== 'SUCCESS') {
-                message.info(res.data.message)
-            } else {
-                window.localStorage.setItem('token', res.data.data.token)
-                message.success(res.data.message)
-                history.push('/profile')
-            }
-        }).catch((error) => {
-
-            console.log(error)
         })
+            .then((res) => {
+                console.log(res.data)
+                if (res.data.code === 'ERROR') {
+                    message.info(res.data.message)
+                } else if (res.data.code === 'SUCCESS') {
+                    window.localStorage.setItem('token', res.data.data.token)
+                    message.success(res.data.message)
+                    history.push('/profile')
+                }
+            })
+            .catch((error) => {
+                message.success(error.toString())
+            })
 
     }
 

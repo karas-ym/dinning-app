@@ -63,7 +63,6 @@ function Product(props) {
             }
         })
             .then((res) => {
-                console.log(res)
                 if (res.data.code === 'ERROR') {
                     message.error(res.data.data.message)
 
@@ -76,13 +75,6 @@ function Product(props) {
             })
         getCategories()
         getTags()
-        for (let i = 0; i < listData.length; i++) {
-            for (let j = 0; j < cartqty.length; j++) {
-                if (cartqty[j].cart.productId === listData[i].id) {
-                    listData[i].count = cartqty[j].cart.qty
-                }
-            }
-        }
     }
 
     // 加入购物车
@@ -164,7 +156,13 @@ function Product(props) {
             })
     }
 
-
+    for (let i = 0; i < listData.length; i++) {
+        for (let j = 0; j < cartqty.length; j++) {
+            if (cartqty[j].cart.productId === listData[i].id) {
+                listData[i].count = cartqty[j].cart.qty
+            }
+        }
+    }
 
 
     // 选择标签
@@ -209,15 +207,15 @@ function Product(props) {
                                                                              onClick={() => {
                                                                                  for (let i = 0; i < listData.length; i++) {
                                                                                      if (item.id === listData[i].id) {
-                                                                                         if (item.count < 1) {
-                                                                                             return;
-                                                                                         }
                                                                                          listData[i].count = (listData[i].count || 1) - 1
                                                                                          addCart(item.id, id, listData[i].count)
+                                                                                         console.log(item.count)
+                                                                                         if (listData[i].count < 0) {
+                                                                                             return;
+                                                                                         }
                                                                                      }
                                                                                  }
                                                                                  setListData([...listData])
-
                                                                              }}/>
                                                          <InputNumber value={item.count || 0}
                                                                       maxLength={2}

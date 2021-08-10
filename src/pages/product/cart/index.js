@@ -149,7 +149,10 @@ function Cart(props) {
     const handleCheck = (price, qty, checked) => {
         price = Number(price)
         let sum = priceSum
-        sum = checked ? sum = sum + (qty * price) : sum = sum - (qty * price);
+        sum = checked ?
+            sum = parseFloat((sum + (qty * price)).toFixed(10))
+            :
+            sum = parseFloat((sum - (qty * price)).toFixed(10));
         console.log('total: ', sum);
         setPriceSum(sum);
     }
