@@ -12,6 +12,7 @@ import url from '../../../api'
 
 function Cart(props) {
 
+
     let token = window.localStorage.getItem('token')
     let userId = Number(window.localStorage.getItem('id'))
 
@@ -22,11 +23,6 @@ function Cart(props) {
     // 获取订餐的日期和时段
     let orderContext = useContext(OrderContext)
 
-
-    const searchParams = new URLSearchParams(props.location.search.substring(1))
-    let id = searchParams.get("id")
-    let slot = searchParams.get("slot")
-    let data = searchParams.get("time")
 
 
     const getSlot = (time) => {
@@ -104,7 +100,6 @@ function Cart(props) {
     let [productList, setProductList] = useState([])
     const selectProduct = (id, checked) => {
         const idList = checked ? [...productList, id] : productList.filter(i => i !== id);
-        console.log('pid: ', idList);
         setProductList(idList);
     }
 
@@ -115,7 +110,6 @@ function Cart(props) {
 
     const onChange = (value, id) => {
         const list = value ? [...checkedList, id] : checkedList.filter(i => i !== id);
-        console.log('list:', list)
 
         setCheckedList(list);
         setIndeterminate(!!list.length && list.length < listCart.length);
@@ -138,7 +132,6 @@ function Cart(props) {
 
         setPriceSum(e.target.checked ? total : 0)
 
-        console.log(checkedList)
     };
 
     // 计算总价
@@ -157,10 +150,10 @@ function Cart(props) {
 
         let data = {
             cartIdArr: checkedList.join(','),
-            day: data,
-            slot: getSlot(slot),
+            day: props.date,
+            slot: getSlot(props.slot),
             locationId: 1,
-            shopId: id
+            shopId: props.shopId,
         }
 
         axios({

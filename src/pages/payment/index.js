@@ -33,7 +33,6 @@ function Payment() {
             if (res.data.code !== 'SUCCESS') {
                 console.log(res.data.message)
             } else {
-                console.log(res.data.code)
                 setOrderDetail(res.data.data[0])
                 setHospital(res.data.data[0].hospital)
                 setLocation(res.data.data[0].location)
@@ -43,14 +42,12 @@ function Payment() {
         })
     }, [id, token]);
 
-    console.log(orderDetail.number)
 
     const handlePayment = () => {
         const urlCallBack = url + '/postpay'
         // const urlCallBack = 'http://47.118.78.54:8001/swagger-ui/'
         const formData = new FormData();
         formData.append('url', urlCallBack)
-        console.log('formdata:', formData)
 
         axios({
             method: "post",
@@ -60,17 +57,17 @@ function Payment() {
                 number: orderDetail.number
             },
             data: formData
-        }).then((res) => {
-            console.log('payment:', res.data)
-            if (res.data.code !== 'SUCCESS') {
-                message.error(res.data.message)
-            } else {
-                console.log(res.data.code)
-                window.location.href = res.data.data.payUrl
-            }
-        }).catch((error) => {
-            console.log(error)
         })
+            .then((res) => {
+                if (res.data.code !== 'SUCCESS') {
+                    message.error(res.data.message)
+                } else {
+                    window.location.href = res.data.data.payUrl
+                }
+            })
+            .catch((error) => {
+                message.error(error.toString())
+            })
     }
 
     // 取消
@@ -84,22 +81,19 @@ function Payment() {
             <PageHeader
                 className=""
                 onBack={handleCancel}
-                title="确认订单"
-            />
+                title="确认订单"/>
 
             <List>
                 <List.Item className='content-row'>
                     <List.Item.Meta
                         title='配送地点'
                         description={hospital.name + ' ' + location.department + ' ' +
-                        location.room + '-' + location.bunk}
-                    />
+                        location.room + '-' + location.bunk}/>
                 </List.Item>
                 <List.Item className='content-row'>
                     <List.Item.Meta
                         title='配送时间'
-                        description={orderDetail.day + ' ' + orderDetail.slot}
-                    />
+                        description={orderDetail.day + ' ' + orderDetail.slot}/>
                 </List.Item>
             </List>
 
@@ -116,14 +110,12 @@ function Payment() {
                                 <div>￥{item.price}</div>
                                 <div>x {item.qty}</div>
                             </div>
-                        }
-                    >
+                        }>
                         <List.Item.Meta
                             title={<span>{item.productName}</span>}
                         />
                     </List.Item>
-                )}
-            >
+                )}>
                 <List.Item className='content-row' extra={<div>合计 ￥{orderDetail.total}</div>}></List.Item>
             </List>
 

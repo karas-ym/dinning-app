@@ -45,7 +45,7 @@ function Product(props) {
     const searchParams = new URLSearchParams(props.location.search.substring(1))
     let id = searchParams.get("id")
     let slot = searchParams.get("slot")
-    let data = searchParams.get("time")
+    let date = searchParams.get("time")
     let weekday = new Date(searchParams.get("time")).getDay()
 
 
@@ -292,7 +292,7 @@ function Product(props) {
                 title="商品列表"
                 subTitle={
                     <Space>
-                        <div> 日期:{data}</div>
+                        <div> 日期:{date}</div>
                         |
                         <div> 时段:{slot}</div>
                         |
@@ -344,7 +344,7 @@ function Product(props) {
                         }
                     </Tabs>
                     {token !== null ?
-                        <Cart value={value.shop} render={render}/>
+                        <Cart value={value.shop} slot={slot} shopId={id} date={date} render={render}/>
                         :
                         <Badge className="cart">
                             <Button
