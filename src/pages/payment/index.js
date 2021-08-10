@@ -44,8 +44,7 @@ function Payment() {
 
 
     const handlePayment = () => {
-        const urlCallBack = url + '/postpay'
-        // const urlCallBack = 'http://47.118.78.54:8001/swagger-ui/'
+        const urlCallBack = 'https://www.baidu.com/'
         const formData = new FormData();
         formData.append('url', urlCallBack)
 

@@ -176,7 +176,7 @@ function Home() {
                     <div>预定时段: {time}</div>
 
                     <Button type="primary" onClick={() => {
-                        if (date !== null && time !== null && shopId !== null) {
+                        if (date !== null && time !== null && shopId !== null && date !== '') {
                             history.push('/product?id=' + shopId + '&slot=' + time + '&time=' + date)
                         } else if (shopId === null) {
                             message.info('请选择店铺')

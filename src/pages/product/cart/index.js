@@ -126,6 +126,7 @@ function Cart(props) {
 
     const onCheckAllChange = (e) => {
         let tempList = []
+
         for (let i = 0; i < listCart.length; i++) {
             tempList = [...tempList, listCart[i].cart.id]
         }
@@ -139,8 +140,11 @@ function Cart(props) {
         }
 
         setPriceSum(e.target.checked ? total : 0)
-
-        console.log(checkedList)
+        if (e.target.checked === true) {
+            setDisabled(false)
+        } else {
+            setDisabled(true)
+        }
     };
 
     // 计算总价

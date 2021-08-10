@@ -171,10 +171,17 @@ function Product(props) {
 
     // 选择标签
     const handleTag = (tag, checked) => {
-        const nextSelectedTags = checked ? [...selectedTags, tag] : selectedTags.filter(t => t !== tag);
-        setSelectedTags(nextSelectedTags);
+        console.log(tag, checked)
+        // const nextSelectedTags = checked ? [...selectedTags, tag] : selectedTags.filter(t => t !== tag)
+        // console.log(nextSelectedTags)
+        // setSelectedTags(nextSelectedTags);
         // checked ? setTagId(tag.id) : setTagId(0)
-        checked ? getProduct(tag.id) : getProduct(0)
+        // checked ? getProduct(tag.id) : getProduct()
+        if (checked) {
+            getProduct(tag.id)
+        } else {
+            getProduct()
+        }
     }
 
     useEffect(() => {
@@ -207,7 +214,6 @@ function Product(props) {
                                                          className={item.tags !== null ? 'add-icon update-qty' : 'add-icon-adjust update-qty'}>
                                                          <MinusCircleTwoTone style={{fontSize: '16px'}}
                                                                              onClick={() => {
-                                                                                 console.log(1234)
                                                                                  for (let i = 0; i < listData.length; i++) {
                                                                                      if (item.id === listData[i].id) {
                                                                                          if (listData[i].count <= 0) {
@@ -222,7 +228,7 @@ function Product(props) {
                                                                                  setListData([...listData])
                                                                              }}/>
                                                          <InputNumber value={item.count || 0}
-                                                             // maxLength={2}
+                                                                      maxLength={2}
                                                                       style={{width: '30px'}}
                                                                       size='small'
                                                                       onChange={(value) => {
@@ -345,7 +351,8 @@ function Product(props) {
                         }
                     </Tabs>
                     {token !== null ?
-                        <Cart value={value.shop} slot={slot} shopId={id} date={date} render={render}/>
+                        <Cart value={value.shop} slot={slot} shopId={id} date={date} render={render}
+                              click={() => 1111}/>
                         :
                         <Badge className="cart">
                             <Button
