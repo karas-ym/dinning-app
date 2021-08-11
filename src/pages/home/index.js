@@ -10,7 +10,11 @@ import url from '../../api'
 const {Header, Content} = Layout
 const {Option} = Select;
 
-function Home() {
+function Home(props) {
+
+    //获取送餐地址
+    const searchParams = new URLSearchParams(props.location.search.substring(1))
+    window.localStorage.setItem('location', searchParams.get("location"))
 
     let history = useHistory()
 

@@ -167,7 +167,7 @@ function Cart(props) {
             cartIdArr: checkedList.join(','),
             day: props.date,
             slot: getSlot(props.slot),
-            locationId: 1,
+            locationId: window.localStorage.getItem('location'),
             shopId: props.shopId,
         }
 
