@@ -234,16 +234,9 @@ function Product(props) {
                                                          <InputNumber value={item.count || 0}
                                                                       maxLength={2}
                                                                       style={{width: '30px'}}
+                                                                      bordered={false}
+                                                                      readOnly={true}
                                                                       size='small'
-                                                                      onChange={(value) => {
-                                                                          for (let i = 0; i < listData.length; i++) {
-                                                                              if (item.id === listData[i].id) {
-                                                                                  listData[i].count = value
-                                                                                  addCart(item.id, item.shopId, value)
-                                                                              }
-                                                                          }
-                                                                          setListData([...listData])
-                                                                      }}
                                                          />
                                                          <PlusCircleTwoTone style={{fontSize: '16px'}}
                                                                             onClick={() => {

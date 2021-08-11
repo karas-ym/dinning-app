@@ -227,7 +227,12 @@ function Cart(props) {
                                                                   handleCheck(item.productDetail.product.price, 1, false)
                                                               }
                                                           }}/>
-                                      <InputNumber min={0} value={item.cart.qty} style={{width: '25px'}} size='small'/>
+                                      <InputNumber min={0}
+                                                   bordered={false}
+                                                   readOnly={true}
+                                                   value={item.cart.qty}
+                                                   style={{width: '25px'}}
+                                                   size='small'/>
                                       <PlusCircleTwoTone style={{fontSize: '16px'}}
                                                          onClick={() => {
                                                              props.setIII(item.cart.qty)
