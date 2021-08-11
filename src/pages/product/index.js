@@ -198,6 +198,7 @@ function Product(props) {
     const productList = () => {
         return (
             <List size="large"
+                  style={{marginBottom:65}}
                   dataSource={listData}
                   itemLayout='horizontal'
                   renderItem={(item) => {
@@ -252,7 +253,7 @@ function Product(props) {
                                              }
                                          </div>
                                      ]}
-                                     extra={<div className='tags'>{
+                                     extra={<div className='tags' style={{height:21}}>{
                                          item.tags !== null ?
                                              item.tags.map((i) => {
                                                  return (
@@ -262,7 +263,7 @@ function Product(props) {
                                      }</div>}>
                               <List.Item.Meta
                                   onClick={() => {
-                                      props.history.push("/order/" + item.id)
+                                      props.history.push("/product/" + item.id)
                                   }}
                                   avatar={<Image src={"http://" + item.cover} width={80}/>}
                                   title={<Text strong>{item.name}</Text>}
