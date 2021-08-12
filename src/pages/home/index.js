@@ -13,8 +13,11 @@ const {Option} = Select;
 function Home(props) {
 
     //获取送餐地址
-    const searchParams = new URLSearchParams(props.location.search.substring(1))
-    window.localStorage.setItem('location', searchParams.get("location"))
+    if (window.localStorage.getItem('location') === null) {
+        const searchParams = new URLSearchParams(props.location.search.substring(1))
+        window.localStorage.setItem('location', searchParams.get("location"))
+    }
+
 
     let history = useHistory()
 

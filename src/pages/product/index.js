@@ -17,6 +17,9 @@ function Product(props) {
     const {Text} = Typography;
     let token = window.localStorage.getItem('token')
     let [render, setRender] = useState(false)
+    let location = window.localStorage.getItem('location')
+
+    console.log(location)
 
     // let history = useHistory()
     let value = useContext(TimeContext)

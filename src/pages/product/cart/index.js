@@ -14,6 +14,7 @@ function Cart(props) {
 
 
     let token = window.localStorage.getItem('token')
+    let location = window.localStorage.getItem('location')
     let userId = Number(window.localStorage.getItem('id'))
 
     let [render, setRender] = useState(true)
@@ -167,7 +168,7 @@ function Cart(props) {
             cartIdArr: checkedList.join(','),
             day: props.date,
             slot: getSlot(props.slot),
-            locationId: window.localStorage.getItem('location'),
+            locationId: location,
             shopId: props.shopId,
         }
 
@@ -178,7 +179,6 @@ function Cart(props) {
             data: qs.stringify(data)
         })
             .then((res) => {
-                console.log('check:', res.data)
                 if (res.data.code === 'ERROR') {
                     message.error(res.data.message)
                 } else if (res.data.code === 'SUCCESS') {
