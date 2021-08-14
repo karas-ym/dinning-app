@@ -14,7 +14,7 @@ function Cart(props) {
 
 
     let token = window.localStorage.getItem('token')
-    let location = window.localStorage.getItem('location')
+    let location = window.sessionStorage.getItem('location')
     let userId = Number(window.localStorage.getItem('id'))
 
     let [render, setRender] = useState(true)

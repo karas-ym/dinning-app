@@ -69,8 +69,8 @@ function Product(props) {
             .then((res) => {
                 if (res.data.code === 'ERROR') {
                     message.error(res.data.data.message)
-
                 } else {
+                    setListData(res.data.data.productDtos)
                     if (window.localStorage.getItem('token') !== null) {
                         cartList(res.data.data.productDtos)
                     }

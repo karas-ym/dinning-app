@@ -13,10 +13,12 @@ const {Option} = Select;
 function Home(props) {
 
     //获取送餐地址
-    if (window.localStorage.getItem('location') === null) {
+    if (window.sessionStorage.getItem('location') === null) {
         const searchParams = new URLSearchParams(props.location.search.substring(1))
-        window.localStorage.setItem('location', searchParams.get("location"))
+        window.sessionStorage.setItem('location', searchParams.get("location"))
+        window.sessionStorage.setItem('hospital', searchParams.get("hospital"))
     }
+
 
 
     let history = useHistory()
@@ -105,8 +107,7 @@ function Home(props) {
             method: "get",
             url: url + '/api/shop/list',
             params: {
-                hospitalId: 1
-
+                hospitalId: window.sessionStorage.getItem('hospital')
             }
         })
             .then((res) => {
