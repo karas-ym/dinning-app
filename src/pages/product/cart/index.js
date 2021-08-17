@@ -163,11 +163,12 @@ function Cart(props) {
 
     // 创建订单 跳转支付
     const checkout = () => {
+        console.log(props)
 
         let data = {
             cartIdArr: checkedList.join(','),
             day: props.date,
-            slot: getSlot(props.slot),
+            slot: props.slot,
             locationId: location,
             shopId: props.shopId,
         }
@@ -196,7 +197,8 @@ function Cart(props) {
     return (
         <div className='Cart'>
             <Badge count={listCart.length} className="cart">
-                <Button type="primary" shape="round" onClick={showDrawer} icon={<ShoppingCartOutlined/>}>
+                <Button type="primary" style={{backgroundColor: "red", border: 0}} shape="round" onClick={showDrawer}
+                        icon={<ShoppingCartOutlined/>}>
                     购物车
                 </Button>
             </Badge>
@@ -219,7 +221,8 @@ function Cart(props) {
                               key={item.cart.id}
                               actions={[
                                   <Space>
-                                      <MinusCircleTwoTone style={{fontSize: '16px'}}
+                                      <MinusCircleTwoTone style={{fontSize: '22px'}}
+                                                          twoToneColor={'red'}
                                                           onClick={() => {
                                                               props.setIII(item.cart.qty)
                                                               updateCart(item.cart.productId, item.cart.id, item.cart.qty - 1, item.cart.shopId)
@@ -233,7 +236,8 @@ function Cart(props) {
                                                    value={item.cart.qty}
                                                    style={{width: '25px'}}
                                                    size='small'/>
-                                      <PlusCircleTwoTone style={{fontSize: '16px'}}
+                                      <PlusCircleTwoTone style={{fontSize: '22px'}}
+                                                         twoToneColor={'red'}
                                                          onClick={() => {
                                                              props.setIII(item.cart.qty)
                                                              updateCart(item.cart.productId, item.cart.id, item.cart.qty + 1, item.cart.shopId)

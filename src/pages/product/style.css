@@ -7,9 +7,78 @@
     width: 100%;
     z-index: 2;
 }
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
+    color:red;
+}
 
-.Product .main {
-    margin: 60px 0;
+.ant-tag-checkable:not(.ant-tag-checkable-checked):hover {
+    color: red;
+}
+
+.title2 {
+    width: 100vw;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    letter-spacing: 8px;
+    font-size: 18px;
+    font-family: "Microsoft Yahei", Times, serif;
+    font-weight: 700;
+}
+
+.title2-shop {
+    background-color: #fff;
+    border-top: 1px solid #dee1e6;
+}
+
+.title2-shop-content {
+    padding: 10px 20px;
+    display: flex;
+}
+
+.title2-shop-content-img {
+    width: 80px;
+    height: 80px;
+}
+
+.title2-shop-content-img > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.title2-shop-content-message {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 5px 20px;
+}
+
+.title2-shop-content-message-first {
+    font-family: "Microsoft Yahei", Times, serif;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.title-shop-notice {
+    color: red;
+    padding: 10px 20px;
+}
+
+.title-shop-notice > div {
+    background-color: #f5f5f5;
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+
+.main {
+    max-height: 412px;
+}
+
+.ant-tabs {
+    max-height: 412px !important;
 }
 
 .Product .main .tags-wrap {
@@ -33,7 +102,7 @@
 }
 
 .Product .ant-list-lg .ant-list-item {
-    padding: 16px 10px;
+    padding: 13px 10px;
 }
 
 .Product .count .ant-badge-count {
@@ -87,7 +156,7 @@
 }
 
 .Product .update-qty {
-    left: 24px;
+    left: -4px;
 }
 
 .card-container > .ant-tabs-card .ant-tabs-content > .ant-tabs-tabpane {
@@ -118,4 +187,21 @@
 
 .card-container > .ant-tabs-card .ant-tabs-content > .ant-tabs-tabpane {
     padding: 0;
+}
+
+.picture {
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+    text-align: center;
+    border: 1px solid #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.picture > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }

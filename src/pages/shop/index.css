@@ -1,0 +1,53 @@
+.title1 {
+    width: 100vw;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    letter-spacing: 8px;
+    font-size: 18px;
+    font-family: "Microsoft Yahei", Times, serif;
+    font-weight: 700;
+}
+
+.shop-content {
+    margin-top: 5px;
+    background-color: #fff;
+    padding: 10px 12px;
+}
+
+.shop-table {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px 0;
+    border-bottom: 2px solid #dee1e6;
+}
+
+.shop-table-content {
+    display: flex;
+}
+
+.content-describe {
+    padding: 0 10px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+    justify-content: space-between;
+}
+
+.content-describe-title {
+    font-size: 18px;
+    font-weight: 700;
+    font-family: "Times New Roman", Times, serif;
+}
+
+.order-dishes {
+    background-color: #ff4200;
+    color: #fff;
+    padding: 5px 16px;
+    border-radius: 5px;
+    margin-right: 11px;
+    border:0;
+}

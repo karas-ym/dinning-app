@@ -2,11 +2,18 @@ import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
 import qs from 'qs'
 import {List, PageHeader, Image, Layout, Tabs, Tag, message, InputNumber, Space, Typography, Button, Badge} from 'antd'
-import {MinusCircleTwoTone, PlusCircleTwoTone, ShoppingCartOutlined, PlusCircleFilled} from '@ant-design/icons'
+import {
+    MinusCircleTwoTone,
+    PlusCircleTwoTone,
+    ShoppingCartOutlined,
+    PlusCircleFilled,
+    LeftOutlined, StarFilled, SoundFilled
+} from '@ant-design/icons'
 import './style.css'
 import {TimeContext} from '../../App';
 import Cart from './cart'
 import url from '../../api'
+import color from "color";
 
 const {Header, Content} = Layout
 const {TabPane} = Tabs
@@ -16,12 +23,7 @@ function Product(props) {
     const {Text} = Typography;
     let token = window.localStorage.getItem('token')
     let [render, setRender] = useState(false)
-    let location = window.localStorage.getItem('location')
 
-
-    console.log(location)
-
-    // let history = useHistory()
     let value = useContext(TimeContext)
 
     let [listData, setListData] = useState([])
@@ -50,6 +52,7 @@ function Product(props) {
     let id = searchParams.get("id")
     let slot = searchParams.get("slot")
     let date = searchParams.get("time")
+    let name = searchParams.get("name")
     let weekday = new Date(searchParams.get("time")).getDay()
 
 
@@ -71,6 +74,7 @@ function Product(props) {
                     message.error(res.data.data.message)
                 } else {
                     setListData(res.data.data.productDtos)
+                    console.log(res)
                     if (window.localStorage.getItem('token') !== null) {
                         cartList(res.data.data.productDtos)
                     }
@@ -201,7 +205,7 @@ function Product(props) {
     const productList = () => {
         return (
             <List size="large"
-                  style={{marginBottom: 65, minHeight: '100vh'}}
+                  style={{marginBottom: 65, overflow: 'scroll', height: '57vh'}}
                   dataSource={listData}
                   itemLayout='horizontal'
                   renderItem={(item) => {
@@ -220,7 +224,8 @@ function Product(props) {
                                                      :
                                                      <Space
                                                          className={item.tags !== null ? 'add-icon update-qty' : 'add-icon-adjust update-qty'}>
-                                                         <MinusCircleTwoTone style={{fontSize: '16px'}}
+                                                         <MinusCircleTwoTone style={{fontSize: '22px'}}
+                                                                             twoToneColor={'red'}
                                                                              onClick={() => {
                                                                                  for (let i = 0; i < listData.length; i++) {
                                                                                      if (item.id === listData[i].id) {
@@ -242,7 +247,8 @@ function Product(props) {
                                                                       readOnly={true}
                                                                       size='small'
                                                          />
-                                                         <PlusCircleTwoTone style={{fontSize: '16px'}}
+                                                         <PlusCircleTwoTone style={{fontSize: '22px', color: 'red'}}
+                                                                            twoToneColor={'red'}
                                                                             onClick={() => {
                                                                                 for (let i = 0; i < listData.length; i++) {
                                                                                     if (item.id === listData[i].id) {
@@ -268,7 +274,11 @@ function Product(props) {
                                   onClick={() => {
                                       props.history.push("/product/" + item.id)
                                   }}
-                                  avatar={<Image src={"http://" + item.cover} width={80}/>}
+                                  avatar={
+                                      <div className={'picture'}>
+                                          <img src={"http://" + item.cover} alt=""/>
+                                      </div>
+                                  }
                                   title={<Text strong>{item.name}</Text>}
                                   description={<Text type="secondary">￥{item.price}</Text>}/>
                           </List.Item>
@@ -292,25 +302,34 @@ function Product(props) {
 
     return (
         <div className="Product">
+            <div className={'top-box'}>
+                <div className={'title2'}>
+                    <LeftOutlined style={{fontSize: 22}} onClick={() => window.history.back()}/>
+                    <div>商品列表</div>
+                    <span></span>
+                </div>
+                <div className={'title2-shop'}>
+                    <div className={'title2-shop-content'}>
+                        <div className={'title2-shop-content-img'}>
+                            <img src="https://cdn.pixabay.com/photo/2016/11/29/05/07/breads-1867459_960_720.jpg"
+                                 alt=""/>
+                        </div>
+                        <div className={'title2-shop-content-message'}>
+                            <span className={'title2-shop-content-message-first'}>{name}</span>
+                            <Space>
+                                <span><StarFilled style={{color: ' #ffc300'}}/> 5.0</span>
+                                <span style={{color: '#CCCCCCFF'}}>月售40单</span>
+                            </Space>
+                        </div>
+                    </div>
+                    <div className={'title-shop-notice'}>
+                        <div>
+                            <SoundFilled/> 欢迎下单选购
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-
-            <PageHeader
-                ghost={false}
-                onBack={() => {
-                    window.history.back()
-                }}
-                title="商品列表"
-                // subTitle={
-                //     <Space>
-                //         <div> 日期:{date}</div>
-                //         |
-                //         <div> 时段:{slot}</div>
-                //         |
-                //         <div>星期:{weekday}</div>
-                //     </Space>
-                // }
-                className='header'
-            />
 
             <Content className='main'>
                 <Header className='tags-wrap'>
@@ -335,10 +354,9 @@ function Product(props) {
                           tabPosition='left'
                           defaultActiveKey={0}
                           onChange={(activeKey) => {
-                              console.log(activeKey)
                               setCategoryId(activeKey)
                           }}
-                          tabBarStyle={{width: '90px'}}>
+                          tabBarStyle={{width: '90px',}}>
 
                         <TabPane tab='全部' key={0}>
                             {productList()}
@@ -360,6 +378,7 @@ function Product(props) {
                         :
                         <Badge className="cart">
                             <Button
+                                style={{backgroundColor: 'red', border: 0}}
                                 type="primary"
                                 shape="round"
                                 onClick={cart}

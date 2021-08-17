@@ -1,10 +1,9 @@
 import React, {useState, useContext, useEffect} from 'react';
 import axios from 'axios';
-import {DatePicker, Space, message, Carousel} from 'antd'
+import {Space, message, Carousel} from 'antd'
 import moment from 'moment';
 import './style.css'
 import {TimeContext} from '../../App';
-import url from '../../api'
 import {LeftOutlined, RightOutlined} from "@ant-design/icons";
 import 'moment/locale/zh-cn'
 
@@ -115,7 +114,7 @@ function Home(props) {
         if (orderBr()) {
             message.warn('今日不可预定')
         } else {
-            // history.push('/shop?slot=' + 1 + '&time=' + date)
+            props.history.push('/shop?slot=' + 1 + '&time=' + date + '&weekday=' + weekday)
         }
     }
 
@@ -123,7 +122,7 @@ function Home(props) {
         if (orderLu()) {
             message.warn('今日不可预定')
         } else {
-            // history.push('/shop?slot=' + 2 + '&time=' + date)
+            props.history.push('/shop?slot=' + 2 + '&time=' + date + '&weekday=' + weekday)
         }
     }
 
@@ -131,7 +130,7 @@ function Home(props) {
         if (orderDi()) {
             message.warn('今日不可预定')
         } else {
-            // history.push('/shop?slot=' + 4 + '&time=' + date)
+            props.history.push('/shop?slot=' + 4 + '&time=' + date + '&weekday=' + weekday)
         }
     }
 
@@ -140,19 +139,20 @@ function Home(props) {
         <div className="Home">
             <div style={{width: '100vw'}}>
                 <Carousel autoplay>
-                    <div>
-                        <img style={{height: '160px', width: '100vw'}}
+                    <div className={'picture-home'}>
+                        <img className={'picture-home-img'}
                              src="https://cdn.pixabay.com/photo/2020/10/27/03/48/gioc-village-waterfall-5689446_960_720.jpg"
                              alt=""/>
                     </div>
-                    <div>
-                        <img style={{height: '160px', width: '100vw'}}
+                    <div className={'picture-home'}>
+                        <img className={'picture-home-img'}
                              src="https://cdn.pixabay.com/photo/2021/08/12/10/38/mountains-6540497_960_720.jpg"
                              alt=""/>
                     </div>
                 </Carousel>
             </div>
             <div className={'content-home'}>
+
                 <Space direction="vertical" align="center" size={30}>
                     <div className={'date'}>
                         <>
@@ -194,12 +194,14 @@ function Home(props) {
                     <div className={'period'}>
                         <div className={'time-one'} onClick={breakfast}>
                             <div className={'time-two'}>
-                                <img style={{width: 85}}
-                                     src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                                     alt=""/>
+                                <div className={'time-two-first'}>
+                                    <img className={'picture-home-img'}
+                                         src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                                         alt=""/>
+                                </div>
                                 <div className={'time-bulletin'}>
                                     <Space>
-                                        <span>早餐</span>
+                                        <span className={'title'}>早餐</span>
                                         {
                                             orderBr() ? <span className={'Display'}>今日不可预定</span> : null
                                         }
@@ -212,12 +214,14 @@ function Home(props) {
                         </div>
                         <div className={'time-one'} onClick={lunch}>
                             <div className={'time-two'}>
-                                <img style={{width: 85}}
-                                     src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                                     alt=""/>
+                                <div className={'time-two-first'}>
+                                    <img className={'picture-home-img'}
+                                         src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                                         alt=""/>
+                                </div>
                                 <div className={'time-bulletin'}>
                                     <Space>
-                                        <span>午餐</span>
+                                        <span className={'title'}>午餐</span>
                                         {
                                             orderLu() ? <span className={'Display'}>今日不可预定</span> : null
                                         }
@@ -230,12 +234,14 @@ function Home(props) {
                         </div>
                         <div className={'time-one'}>
                             <div className={'time-two'} onClick={dinner}>
-                                <img style={{width: 85}}
-                                     src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                                     alt=""/>
+                                <div className={'time-two-first'}>
+                                    <img className={'picture-home-img'}
+                                         src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                                         alt=""/>
+                                </div>
                                 <div className={'time-bulletin'}>
                                     <Space>
-                                        <span>晚餐</span>
+                                        <span className={'title'}>晚餐</span>
                                         {
                                             orderDi() ? <span className={'Display'}>今日不可预定</span> : null
                                         }
@@ -247,9 +253,8 @@ function Home(props) {
                             <RightOutlined style={{fontSize: '22px'}}/>
                         </div>
                     </div>
-                    <>
 
-                    </>
+
                     {/*<Radio.Group buttonStyle="solid"*/}
                     {/*             onChange={(e) => {*/}
                     {/*                 setTime(e.target.value)*/}

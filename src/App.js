@@ -11,6 +11,7 @@ import OrderItem from './pages/order/order_item'
 import Payment from './pages/payment'
 import Postpay from './pages/postpay'
 import ShopList from './temp'
+import Shop from "./pages/shop";
 
 export const TimeContext = React.createContext()
 
@@ -31,6 +32,7 @@ function App() {
                     <div className="App">
                         <Switch>
                             <Route exact path="/" component={Home}/>
+                            <Route path="/shop" component={Shop}/>
 
                             <Route path="/product" component={Product}/>
 
