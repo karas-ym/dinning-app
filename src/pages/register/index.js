@@ -57,7 +57,7 @@ function Register() {
         <div className="Register">
             <PageHeader
                 onBack={() => {
-                    history.push('/profile')
+                    window.history.back()
                 }}
                 title="用户注册"/>
 
@@ -130,8 +130,7 @@ function Register() {
                                     return Promise.reject(new Error('输入密码不一致'));
                                 },
                             }),
-                        ]}
-                    >
+                        ]}>
                         <Input.Password allowClear onChange={(e) => {
                             setPassword(e.target.value)
                         }}/>

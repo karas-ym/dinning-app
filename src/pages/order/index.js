@@ -1,14 +1,15 @@
 import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios'
 import {useHistory} from 'react-router-dom';
-import {PageHeader, List, Space, Button, Result, message} from 'antd'
+import {PageHeader, List, Space, Button, Result, message, Layout, Typography, Avatar} from 'antd'
 import './style.css'
 
 import url from '../../api'
 import {OrderContext} from '../../App'
+import {RightOutlined} from "@ant-design/icons";
 
 function Order() {
-
+    const {Text} = Typography;
     let history = useHistory()
     let value = useContext(OrderContext)
     let token = window.localStorage.getItem('token')
@@ -63,14 +64,15 @@ function Order() {
         }
     }
 
+    const {Header} = Layout
+
 
     return (
         <>
-            <PageHeader
-                className="header"
-                backIcon="false"
-                title="订单信息"
-            />
+            <Header className="header">
+                <span
+                    className="header-home">订单信息</span>
+            </Header>
 
             {
                 token === null ?
@@ -84,18 +86,23 @@ function Order() {
                         <Result
                             title="您还未登录"
                             extra={[
-                                <Button type='primary' size='large' key='login' onClick={() => {
-                                    history.push('/login')
-                                }}>登录</Button>,
-                                <Button type='default' size='large' key='register' onClick={() => {
-                                    history.push('/register')
-                                }}>注册</Button>
+                                <div style={{padding: "35px 10px "}}>
+                                    <button className={'button'} type='primary' key='login' onClick={() => {
+                                        history.push('/login')
+                                    }}>登录
+                                    </button>
+
+                                    <button className={'button1'} type='default' key='register' onClick={() => {
+                                        history.push('/register')
+                                    }}>注册
+                                    </button>
+                                </div>
+
                             ]}
                         />
                     </>
                     :
                     <div className="Order">
-
                         <div className="card-container">
                             <List itemLayout="vertical" size="large" dataSource={listData}
                                   renderItem={item => (
@@ -110,10 +117,19 @@ function Order() {
                                                   {orderStatus(item)}
                                                   <div>￥{item.total}</div>
                                               </Space>
-                                          }
-                                      >
+                                          }>
                                           <List.Item.Meta
-                                              title={<span className='shopname'>{item.shop.name}</span>}
+                                              style={{alignItems: 'center'}}
+                                              title={
+                                                  <Space>
+                                                      <span className='shopname'>{item.shop.name}</span>
+                                                      <Text type="secondary"><RightOutlined/></Text>
+                                                  </Space>
+                                              }
+                                              avatar={<Avatar
+                                                  shape="square"
+                                                  size={64}
+                                                  src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"/>}
                                               description={
                                                   item.orderItemDtoList.map((product) => {
                                                       return (
@@ -121,8 +137,7 @@ function Order() {
                                                               key={product.id}>{product.productName} x {product.qty}</div>
                                                       )
                                                   })
-                                              }
-                                          />
+                                              }/>
                                       </List.Item>
                                   )}
                             >

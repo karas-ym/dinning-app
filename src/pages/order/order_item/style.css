@@ -1,7 +1,7 @@
 @import '~antd/dist/antd.css';
 
 .OrderItem {
-    padding-bottom: 50px;
+    padding-bottom: 60px;
 }
 
 .OrderItem .ant-layout-content {
@@ -20,6 +20,22 @@
 }
 
 .OrderItem .btn-wrap {
-    float: right;
+    /*float: right;*/
     margin: 20px;
+}
+
+.item {
+    padding: 10px;
+}
+
+.orderD {
+    margin-top: 10px;
+    padding: 20px 20px;
+    background-color: #fff;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom:5px
 }

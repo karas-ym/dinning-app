@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios'
 import qs from 'qs'
 import './style.css'
-import {PageHeader, List, Button, Layout, Input, Form, Rate, message, Space} from 'antd'
+import {PageHeader, List, Button, Layout, Input, Form, Rate, message, Space, Divider, Avatar, Typography} from 'antd'
 import {useHistory, useParams} from 'react-router-dom';
 
 import url from '../../../api'
@@ -11,6 +11,7 @@ const {Content} = Layout
 const {TextArea} = Input;
 
 function OrderItem() {
+    const {Text} = Typography;
 
     let token = window.localStorage.getItem('token')
 
@@ -20,7 +21,10 @@ function OrderItem() {
 
     let [render, setRender] = useState(false)
 
-    let [orderDetail, setOrderDetail] = useState({})
+    let [orderDetail, setOrderDetail] = useState({
+        hospital: {},
+        location: {},
+    })
 
     let [cmt, setCmt] = useState('')
     let [point, setPoint] = useState()
@@ -141,44 +145,51 @@ function OrderItem() {
     return (
         <div className="OrderItem">
             <PageHeader
-                className="header"
                 onBack={() => {
                     window.history.back()
                 }}
                 title={
                     <div>{orderStatus(orderDetail)}</div>
-                }
-            />
+                }/>
 
-            <Content>
-
+            <Content style={{backgroundColor: "#f8f8f8"}}>
+                <Divider orientation="left" style={{
+                    backgroundColor: "#fff",
+                    padding: '10px 0',
+                    fontSize: 18,
+                    fontWeight: 700
+                }}>{shop.name}</Divider>
                 <List
-                    header={shop.name}
                     itemLayout="vertical"
                     size="large"
+                    header={<Text strong style={{fontSize: 18}}>餐品</Text>}
+                    style={{backgroundColor: "#fff", marginTop: 10}}
                     dataSource={orderDetail.orderItemDtoList}
                     renderItem={item => (
-                        <List.Item
-                            key={item.id}
-                            extra={
-                                <div>
-                                    <div>￥{item.price}</div>
-                                    <div>x {item.qty}</div>
-                                </div>
-                            }
-                        >
-                            <List.Item.Meta
-                                title={<span>{item.productName}</span>}
-                            />
-                        </List.Item>
-                    )}
-                >
+                        <div className={'item'}>
+                            <List.Item
+                                style={{borderBottom: '2px solid #f8f8f8'}}
+                                key={item.id}
+                                extra={
+                                    <div style={{display: 'flex', alignItems: 'center',flexDirection: 'column'}}>
+                                        <div>￥{item.price}</div>
+                                        <div>* {item.qty}</div>
+                                    </div>
+                                }>
+                                <List.Item.Meta
+                                    avatar={<Avatar shape="square" size={64} src={'http://' + item.cover}/>}
+                                    title={<span>{item.productName}</span>}/>
+                            </List.Item>
+                        </div>
+                    )}>
+
                     <List.Item extra={<div>合计 ￥{orderDetail.total}</div>}></List.Item>
 
                     {
                         orderDetail.paymentStatus === 1 && orderDetail.status === 1 ?
-                            <Space size={0} className='btn-wrap'>
-                                <Button size='middle' shape='round' onClick={handleCancel}>取消订单</Button>
+                            <Space size={10} className='btn-wrap'>
+                                <Button size='middle' shape='round' onClick={handleCancel}
+                                >取消订单</Button>
                                 <Button type='primary' shape='round'
                                         className="check-btn"
                                         onClick={() => {
@@ -190,7 +201,8 @@ function OrderItem() {
                     {
                         orderDetail.paymentStatus !== 1 && orderDetail.status === 1 ?
                             <Space size={0} className='btn-wrap'>
-                                <Button size='middle' shape='round' onClick={handleCancel}>取消订单</Button>
+                                <Button size='middle' shape='round' onClick={handleCancel}
+                                        type={'primary'}>取消订单</Button>
                             </Space> : null
                     }
 
@@ -229,8 +241,44 @@ function OrderItem() {
                                 {/* </Drawer> */}
                             </List.Item> : null
                     }
-
                 </List>
+
+                <div className={'orderD'}>
+                    <Text strong style={{fontSize: 18}}>配送信息</Text>
+                    <Divider/>
+                    <div className={'row'}>
+                        <Text type="secondary">配送时间</Text>
+                        <Text>立即配送</Text>
+                    </div>
+                    <div className={'row'}>
+                        <Text type="secondary">配送地址</Text>
+                        <Text>{orderDetail.hospital.name +
+                        orderDetail.location.department +
+                        orderDetail.location.bunk + "房" +
+                        orderDetail.location.room + "床"}</Text>
+                    </div>
+                    <div className={'row'}>
+                        <Text type="secondary">配送服务</Text>
+                        <Text>商家配送</Text>
+                    </div>
+                </div>
+
+                <div className={'orderD'}>
+                    <Text strong style={{fontSize: 18}}>订单详情</Text>
+                    <Divider/>
+                    <div className={'row'}>
+                        <Text type="secondary">订单号码</Text>
+                        <Text>{orderDetail.number}</Text>
+                    </div>
+                    <div className={'row'}>
+                        <Text type="secondary">下单时间</Text>
+                        <Text>{orderDetail.createAt}</Text>
+                    </div>
+                    <div className={'row'}>
+                        <Text type="secondary">餐具数量</Text>
+                        <Text>依据用餐量提供</Text>
+                    </div>
+                </div>
 
             </Content>
 

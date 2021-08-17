@@ -14,7 +14,7 @@
 
 .Product .main .tags-wrap {
     width: 100%;
-    background-color: #f3f4f5;
+    background-color: #f8f8f8;
     line-height: 50px;
     height: 50px;
     position: fixed;
@@ -29,6 +29,7 @@
 
 .Product .main .card-container {
     padding-top: 50px;
+    background-color: #f8f8f8;
 }
 
 .Product .ant-list-lg .ant-list-item {

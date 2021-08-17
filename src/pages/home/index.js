@@ -1,14 +1,13 @@
 import React, {useState, useContext, useEffect} from 'react';
 import axios from 'axios';
-import {useHistory} from 'react-router-dom'
-import {Layout, PageHeader, Button, DatePicker, Radio, Space, message, Select} from 'antd'
+import {DatePicker, Space, message, Carousel} from 'antd'
 import moment from 'moment';
 import './style.css'
 import {TimeContext} from '../../App';
 import url from '../../api'
+import {LeftOutlined, RightOutlined} from "@ant-design/icons";
+import 'moment/locale/zh-cn'
 
-const {Header, Content} = Layout
-const {Option} = Select;
 
 function Home(props) {
 
@@ -20,14 +19,11 @@ function Home(props) {
     }
 
 
-
-    let history = useHistory()
-
-    let [date, setDate] = useState(null)    // 
-    let [time, setTime] = useState(null)    // 时段 1 2 4,
-    let [selectShop, setSelectShop] = useState() //
+    let [date, setDate] = useState(null)    //日期变量
+    const [weekday, setWeekday] = useState()        //周末变量
 
     let value = useContext(TimeContext)
+
 
     const getDay = (day) => {
         switch (day) {
@@ -49,18 +45,6 @@ function Home(props) {
         }
     }
 
-    // 获取日期
-    function onChangeDate(date, dateString) {
-        // 获取星期几
-        let weekday
-        if (date != null) {
-            weekday = date.format('dddd')
-            weekday = getDay(weekday)
-        }
-        setDate(dateString)
-        value.setDate(dateString)
-        value.setWeekday(weekday)
-    }
 
     // 可选日期范围
     function disabledDate(current) {
@@ -101,101 +85,198 @@ function Home(props) {
     }
 
     // 获取商店列表
-    let [shopList, setShopList] = useState([])
-    const getShop = () => {
-        axios({
-            method: "get",
-            url: url + '/api/shop/list',
-            params: {
-                hospitalId: window.sessionStorage.getItem('hospital')
-            }
-        })
-            .then((res) => {
-                if (res.data.code === 'ERROR') {
-                    message.error(res.data.message)
-                } else if (res.data.code === 'SUCCESS') {
-                    setShopList(res.data.data)
-                    setSelectShop(res.data.data[0].name);
-                    setShopId(res.data.data[0].id)
-                }
-            })
-            .catch((error) => {
-                message.error(error.toString())
-            })
-    }
+    // let [shopList, setShopList] = useState([])
+    // const getShop = () => {
+    //     axios({
+    //         method: "get",
+    //         url: url + '/api/shop/list',
+    //         params: {
+    //             hospitalId: window.sessionStorage.getItem('hospital')
+    //         }
+    //     })
+    //         .then((res) => {
+    //             console.log(res)
+    //         })
+    //         .catch((error) => {
+    //             message.error(error.toString())
+    //         })
+    // }
 
-
-    const [shopId, setShopId] = useState()
-    const handleShop = (e) => {
-        setShopId(e)
-    }
 
     const dateFormat = 'YYYY-MM-DD';
 
+
     useEffect(() => {
-        getShop()
         setDate(moment(new Date().toLocaleDateString()).format('YYYY-MM-DD'))
+        setWeekday(moment(new Date().toLocaleDateString()).format('dddd'))
     }, [])
 
+    const breakfast = () => {
+        if (orderBr()) {
+            message.warn('今日不可预定')
+        } else {
+            // history.push('/shop?slot=' + 1 + '&time=' + date)
+        }
+    }
+
+    const lunch = () => {
+        if (orderLu()) {
+            message.warn('今日不可预定')
+        } else {
+            // history.push('/shop?slot=' + 2 + '&time=' + date)
+        }
+    }
+
+    const dinner = () => {
+        if (orderDi()) {
+            message.warn('今日不可预定')
+        } else {
+            // history.push('/shop?slot=' + 4 + '&time=' + date)
+        }
+    }
+
+
     return (
-        <Layout className="Home">
-
-            <Header className="header">
-                <PageHeader
-                    className=""
-                    title="订餐首页"/>
-            </Header>
-
-            <Content>
+        <div className="Home">
+            <div style={{width: '100vw'}}>
+                <Carousel autoplay>
+                    <div>
+                        <img style={{height: '160px', width: '100vw'}}
+                             src="https://cdn.pixabay.com/photo/2020/10/27/03/48/gioc-village-waterfall-5689446_960_720.jpg"
+                             alt=""/>
+                    </div>
+                    <div>
+                        <img style={{height: '160px', width: '100vw'}}
+                             src="https://cdn.pixabay.com/photo/2021/08/12/10/38/mountains-6540497_960_720.jpg"
+                             alt=""/>
+                    </div>
+                </Carousel>
+            </div>
+            <div className={'content-home'}>
                 <Space direction="vertical" align="center" size={30}>
+                    <div className={'date'}>
+                        <>
+                            <button className={'date-btn'} onClick={() => {
+                                if (new Date().getTime() >= (new Date(date).getTime() - 12 * 60 * 60 * 1000)) {
+                                    message.warn('昨天不可预定')
+                                } else {
+                                    setDate(moment(new Date(date).getTime() - 24 * 60 * 60 * 1000).format('YYYY-MM-DD'))
+                                    setWeekday(moment(new Date(date).getTime() - 24 * 60 * 60 * 1000).format('dddd'))
+                                }
+                            }}>
+                                <LeftOutlined style={{color: '#fff'}}/>
+                            </button>
+                        </>
 
-                    <Select placeholder="选择店铺" defaultValue={selectShop} key={selectShop} style={{width: 120}}
-                            onChange={handleShop}>
-                        {
-                            shopList.map((item) => {
-                                return (
-                                    item.status === 1 ?
-                                        <Option key={item.id} value={item.id}>{item.name}</Option>
-                                        : null
-                                )
-                            })
-                        }
-                    </Select>
+                        <span style={{color: 'red'}}>
+                                预定日期：
+                            <Space>
+                                <>{date}</>
+                                <>{weekday}</>
+                            </Space>
+                        </span>
 
-                    <DatePicker
-                        placeholder='选择订餐日期'
-                        disabledDate={disabledDate}
-                        locale='ch'
-                        onChange={onChangeDate}
-                        defaultValue={moment(new Date().toLocaleDateString(), dateFormat)} format={dateFormat}
-                        allowClear/>
+                        <>
+                            <button className={'date-btn'} onClick={() => {
+                                if ((new Date(date).getTime() + 24 * 60 * 60 * 1000) - new Date().getTime() > 24 * 60 * 60 * 1000 * 2) {
+                                    message.warn('预定不可超过两天')
+                                } else {
+                                    setDate(moment(new Date(date).getTime() + 24 * 60 * 60 * 1000).format('YYYY-MM-DD'))
+                                    setWeekday(moment(new Date(date).getTime() + 24 * 60 * 60 * 1000).format('dddd'))
+                                }
+                            }}>
+                                <RightOutlined style={{color: '#fff'}}/>
+                            </button>
+                        </>
+                    </div>
 
-                    <Radio.Group buttonStyle="solid"
-                                 onChange={(e) => {
-                                     setTime(e.target.value)
-                                     value.setTime(e.target.value)
-                                 }}>
-                        <Radio.Button value="早餐" disabled={orderBr()}>早餐</Radio.Button>
-                        <Radio.Button value="午餐" disabled={orderLu()}>午餐</Radio.Button>
-                        <Radio.Button value="晚餐" disabled={orderDi()}>晚餐</Radio.Button>
-                    </Radio.Group>
 
-                    <div>预定日期: {date}</div>
-                    <div>预定时段: {time}</div>
+                    <div className={'period'}>
+                        <div className={'time-one'} onClick={breakfast}>
+                            <div className={'time-two'}>
+                                <img style={{width: 85}}
+                                     src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                                     alt=""/>
+                                <div className={'time-bulletin'}>
+                                    <Space>
+                                        <span>早餐</span>
+                                        {
+                                            orderBr() ? <span className={'Display'}>今日不可预定</span> : null
+                                        }
+                                    </Space>
+                                    <span>预定时间：当日5:40前</span>
+                                    <span>统一配送：当日6:40-8:00</span>
+                                </div>
+                            </div>
+                            <RightOutlined style={{fontSize: '22px'}}/>
+                        </div>
+                        <div className={'time-one'} onClick={lunch}>
+                            <div className={'time-two'}>
+                                <img style={{width: 85}}
+                                     src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                                     alt=""/>
+                                <div className={'time-bulletin'}>
+                                    <Space>
+                                        <span>午餐</span>
+                                        {
+                                            orderLu() ? <span className={'Display'}>今日不可预定</span> : null
+                                        }
+                                    </Space>
+                                    <span>预定时间：当日10:40前</span>
+                                    <span>统一配送：当日6:40-8:00</span>
+                                </div>
+                            </div>
+                            <RightOutlined style={{fontSize: '22px'}}/>
+                        </div>
+                        <div className={'time-one'}>
+                            <div className={'time-two'} onClick={dinner}>
+                                <img style={{width: 85}}
+                                     src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                                     alt=""/>
+                                <div className={'time-bulletin'}>
+                                    <Space>
+                                        <span>晚餐</span>
+                                        {
+                                            orderDi() ? <span className={'Display'}>今日不可预定</span> : null
+                                        }
+                                    </Space>
+                                    <span>预定时间：当日16:40前</span>
+                                    <span>统一配送：当日17:40-18:00</span>
+                                </div>
+                            </div>
+                            <RightOutlined style={{fontSize: '22px'}}/>
+                        </div>
+                    </div>
+                    <>
 
-                    <Button type="primary" onClick={() => {
-                        if (date !== null && time !== null && shopId !== null && date !== '') {
-                            history.push('/product?id=' + shopId + '&slot=' + time + '&time=' + date)
-                        } else if (shopId === null) {
-                            message.info('请选择店铺')
-                        } else {
-                            message.info('请选择订餐时间')
-                        }
-                    }}>去订餐</Button>
+                    </>
+                    {/*<Radio.Group buttonStyle="solid"*/}
+                    {/*             onChange={(e) => {*/}
+                    {/*                 setTime(e.target.value)*/}
+                    {/*                 value.setTime(e.target.value)*/}
+                    {/*             }}>*/}
+                    {/*    <Radio.Button value="早餐" disabled={orderBr()}>早餐</Radio.Button>*/}
+                    {/*    <Radio.Button value="午餐" disabled={orderLu()}>午餐</Radio.Button>*/}
+                    {/*    <Radio.Button value="晚餐" disabled={orderDi()}>晚餐</Radio.Button>*/}
+                    {/*</Radio.Group>*/}
+
+                    {/*<div>预定日期: {date}</div>*/}
+                    {/*<div>预定时段: {time}</div>*/}
+
+                    {/*<Button type="primary"*/}
+                    {/*        style={{width: 180, height: 40, fontSize: 18}}*/}
+                    {/*        onClick={() => {*/}
+                    {/*            if (date !== null && time !== null && shopId !== null && date !== '') {*/}
+                    {/*                history.push('/product?id=' + shopId + '&slot=' + time + '&time=' + date)*/}
+                    {/*            } else if (shopId === null) {*/}
+                    {/*                message.info('请选择店铺')*/}
+                    {/*            } else {*/}
+                    {/*                message.info('请选择订餐时间')*/}
+                    {/*            }*/}
+                    {/*        }}>订餐</Button>*/}
                 </Space>
-            </Content>
-
-        </Layout>
+            </div>
+        </div>
     )
 }
 

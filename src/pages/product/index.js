@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
 import qs from 'qs'
-import {useHistory} from 'react-router-dom'
 import {List, PageHeader, Image, Layout, Tabs, Tag, message, InputNumber, Space, Typography, Button, Badge} from 'antd'
 import {MinusCircleTwoTone, PlusCircleTwoTone, ShoppingCartOutlined, PlusCircleFilled} from '@ant-design/icons'
 import './style.css'
@@ -18,6 +17,7 @@ function Product(props) {
     let token = window.localStorage.getItem('token')
     let [render, setRender] = useState(false)
     let location = window.localStorage.getItem('location')
+
 
     console.log(location)
 
@@ -201,7 +201,7 @@ function Product(props) {
     const productList = () => {
         return (
             <List size="large"
-                  style={{marginBottom:65}}
+                  style={{marginBottom: 65, minHeight: '100vh'}}
                   dataSource={listData}
                   itemLayout='horizontal'
                   renderItem={(item) => {
@@ -256,7 +256,7 @@ function Product(props) {
                                              }
                                          </div>
                                      ]}
-                                     extra={<div className='tags' style={{height:21}}>{
+                                     extra={<div className='tags' style={{height: 21}}>{
                                          item.tags !== null ?
                                              item.tags.map((i) => {
                                                  return (
@@ -292,26 +292,29 @@ function Product(props) {
 
     return (
         <div className="Product">
+
+
             <PageHeader
                 ghost={false}
                 onBack={() => {
                     window.history.back()
                 }}
                 title="商品列表"
-                subTitle={
-                    <Space>
-                        <div> 日期:{date}</div>
-                        |
-                        <div> 时段:{slot}</div>
-                        |
-                        <div>星期:{weekday}</div>
-                    </Space>
-                }
+                // subTitle={
+                //     <Space>
+                //         <div> 日期:{date}</div>
+                //         |
+                //         <div> 时段:{slot}</div>
+                //         |
+                //         <div>星期:{weekday}</div>
+                //     </Space>
+                // }
                 className='header'
             />
 
             <Content className='main'>
                 <Header className='tags-wrap'>
+                    <Text strong>口味：</Text>
                     {
                         tags.map((tag) => {
                             return (
