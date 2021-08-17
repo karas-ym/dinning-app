@@ -1,17 +1,14 @@
 import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios'
 import {useHistory} from 'react-router-dom';
-import {PageHeader, List, Space, Button, Result, message, Layout, Typography, Avatar} from 'antd'
+import { Result, message} from 'antd'
 import './style.css'
 
 import url from '../../api'
-import {OrderContext} from '../../App'
-import {RightOutlined} from "@ant-design/icons";
 
-function Order() {
-    const {Text} = Typography;
+
+function Order(props) {
     let history = useHistory()
-    let value = useContext(OrderContext)
     let token = window.localStorage.getItem('token')
 
     const [listData, setListData] = useState([])
@@ -64,24 +61,16 @@ function Order() {
         }
     }
 
-    const {Header} = Layout
-
 
     return (
         <>
-            <Header className="header">
-                <span
-                    className="header-home">订单信息</span>
-            </Header>
+            <div className={'title4'}>
+                <div>订单</div>
+            </div>
 
             {
                 token === null ?
                     <>
-                        {/* <PageHeader
-                            className="header"
-                            backIcon="false"
-                            title="订单信息"
-                        /> */}
 
                         <Result
                             title="您还未登录"
@@ -103,47 +92,103 @@ function Order() {
                     </>
                     :
                     <div className="Order">
-                        <div className="card-container">
-                            <List itemLayout="vertical" size="large" dataSource={listData}
-                                  renderItem={item => (
-                                      <List.Item
-                                          key={item.id}
-                                          onClick={() => {
-                                              value.setOrderDetail(item)
-                                              history.push("/order/" + item.id)
-                                          }}
-                                          extra={
-                                              <Space direction='vertical' size={10}>
-                                                  {orderStatus(item)}
-                                                  <div>￥{item.total}</div>
-                                              </Space>
-                                          }>
-                                          <List.Item.Meta
-                                              style={{alignItems: 'center'}}
-                                              title={
-                                                  <Space>
-                                                      <span className='shopname'>{item.shop.name}</span>
-                                                      <Text type="secondary"><RightOutlined/></Text>
-                                                  </Space>
-                                              }
-                                              avatar={<Avatar
-                                                  shape="square"
-                                                  size={64}
-                                                  src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"/>}
-                                              description={
-                                                  item.orderItemDtoList.map((product) => {
-                                                      return (
-                                                          <div
-                                                              key={product.id}>{product.productName} x {product.qty}</div>
-                                                      )
-                                                  })
-                                              }/>
-                                      </List.Item>
-                                  )}
-                            >
-                            </List>
-                        </div>
+                        {
+                            listData.map((item, index) => {
+                                return (
+                                    <div className={'order-item'} key={index}>
 
+                                        <div className={'order-item-message'}>
+                                            <div className={'order-item-message-name'}>
+                                                <div className={'order-item-message-img'}>
+                                                    <img
+                                                        src="https://cdn.pixabay.com/photo/2021/06/27/14/32/raspberry-6368999_960_720.png"
+                                                        alt=""/>
+                                                </div>
+                                                <span style={{
+                                                    fontSize: '16px',
+                                                    fontWeight: 'bold'
+                                                }}>{item.shop.name}</span>
+                                            </div>
+                                            <div className={'order-item-message-status'}>
+                                                <span style={{
+                                                    color: '#a1a1a1',
+                                                    fontSize: '15px'
+                                                }}>{orderStatus(item)}</span>
+                                            </div>
+                                        </div>
+
+                                        <div className={'order-item-product'}>
+                                            <div style={{display: 'flex',}}>
+                                                {
+                                                    item.orderItemDtoList.map((item, i) => {
+                                                        return (
+                                                            <div className={'order-item-product-img'} key={i}>
+                                                                <img src={'http://' + item.cover} alt=""/>
+                                                            </div>
+                                                        )
+                                                    })
+                                                }
+
+                                            </div>
+                                            <div className={'total'}>
+                                                <span>￥{item.total}</span>
+                                                <span style={{
+                                                    color: '#a1a1a1',
+                                                    fontSize: '13px'
+                                                }}>共{item.orderItemDtoList.length}件</span>
+                                            </div>
+                                        </div>
+
+                                        <div className={'order-item-btn'}>
+                                            <button onClick={() => props.history.push("/order/" + item.id)}>查看订单
+                                            </button>
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
+
+
+                        {/*<div className="card-container">*/}
+                        {/*    <List itemLayout="vertical" size="large" dataSource={listData}*/}
+                        {/*          renderItem={item => (*/}
+                        {/*              <List.Item*/}
+                        {/*                  key={item.id}*/}
+                        {/*                  onClick={() => {*/}
+                        {/*                      value.setOrderDetail(item)*/}
+                        {/*                      history.push("/order/" + item.id)*/}
+                        {/*                  }}*/}
+                        {/*                  extra={*/}
+                        {/*                      <Space direction='vertical' size={10}>*/}
+                        {/*                          {orderStatus(item)} //订单状态*/}
+                        {/*                          <div>￥{item.total}</div>*/}
+                        {/*                      </Space>*/}
+                        {/*                  }>*/}
+                        {/*                  <List.Item.Meta*/}
+                        {/*                      style={{alignItems: 'center'}}*/}
+                        {/*                      title={*/}
+                        {/*                          <Space>*/}
+                        {/*                              <span className='shopname'>{item.shop.name}</span>*/}
+                        {/*                              <Text type="secondary"><RightOutlined/></Text>*/}
+                        {/*                          </Space>*/}
+                        {/*                      }*/}
+                        {/*                      avatar={<Avatar*/}
+                        {/*                          shape="square"*/}
+                        {/*                          size={64}*/}
+                        {/*                          src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"/>}*/}
+                        {/*                      description={*/}
+                        {/*                          item.orderItemDtoList.map((product) => {*/}
+                        {/*                              return (*/}
+                        {/*                                  <div*/}
+                        {/*                                      key={product.id}>{product.productName} x {product.qty}</div>*/}
+                        {/*                              )*/}
+                        {/*                          })*/}
+                        {/*                      }/>*/}
+                        {/*              </List.Item>*/}
+                        {/*          )}*/}
+                        {/*    >*/}
+                        {/*    </List>*/}
+                        {/*</div>*/}
                     </div>
             }
         </>
