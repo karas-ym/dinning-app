@@ -1,7 +1,7 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios'
 import {useHistory} from 'react-router-dom';
-import { Result, message} from 'antd'
+import {Result, message} from 'antd'
 import './style.css'
 
 import url from '../../api'

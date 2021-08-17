@@ -306,7 +306,7 @@ function Product(props) {
                 <div className={'title2'}>
                     <LeftOutlined style={{fontSize: 22}} onClick={() => window.history.back()}/>
                     <div>商品列表</div>
-                    <span></span>
+                    <span> </span>
                 </div>
                 <div className={'title2-shop'}>
                     <div className={'title2-shop-content'}>

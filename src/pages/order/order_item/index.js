@@ -6,6 +6,7 @@ import {PageHeader, List, Button, Layout, Input, Form, Rate, message, Space, Div
 import {useHistory, useParams} from 'react-router-dom';
 
 import url from '../../../api'
+import {LeftOutlined} from "@ant-design/icons";
 
 const {Content} = Layout
 const {TextArea} = Input;
@@ -144,41 +145,90 @@ function OrderItem() {
 
     return (
         <div className="OrderItem">
-            <PageHeader
-                onBack={() => {
-                    window.history.back()
-                }}
-                title={
-                    <div>{orderStatus(orderDetail)}</div>
-                }/>
+            <div className={'title5'}>
+                <LeftOutlined style={{fontSize: 22}} onClick={() => window.history.back()}/>
+                <div>订单详情</div>
+                <span> </span>
+            </div>
 
-            <Content style={{backgroundColor: "#f8f8f8"}}>
-                <Divider orientation="left" style={{
-                    backgroundColor: "#fff",
-                    padding: '10px 0',
-                    fontSize: 18,
-                    fontWeight: 700
-                }}>{shop.name}</Divider>
+            <Content style={{backgroundColor: "#eeeeee"}}>
+                <div className={'OrderItem-status'}>
+                    <div style={{fontSize: '22px', fontWeight: 700}}>{orderStatus(orderDetail)}</div>
+                    <div style={{display: 'flex'}}>订单{orderStatus(orderDetail)}，请关注订单状态</div>
+                </div>
+
+                <div className={'orderD'}>
+                    <Text strong style={{fontSize: 18}}>取货信息</Text>
+                    <Divider/>
+                    <div className={'row'}>
+                        <Text type="secondary">商家名称</Text>
+                        <Text>{shop.name}</Text>
+                    </div>
+                    <div className={'row'}>
+                        <Text type="secondary">商家电话</Text>
+                        <Text>{shop.consumerHotline}</Text>
+                    </div>
+                    <div className={'row'}>
+                        <Text type="secondary">配送信息</Text>
+                        <Text>{shop.contactPerson + shop.contactMobile}</Text>
+                    </div>
+                    <div className={'row'}>
+                        <span>备注：</span>
+                        <span></span>
+                    </div>
+                </div>
+
+                <div className={'orderD'}>
+                    <Text strong style={{fontSize: 18}}>配送信息</Text>
+                    <Divider/>
+                    <div className={'row'}>
+                        <Text type="secondary">配送时间</Text>
+                        <Text>立即配送</Text>
+                    </div>
+                    <div className={'row'}>
+                        <Text type="secondary">配送地址</Text>
+                        <Text>{orderDetail.hospital.name + '-' +
+                        orderDetail.location.department + '-' +
+                        orderDetail.location.bunk + "房" + '-' +
+                        orderDetail.location.room + "床"}</Text>
+                    </div>
+                    <div className={'row'}>
+                        <Text type="secondary">配送服务</Text>
+                        <Text>商家配送</Text>
+                    </div>
+                </div>
+
                 <List
                     itemLayout="vertical"
                     size="large"
-                    header={<Text strong style={{fontSize: 18}}>餐品</Text>}
-                    style={{backgroundColor: "#fff", marginTop: 10}}
+                    header={<Text strong style={{fontSize: 18}}>{shop.name}</Text>}
+                    style={{backgroundColor: "#fff"}}
                     dataSource={orderDetail.orderItemDtoList}
                     renderItem={item => (
                         <div className={'item'}>
                             <List.Item
-                                style={{borderBottom: '2px solid #f8f8f8'}}
+                                style={{
+                                    borderBottom: '2px solid #f8f8f8',
+                                    padding: '10px 15px',
+                                    display: 'flex',
+                                    alignItems: 'center'
+                                }}
                                 key={item.id}
                                 extra={
-                                    <div style={{display: 'flex', alignItems: 'center',flexDirection: 'column'}}>
-                                        <div>￥{item.price}</div>
-                                        <div>* {item.qty}</div>
-                                    </div>
+                                    <div>￥{item.price}</div>
                                 }>
                                 <List.Item.Meta
-                                    avatar={<Avatar shape="square" size={64} src={'http://' + item.cover}/>}
-                                    title={<span>{item.productName}</span>}/>
+                                    avatar={
+                                        <div className={'OrderItem-item-img'}>
+                                            <img src={'http://' + item.cover} alt=''/>
+                                        </div>
+                                    }
+                                    title={
+                                        <div style={{display: 'flex', flexDirection: "column",}}>
+                                            <span>{item.productName}</span>
+                                            <span>* {item.qty}</span>
+                                        </div>
+                                    }/>
                             </List.Item>
                         </div>
                     )}>
@@ -201,7 +251,7 @@ function OrderItem() {
                     {
                         orderDetail.paymentStatus !== 1 && orderDetail.status === 1 ?
                             <Space size={0} className='btn-wrap'>
-                                <Button size='middle' shape='round' onClick={handleCancel}
+                                <Button size='middle' shape='round' danger onClick={handleCancel}
                                         type={'primary'}>取消订单</Button>
                             </Space> : null
                     }
@@ -243,27 +293,8 @@ function OrderItem() {
                     }
                 </List>
 
-                <div className={'orderD'}>
-                    <Text strong style={{fontSize: 18}}>配送信息</Text>
-                    <Divider/>
-                    <div className={'row'}>
-                        <Text type="secondary">配送时间</Text>
-                        <Text>立即配送</Text>
-                    </div>
-                    <div className={'row'}>
-                        <Text type="secondary">配送地址</Text>
-                        <Text>{orderDetail.hospital.name +
-                        orderDetail.location.department +
-                        orderDetail.location.bunk + "房" +
-                        orderDetail.location.room + "床"}</Text>
-                    </div>
-                    <div className={'row'}>
-                        <Text type="secondary">配送服务</Text>
-                        <Text>商家配送</Text>
-                    </div>
-                </div>
 
-                <div className={'orderD'}>
+                <div className={'orderD'} style={{marginTop: 7}}>
                     <Text strong style={{fontSize: 18}}>订单详情</Text>
                     <Divider/>
                     <div className={'row'}>
