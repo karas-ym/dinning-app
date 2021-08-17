@@ -4,7 +4,7 @@ import {Form, Input, Button, PageHeader, message, Divider, Card} from 'antd';
 import './style.css'
 import {useHistory} from 'react-router-dom';
 import url from '../../api'
-import {LockOutlined, UserOutlined} from "@ant-design/icons";
+import {LeftOutlined, LockOutlined, UserOutlined} from "@ant-design/icons";
 
 function Login() {
 
@@ -41,13 +41,13 @@ function Login() {
 
     return (
         <div className="Login">
-            <PageHeader
-                className="header"
-                onBack={() => {
-                    window.history.back()
-                }}
-                title="用户登录"
-            />
+            <div className={'title5'}>
+                <LeftOutlined style={{fontSize: 22}} onClick={() => window.history.back()}/>
+                <div>用户登录</div>
+                <span> </span>
+            </div>
+
+
             <Card
                 cover={
                     <img
@@ -66,10 +66,10 @@ function Login() {
                                 name="mobile"
                                 rules={[{required: true, message: '请输入手机号'}]}>
                                 <Input
-                                    prefix={<UserOutlined />}
+                                    prefix={<UserOutlined/>}
                                     onChange={(e) => {
-                                    setMobile(e.target.value)
-                                }}/>
+                                        setMobile(e.target.value)
+                                    }}/>
                             </Form.Item>
 
                             <Form.Item
@@ -77,10 +77,10 @@ function Login() {
                                 name="password"
                                 rules={[{required: true, message: '请输入密码'}]}>
                                 <Input.Password
-                                    prefix={ <LockOutlined />}
+                                    prefix={<LockOutlined/>}
                                     onChange={(e) => {
-                                    setPassword(e.target.value)
-                                }}/>
+                                        setPassword(e.target.value)
+                                    }}/>
                             </Form.Item>
 
                             <Form.Item style={{textAlign: 'center'}}>

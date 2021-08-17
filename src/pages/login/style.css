@@ -21,3 +21,16 @@
     left: 56px;
 }
 
+.title5 {
+    width: 100vw;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    letter-spacing: 8px;
+    font-size: 18px;
+    font-family: "Microsoft Yahei", Times, serif;
+    font-weight: 700;
+}
+
+

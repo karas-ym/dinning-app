@@ -6,6 +6,7 @@ import './style.css'
 import {useHistory} from 'react-router-dom';
 import url from '../../api'
 import Captcha from '../../components/captcha';
+import {LeftOutlined} from "@ant-design/icons";
 
 
 function Register() {
@@ -55,11 +56,12 @@ function Register() {
 
     return (
         <div className="Register">
-            <PageHeader
-                onBack={() => {
-                    window.history.back()
-                }}
-                title="用户注册"/>
+
+            <div className={'title6'}>
+                <LeftOutlined style={{fontSize: 22}} onClick={() => window.history.back()}/>
+                <div>用户注册</div>
+                <span> </span>
+            </div>
 
             <div className="card-container">
                 <Form

@@ -87,3 +87,30 @@
     border-radius:10px;
     padding:2px 15px;
 }
+
+.buttons{
+    padding:10px;
+    height:135px;
+    margin-top:20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.button{
+    width: 100%;
+    background-color: #ff4200;
+    color:#fff;
+    border: 0;
+    border-radius:5px;
+    padding:8px 10px;
+}
+
+.button1{
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #ff4200;
+    color: #ff4200;
+    border-radius:5px;
+    padding:8px 10px;
+}

@@ -73,9 +73,10 @@ function Order(props) {
                     <>
 
                         <Result
-                            title="您还未登录"
+                            status={'error'}
+                            title="您还未登录,请登录"
                             extra={[
-                                <div style={{padding: "35px 10px "}}>
+                                <div className={'buttons'}>
                                     <button className={'button'} type='primary' key='login' onClick={() => {
                                         history.push('/login')
                                     }}>登录
@@ -86,7 +87,6 @@ function Order(props) {
                                     }}>注册
                                     </button>
                                 </div>
-
                             ]}
                         />
                     </>

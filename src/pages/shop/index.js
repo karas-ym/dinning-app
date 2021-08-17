@@ -49,7 +49,7 @@ function Shop(props) {
             <div className={'title1'}>
                 <LeftOutlined style={{fontSize: 22}} onClick={() => window.history.back()}/>
                 <div>店铺列表</div>
-                <span></span>
+                <span> </span>
             </div>
 
             <div className={'shop-content'}>

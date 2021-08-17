@@ -178,7 +178,7 @@ function Home(props) {
 
                         <>
                             <button className={'date-btn'} onClick={() => {
-                                if ((new Date(date).getTime() + 24 * 60 * 60 * 1000) - new Date().getTime() > 24 * 60 * 60 * 1000 * 2) {
+                                if ((new Date(date).getTime() + 24 * 60 * 60 * 1000) - new Date().getTime() > 24 * 60 * 60 * 1000 * 2.5) {
                                     message.warn('预定不可超过两天')
                                 } else {
                                     setDate(moment(new Date(date).getTime() + 24 * 60 * 60 * 1000).format('YYYY-MM-DD'))
