@@ -1,7 +1,7 @@
 @import '~antd/dist/antd.css';
 
 .Payment {
-    padding: 4px;
+
 }
 
 .Payment .content-row {
@@ -18,6 +18,92 @@
 }
 
 .Payment .btn-wrap {
-    float: right;
-    margin: 10px;
+    background-color: #fff;
+    margin-top: 10px;
+    padding: 20px 15px;
+    text-align: center;
+}
+
+.btn-pay {
+    width: 50%;
+    border: 0;
+    border-radius: 3px;
+    color: #fff;
+    background-color: #ff4200;
+    text-align: center;
+    height: 48px;
+    line-height: 48px;
+}
+
+.title3 {
+    width: 100vw;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    letter-spacing: 8px;
+    font-size: 18px;
+    font-family: "Microsoft Yahei", Times, serif;
+    font-weight: 700;
+}
+
+.payment-message {
+    background-color: #fff;
+    margin-top: 10px;
+    font-size: 16px;
+    font-family: "Microsoft Yahei", Times, serif;
+}
+
+.payment-message-item {
+    padding: 8px 15px;
+    border-bottom: 1px solid #dee1e6;
+    display: flex;
+    justify-content: space-between;
+}
+
+.payment-content {
+    background-color: #fff;
+    margin-top: 10px;
+    font-size: 16px;
+    font-family: "Microsoft Yahei", Times, serif;
+}
+
+.payment-content-shop-name {
+    border-bottom: 1px solid #dee1e6;
+    padding: 8px 15px;
+    font-size: 18px;
+    font-family: "Microsoft Yahei", Times, serif;
+    font-weight: 700;
+    text-align: center;
+}
+
+.payment-content-product {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 15px;
+    border-bottom: 1px solid #dee1e6;
+}
+
+.payment-content-product-message {
+    display: flex;
+}
+
+.payment-content-product-img {
+    width: 80px;
+    height: 80px;
+}
+
+.payment-content-product-img > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.payment-content-product-qty {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px 15px;
+    align-items: center
 }

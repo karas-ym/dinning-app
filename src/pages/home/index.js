@@ -207,7 +207,7 @@ function Home(props) {
                                         }
                                     </Space>
                                     <span>预定时间：当日5:40前</span>
-                                    <span>统一配送：当日6:40-8:00</span>
+                                    <span>统一配送：当日6:40-7:00</span>
                                 </div>
                             </div>
                             <RightOutlined style={{fontSize: '22px'}}/>
@@ -227,7 +227,7 @@ function Home(props) {
                                         }
                                     </Space>
                                     <span>预定时间：当日10:40前</span>
-                                    <span>统一配送：当日6:40-8:00</span>
+                                    <span>统一配送：当日11:40-12:00</span>
                                 </div>
                             </div>
                             <RightOutlined style={{fontSize: '22px'}}/>
