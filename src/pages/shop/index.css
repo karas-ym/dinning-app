@@ -8,12 +8,13 @@
     font-size: 18px;
     font-family: "Microsoft Yahei", Times, serif;
     font-weight: 700;
+    position: fixed;
+    align-items: center;
 }
 
 .shop-content {
-    margin-top: 5px;
     background-color: #fff;
-    padding: 10px 12px;
+    padding: 50px 12px 10px 12px;
 }
 
 .shop-table {

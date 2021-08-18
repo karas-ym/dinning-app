@@ -212,7 +212,7 @@ function Cart(props) {
                 onClose={onClose}
                 visible={visible}>
 
-                <Checkbox indeterminate={indeterminate} onChange={onCheckAllChange} checked={checkAll}>
+                <Checkbox indeterminate={indeterminate} onChange={onCheckAllChange} checked={checkAll} >
                     全选
                 </Checkbox>
 

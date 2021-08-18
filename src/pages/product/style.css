@@ -16,6 +16,7 @@
 }
 
 .title2 {
+    align-items: center;
     width: 100vw;
     padding: 10px;
     display: flex;
@@ -78,7 +79,7 @@
 }
 
 .ant-tabs {
-    max-height: 412px !important;
+    max-height: 470px !important;
 }
 
 .Product .main .tags-wrap {

@@ -14,12 +14,14 @@
     font-size: 18px;
     font-family: "Microsoft Yahei", Times, serif;
     font-weight: 700;
+    position:fixed;
+    align-items: center;
 }
 
 .OrderItem-status {
     background-color: #ff4200;
     color: #fff;
-    padding: 16px;
+    padding: 60px 16px 16px 16px;
 }
 
 .OrderItem-item-img {

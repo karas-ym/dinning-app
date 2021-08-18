@@ -207,7 +207,7 @@ function Product(props) {
     const productList = () => {
         return (
             <List size="large"
-                  style={{marginBottom: 65, overflow: 'scroll', height: '57vh'}}
+                  style={{marginBottom: 65,paddingBottom:25, overflow: 'scroll', height: '60vh'}}
                   dataSource={listData}
                   itemLayout='horizontal'
                   renderItem={(item) => {
@@ -334,7 +334,7 @@ function Product(props) {
 
 
             <Content className='main'>
-                <Header className='tags-wrap'>
+                <Header className='tags-wrap' style={{padding:'0px 10px',minWidth:'100vw'}}>
                     <Text strong>口味：</Text>
                     {
                         tags.map((tag) => {

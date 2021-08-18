@@ -13,6 +13,7 @@ import Postpay from './pages/postpay'
 import ShopList from './temp'
 import Shop from "./pages/shop";
 import Userinfo from "./pages/register/userinfo";
+import {ContainerOutlined, HomeOutlined, UserOutlined} from "@ant-design/icons";
 
 export const TimeContext = React.createContext()
 
@@ -55,9 +56,24 @@ function App() {
                         </Switch>
 
                         <div className="footer">
-                            <Link to={'/'}>首页</Link>
-                            <Link to={'/order'}>订单</Link>
-                            <Link to={'/profile'}>我的</Link>
+                            <Link to={'/'}>
+                                <div style={{display: 'flex', flexDirection: 'column'}}>
+                                    <HomeOutlined style={{color: '#a3a3a3', fontSize: 24}}/>
+                                    <span style={{color: '#a3a3a3', fontSize: 14}}> 首页</span>
+                                </div>
+                            </Link>
+                            <Link to={'/order'}>
+                                <div style={{display: 'flex', flexDirection: 'column'}}>
+                                    <ContainerOutlined style={{color: '#a3a3a3', fontSize: 24}}/>
+                                    <span style={{color: '#a3a3a3', fontSize: 14}}>订单</span>
+                                </div>
+                            </Link>
+                            <Link to={'/profile'}>
+                                <div style={{display: 'flex', flexDirection: 'column'}}>
+                                    <UserOutlined style={{color: '#a3a3a3', fontSize: 24}}/>
+                                    <span style={{color: '#a3a3a3', fontSize: 14}}>我的</span>
+                                </div>
+                            </Link>
                         </div>
 
                     </div>

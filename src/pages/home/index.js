@@ -69,7 +69,7 @@ function Home(props) {
 
     const orderLu = () => {
         if (dateNow === d) {
-            return h < 10 ? false : true
+            return h < 11 ? false : true
         } else {
             return false
         }
@@ -77,29 +77,11 @@ function Home(props) {
 
     const orderDi = () => {
         if (dateNow === d) {
-            return h < 20 ? false : true
+            return h < 17 ? false : true
         } else {
             return false
         }
     }
-
-    // 获取商店列表
-    // let [shopList, setShopList] = useState([])
-    // const getShop = () => {
-    //     axios({
-    //         method: "get",
-    //         url: url + '/api/shop/list',
-    //         params: {
-    //             hospitalId: window.sessionStorage.getItem('hospital')
-    //         }
-    //     })
-    //         .then((res) => {
-    //             console.log(res)
-    //         })
-    //         .catch((error) => {
-    //             message.error(error.toString())
-    //         })
-    // }
 
 
     const dateFormat = 'YYYY-MM-DD';
@@ -153,7 +135,9 @@ function Home(props) {
             </div>
             <div className={'content-home'}>
 
+
                 <Space direction="vertical" align="center" size={30}>
+                    <div style={{fontSize: '18px', fontWeight: 700}}>食堂订餐</div>
                     <div className={'date'}>
                         <>
                             <button className={'date-btn'} onClick={() => {
@@ -193,12 +177,12 @@ function Home(props) {
 
                     <div className={'period'}>
                         <div className={'time-one'} onClick={breakfast}>
+                            <div className={'time-two-first'}>
+                                <img className={'picture-home-img'}
+                                     src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                                     alt=""/>
+                            </div>
                             <div className={'time-two'}>
-                                <div className={'time-two-first'}>
-                                    <img className={'picture-home-img'}
-                                         src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                                         alt=""/>
-                                </div>
                                 <div className={'time-bulletin'}>
                                     <Space>
                                         <span className={'title'}>早餐</span>
@@ -206,19 +190,20 @@ function Home(props) {
                                             orderBr() ? <span className={'Display'}>今日不可预定</span> : null
                                         }
                                     </Space>
-                                    <span>预定时间：当日5:40前</span>
+                                    <span>预定时间：当日6:00前</span>
                                     <span>统一配送：当日6:40-7:00</span>
                                 </div>
+                                <RightOutlined style={{fontSize: '15px', color: '#8c8080'}}/>
                             </div>
-                            <RightOutlined style={{fontSize: '22px'}}/>
                         </div>
+
                         <div className={'time-one'} onClick={lunch}>
+                            <div className={'time-two-first'}>
+                                <img className={'picture-home-img'}
+                                     src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                                     alt=""/>
+                            </div>
                             <div className={'time-two'}>
-                                <div className={'time-two-first'}>
-                                    <img className={'picture-home-img'}
-                                         src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                                         alt=""/>
-                                </div>
                                 <div className={'time-bulletin'}>
                                     <Space>
                                         <span className={'title'}>午餐</span>
@@ -226,19 +211,19 @@ function Home(props) {
                                             orderLu() ? <span className={'Display'}>今日不可预定</span> : null
                                         }
                                     </Space>
-                                    <span>预定时间：当日10:40前</span>
+                                    <span>预定时间：当日11:00前</span>
                                     <span>统一配送：当日11:40-12:00</span>
                                 </div>
+                                <RightOutlined style={{fontSize: '15px', color: '#8c8080'}}/>
                             </div>
-                            <RightOutlined style={{fontSize: '22px'}}/>
                         </div>
                         <div className={'time-one'}>
+                            <div className={'time-two-first'}>
+                                <img className={'picture-home-img'}
+                                     src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                                     alt=""/>
+                            </div>
                             <div className={'time-two'} onClick={dinner}>
-                                <div className={'time-two-first'}>
-                                    <img className={'picture-home-img'}
-                                         src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                                         alt=""/>
-                                </div>
                                 <div className={'time-bulletin'}>
                                     <Space>
                                         <span className={'title'}>晚餐</span>
@@ -246,11 +231,11 @@ function Home(props) {
                                             orderDi() ? <span className={'Display'}>今日不可预定</span> : null
                                         }
                                     </Space>
-                                    <span>预定时间：当日16:40前</span>
+                                    <span>预定时间：当日17:00前</span>
                                     <span>统一配送：当日17:40-18:00</span>
                                 </div>
+                                <RightOutlined style={{fontSize: '15px', color: '#8c8080'}}/>
                             </div>
-                            <RightOutlined style={{fontSize: '22px'}}/>
                         </div>
                     </div>
 

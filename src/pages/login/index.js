@@ -66,7 +66,7 @@ function Login() {
                                 rules={[{required: true, message: '请输入手机号'}]}>
                                 <Input
                                     blur
-                                    style={{borderRadius:'15px'}}
+                                    style={{borderRadius: '15px'}}
                                     placeholder={'请输入手机号'}
                                     prefix={<UserOutlined/>}
                                     onChange={(e) => {
@@ -78,8 +78,8 @@ function Login() {
                                 name="password"
                                 rules={[{required: true, message: '请输入密码'}]}>
                                 <Input.Password
-                                    style={{borderRadius:'15px'}}
-                                    placeholder={'请输入验证码'}
+                                    style={{borderRadius: '15px'}}
+                                    placeholder={'请输入密码'}
                                     prefix={<LockOutlined/>}
                                     onChange={(e) => {
                                         setPassword(e.target.value)

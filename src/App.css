@@ -11,7 +11,7 @@
 .App .footer a {
     display: inline-block;
     width: 100px;
-    padding: 20px;
+    padding:8px 20px;
     text-align: center;
     text-decoration: none;
     color: #333;
