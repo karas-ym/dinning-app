@@ -13,7 +13,7 @@ import './style.css'
 import {TimeContext} from '../../App';
 import Cart from './cart'
 import url from '../../api'
-import color from "color";
+
 
 const {Header, Content} = Layout
 const {TabPane} = Tabs
@@ -106,7 +106,6 @@ function Product(props) {
                 message.info(res.data.message)
             } else if (res.data.code === 'SUCCESS') {
                 setRender(!render)
-                // setCount(count + 1)
                 cartList(listData)
             }
         }).catch((error) => {
@@ -157,6 +156,9 @@ function Product(props) {
             method: "get",
             url: url + '/api/cart/list',
             headers: {token},
+            params: {
+                shopId: id
+            }
         })
             .then((res) => {
                 cartqty = res.data.data
@@ -217,7 +219,7 @@ function Product(props) {
                                                  token === null ?
                                                      <PlusCircleFilled
                                                          className={item.tags !== null ? 'add-icon' : 'add-icon-adjust'}
-                                                         style={{color: '#1890ff', fontSize: '18px'}}
+                                                         style={{color: '#ff1818', fontSize: '22px'}}
                                                          onClick={() => {
                                                              addCart(item.id, item.shopId)
                                                          }}/>

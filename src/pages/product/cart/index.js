@@ -55,6 +55,9 @@ function Cart(props) {
             method: "get",
             url: url + '/api/cart/list',
             headers: {token},
+            params: {
+                shopId: props.shopId,
+            }
         })
             .then((res) => {
                 if (res.data.code !== 'SUCCESS') {
