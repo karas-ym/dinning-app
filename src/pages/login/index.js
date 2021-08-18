@@ -62,10 +62,12 @@ function Login() {
                             name="login-mobile"
                             onFinish={handleLogin}>
                             <Form.Item
-                                label="手机号"
                                 name="mobile"
                                 rules={[{required: true, message: '请输入手机号'}]}>
                                 <Input
+                                    blur
+                                    style={{borderRadius:'15px'}}
+                                    placeholder={'请输入手机号'}
                                     prefix={<UserOutlined/>}
                                     onChange={(e) => {
                                         setMobile(e.target.value)
@@ -73,10 +75,11 @@ function Login() {
                             </Form.Item>
 
                             <Form.Item
-                                label="密码"
                                 name="password"
                                 rules={[{required: true, message: '请输入密码'}]}>
                                 <Input.Password
+                                    style={{borderRadius:'15px'}}
+                                    placeholder={'请输入验证码'}
                                     prefix={<LockOutlined/>}
                                     onChange={(e) => {
                                         setPassword(e.target.value)
@@ -98,9 +101,9 @@ function Login() {
                             </Form.Item>
 
                             <Form.Item>
-                                <Button type="primary" htmlType="submit" className='submit'>
+                                <button type="submit" className='submit'>
                                     提交
-                                </Button>
+                                </button>
                             </Form.Item>
                         </Form>
                     </div>

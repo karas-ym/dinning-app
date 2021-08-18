@@ -1,0 +1,35 @@
+.title7 {
+    width: 100vw;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    letter-spacing: 8px;
+    font-size: 18px;
+    font-family: "Microsoft Yahei", Times, serif;
+    font-weight: 700;
+}
+
+.userinfo {
+    width: 100%;
+    padding: 20px 35px;
+    margin-top:10px;
+    background-color: #fff
+}
+
+.userinfo-input{
+    width: 100% !important;
+    outline:none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    border: 1px solid #dcdfe6;
+}
+
+.userinfo-button{
+    width: 100% !important;
+    border-radius: 5px;
+    border: 0;
+    background-color: #ff4200;
+    color: #fff;
+    padding: 10px;
+}

@@ -16,9 +16,12 @@
 }
 
 .Login .card-container .submit {
-    width: 70%;
-    position: relative;
-    left: 56px;
+    width: 100%;
+    background-color: #ff4200;
+    border: 0;
+    border-radius:5px;
+    color: #fff;
+    padding:10px;
 }
 
 .title5 {
@@ -32,5 +35,7 @@
     font-family: "Microsoft Yahei", Times, serif;
     font-weight: 700;
 }
+
+
 
 

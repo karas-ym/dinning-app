@@ -108,9 +108,7 @@ function Profile(props) {
 
                 <div className="profile-bio">
                     <p>
-                        It takes monumental improvement for us to change how we live our lives. Design is the way we
-                        access that
-                        improvement.
+                       个人简介
                     </p>
                 </div>
 

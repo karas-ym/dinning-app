@@ -12,6 +12,7 @@ import Payment from './pages/payment'
 import Postpay from './pages/postpay'
 import ShopList from './temp'
 import Shop from "./pages/shop";
+import Userinfo from "./pages/register/userinfo";
 
 export const TimeContext = React.createContext()
 
@@ -45,6 +46,7 @@ function App() {
                             <Route path="/login" component={Login}/>
 
                             <Route path="/register" component={Register}/>
+                            <Route path="/userinfo" component={Userinfo}/>
 
                             <Route path="/profile" component={Profile}/>
 

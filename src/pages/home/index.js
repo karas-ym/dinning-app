@@ -254,31 +254,6 @@ function Home(props) {
                         </div>
                     </div>
 
-
-                    {/*<Radio.Group buttonStyle="solid"*/}
-                    {/*             onChange={(e) => {*/}
-                    {/*                 setTime(e.target.value)*/}
-                    {/*                 value.setTime(e.target.value)*/}
-                    {/*             }}>*/}
-                    {/*    <Radio.Button value="早餐" disabled={orderBr()}>早餐</Radio.Button>*/}
-                    {/*    <Radio.Button value="午餐" disabled={orderLu()}>午餐</Radio.Button>*/}
-                    {/*    <Radio.Button value="晚餐" disabled={orderDi()}>晚餐</Radio.Button>*/}
-                    {/*</Radio.Group>*/}
-
-                    {/*<div>预定日期: {date}</div>*/}
-                    {/*<div>预定时段: {time}</div>*/}
-
-                    {/*<Button type="primary"*/}
-                    {/*        style={{width: 180, height: 40, fontSize: 18}}*/}
-                    {/*        onClick={() => {*/}
-                    {/*            if (date !== null && time !== null && shopId !== null && date !== '') {*/}
-                    {/*                history.push('/product?id=' + shopId + '&slot=' + time + '&time=' + date)*/}
-                    {/*            } else if (shopId === null) {*/}
-                    {/*                message.info('请选择店铺')*/}
-                    {/*            } else {*/}
-                    {/*                message.info('请选择订餐时间')*/}
-                    {/*            }*/}
-                    {/*        }}>订餐</Button>*/}
                 </Space>
             </div>
         </div>

@@ -71,7 +71,6 @@ function Order(props) {
             {
                 token === null ?
                     <>
-
                         <Result
                             status={'error'}
                             title="您还未登录,请登录"
@@ -96,7 +95,6 @@ function Order(props) {
                             listData.map((item, index) => {
                                 return (
                                     <div className={'order-item'} key={index}>
-
                                         <div className={'order-item-message'}>
                                             <div className={'order-item-message-name'}>
                                                 <div className={'order-item-message-img'}>
@@ -120,9 +118,9 @@ function Order(props) {
                                         <div className={'order-item-product'}>
                                             <div style={{display: 'flex',}}>
                                                 {
-                                                    item.orderItemDtoList.map((item, i) => {
+                                                    item.orderItemDtoList.map((item, index) => {
                                                         return (
-                                                            <div className={'order-item-product-img'} key={i}>
+                                                            <div className={'order-item-product-img'} key={index}>
                                                                 <img src={'http://' + item.cover} alt=""/>
                                                             </div>
                                                         )
@@ -148,47 +146,6 @@ function Order(props) {
                             })
                         }
 
-
-                        {/*<div className="card-container">*/}
-                        {/*    <List itemLayout="vertical" size="large" dataSource={listData}*/}
-                        {/*          renderItem={item => (*/}
-                        {/*              <List.Item*/}
-                        {/*                  key={item.id}*/}
-                        {/*                  onClick={() => {*/}
-                        {/*                      value.setOrderDetail(item)*/}
-                        {/*                      history.push("/order/" + item.id)*/}
-                        {/*                  }}*/}
-                        {/*                  extra={*/}
-                        {/*                      <Space direction='vertical' size={10}>*/}
-                        {/*                          {orderStatus(item)} //订单状态*/}
-                        {/*                          <div>￥{item.total}</div>*/}
-                        {/*                      </Space>*/}
-                        {/*                  }>*/}
-                        {/*                  <List.Item.Meta*/}
-                        {/*                      style={{alignItems: 'center'}}*/}
-                        {/*                      title={*/}
-                        {/*                          <Space>*/}
-                        {/*                              <span className='shopname'>{item.shop.name}</span>*/}
-                        {/*                              <Text type="secondary"><RightOutlined/></Text>*/}
-                        {/*                          </Space>*/}
-                        {/*                      }*/}
-                        {/*                      avatar={<Avatar*/}
-                        {/*                          shape="square"*/}
-                        {/*                          size={64}*/}
-                        {/*                          src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"/>}*/}
-                        {/*                      description={*/}
-                        {/*                          item.orderItemDtoList.map((product) => {*/}
-                        {/*                              return (*/}
-                        {/*                                  <div*/}
-                        {/*                                      key={product.id}>{product.productName} x {product.qty}</div>*/}
-                        {/*                              )*/}
-                        {/*                          })*/}
-                        {/*                      }/>*/}
-                        {/*              </List.Item>*/}
-                        {/*          )}*/}
-                        {/*    >*/}
-                        {/*    </List>*/}
-                        {/*</div>*/}
                     </div>
             }
         </>
