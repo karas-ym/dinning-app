@@ -13,6 +13,8 @@ function Userinfo(props) {
     const searchParams = new URLSearchParams(props.location.search.substring(1))
     let mobile = searchParams.get("mobile")
     let code = searchParams.get("code")
+    let nickname = searchParams.get("nickname")
+    let password = searchParams.get("password")
 
 
     const onfinish = (val) => {
@@ -36,6 +38,9 @@ function Userinfo(props) {
                     } else if (res.data.code === 'SUCCESS') {
                         window.localStorage.setItem('token', res.data.data.token)
                         props.history.push('/profile')
+                    } else if (res.data.code === 'CODE_ERROR') {
+                        message.error(res.data.message)
+                        props.history.push('/register?nickname=' + val.nickname + '&password=' + val.password)
                     }
                 })
                 .catch((error) => {
@@ -64,6 +69,11 @@ function Userinfo(props) {
                 </div>
 
                 <Form
+                    initialValues={{
+                        'nickname': nickname === null ? '' : nickname,
+                        'password': password === null ? '' : password,
+                        'again': password === null ? '' : password,
+                    }}
                     onFinish={onfinish}
                     name={'userinfo'}>
                     <Form.Item

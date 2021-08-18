@@ -1,39 +1,4 @@
 
-/*html {*/
-/*    height: 100%;*/
-/*}*/
-
-/*body {*/
-/*    overflow: hidden;*/
-/*    !*background: #bcdee7 url("../img/bg.jpg") no-repeat center center fixed;*!*/
-/*    background-size: cover;*/
-/*    position: fixed;*/
-/*    padding: 0px;*/
-/*    margin: 0px;*/
-/*    width: 100%;*/
-/*    height: 100%;*/
-/*    font: normal 14px/1.618em "Roboto", sans-serif;*/
-/*    -webkit-font-smoothing: antialiased;*/
-/*}*/
-
-/*body:before {*/
-/*    content: "";*/
-/*    height: 0px;*/
-/*    padding: 0px;*/
-/*    border: 130em solid #313440;*/
-/*    position: absolute;*/
-/*    left: 50%;*/
-/*    top: 100%;*/
-/*    z-index: 2;*/
-/*    display: block;*/
-/*    -webkit-border-radius: 50%;*/
-/*    border-radius: 50%;*/
-/*    -webkit-transform: translate(-50%, -50%);*/
-/*    transform: translate(-50%, -50%);*/
-/*    -webkit-animation: puff 0.5s 1.8s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards, borderRadius 0.2s 2.3s linear forwards;*/
-/*    animation: puff 0.5s 1.8s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards, borderRadius 0.2s 2.3s linear forwards;*/
-/*}*/
-
 h1,
 h2 {
     font-weight: 500;
@@ -540,51 +505,5 @@ p {
     }
 }
 
-
-/*@import '~antd/dist/antd.css';*/
-
-/*.nologin {*/
-/*    width: 100%;*/
-/*    height: 100vh;*/
-/*}*/
-
-/*.nologin > div {*/
-/*    position: absolute;*/
-/*    top: calc(50% - 60px);*/
-/*    left: calc(50% - 30px);*/
-/*}*/
-
-/*.nologin button {*/
-/*    display: block;*/
-/*    margin-top: 10px;*/
-/*}*/
-
-/*.Profile .content {*/
-/*    background-color: #fff;*/
-/*    padding: 20px 10px;*/
-/*    text-align: center;*/
-/*}*/
-
-/*.Profile .info-right {*/
-/*    float: right;*/
-/*    top: 8px;*/
-/*}*/
-
-/*.Profile .logout {*/
-/*    display: block;*/
-/*    margin: 20px auto 10px;*/
-/*}*/
-
-/*.Profile .list-row {*/
-/*    border-bottom: none;*/
-/*    text-align: left;*/
-/*    font-size: 15px;*/
-/*    line-height: 60px;*/
-/*    margin-top: 10px;*/
-/*}*/
-
-/*.Profile .ant-collapse > .ant-collapse-item > .ant-collapse-header {*/
-/*    line-height: 2.5;*/
-/*}*/
 
 

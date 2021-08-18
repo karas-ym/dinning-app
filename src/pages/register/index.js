@@ -1,32 +1,24 @@
-import React, {useState} from 'react';
-import axios from 'axios'
-import qs from 'qs'
-import {Form, message, Space} from 'antd';
+import React from 'react';
+import {Form, Space} from 'antd';
 import './style.css'
-import {useHistory} from 'react-router-dom';
-import url from '../../api'
-import Captcha from '../../components/captcha';
+
 import {LeftOutlined} from "@ant-design/icons";
 
 
 function Register(props) {
 
-    let [nickname, setNickname] = useState('')
-    let [mobile, setMobile] = useState('')
-    let [password, setPassword] = useState('')
-    let [smsCode, setSmsCode] = useState()
+    const searchParams = new URLSearchParams(props.location.search.substring(1))
+    let nickname = searchParams.get("nickname")
+    let password = searchParams.get("password")
 
-    let history = useHistory()
 
     const onFinish = (values) => {
-        props.history.push('/userinfo?mobile='+values.mobile+'&code='+values.code)
-        console.log(values)
+        if (nickname === null && password === null) {
+            props.history.push('/userinfo?mobile=' + values.mobile + '&code=' + values.code)
+        } else {
+            props.history.push('/userinfo?mobile=' + values.mobile + '&code=' + values.code + '&nickname=' + nickname + '&password=' + password)
+        }
     };
-
-
-
-
-
 
     return (
         <div className="Register">
