@@ -108,15 +108,14 @@ function Captcha(props) {
 
     return (
         <span>
-            <Button size='middle' disabled={!smsStatus} onClick={sendSms}>
+            <button className={'button-code'} disabled={!smsStatus} onClick={sendSms}>
                 {!smsStatus ? cd + "s 后重新发送" : '发送验证码'}
-            </Button>
+            </button>
             <Modal title="图片验证" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}
                    closable={false}
                    footer={null}
                    centered
-                   width={300}
-            >
+                   width={300}>
                 <Space direction='vertical' size={20}>
                     <Space>
                         <Image width={150} src={captchaUrl}/>

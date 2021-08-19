@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Form, Space} from 'antd';
 import './style.css'
 
 import {LeftOutlined} from "@ant-design/icons";
+import Captcha from "../../components/captcha";
 
 
 function Register(props) {
@@ -11,8 +12,11 @@ function Register(props) {
     let nickname = searchParams.get("nickname")
     let password = searchParams.get("password")
 
+    const[mobile,setMobile]=useState()
+
 
     const onFinish = (values) => {
+        setMobile(values.mobile)
         if (nickname === null && password === null) {
             props.history.push('/userinfo?mobile=' + values.mobile + '&code=' + values.code)
         } else {
@@ -55,6 +59,8 @@ function Register(props) {
                                 noStyle>
                                 <input type="text" className={'input-phone'} placeholder={'请输入手机验证码'}/>
                             </Form.Item>
+                            <Captcha value={mobile}></Captcha>
+
                             <button
 
                                 onClick={() => {
@@ -108,7 +114,7 @@ function Register(props) {
                 {/*                   onChange={(e) => {*/}
                 {/*                       setSmsCode(e.target.value)*/}
                 {/*                   }}/>*/}
-                {/*            <Captcha value={mobile}></Captcha>*/}
+
                 {/*        </div>*/}
                 {/*    </Form.Item>*/}
 
