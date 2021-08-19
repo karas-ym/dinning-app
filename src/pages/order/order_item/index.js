@@ -158,7 +158,7 @@ function OrderItem() {
                 </div>
 
                 <div className={'orderD'}>
-                    <Text strong style={{fontSize: 18}}>取货信息</Text>
+                    <Text strong style={{fontSize: 14}}>取货信息</Text>
                     <Divider/>
                     <div className={'row'}>
                         <Text type="secondary">商家名称</Text>
@@ -179,7 +179,7 @@ function OrderItem() {
                 </div>
 
                 <div className={'orderD'}>
-                    <Text strong style={{fontSize: 18}}>配送信息</Text>
+                    <Text strong style={{fontSize: 14}}>配送信息</Text>
                     <Divider/>
                     <div className={'row'}>
                         <Text type="secondary">配送时间</Text>
@@ -201,7 +201,7 @@ function OrderItem() {
                 <List
                     itemLayout="vertical"
                     size="large"
-                    header={<Text strong style={{fontSize: 18}}>{shop.name}</Text>}
+                    header={<Text strong style={{fontSize: 14}}>{shop.name}</Text>}
                     style={{backgroundColor: "#fff"}}
                     dataSource={orderDetail.orderItemDtoList}
                     renderItem={item => (
@@ -238,9 +238,11 @@ function OrderItem() {
                     {
                         orderDetail.paymentStatus === 1 && orderDetail.status === 1 ?
                             <Space size={10} className='btn-wrap'>
-                                <Button size='middle' shape='round' onClick={handleCancel}
+                                <Button size='middle' shape='round' danger onClick={handleCancel}
                                 >取消订单</Button>
-                                <Button type='primary' shape='round'
+                                <Button type='primary'
+                                        shape='round'
+                                        danger
                                         className="check-btn"
                                         onClick={() => {
                                             history.push('/payment/' + orderId.id)
@@ -284,7 +286,7 @@ function OrderItem() {
                                     />
                                 </Form.Item>
                                 <Form.Item>
-                                    <Button type="primary" onClick={handleCmt}>
+                                    <Button type="primary" danger onClick={handleCmt}>
                                         提交
                                     </Button>
                                 </Form.Item>
@@ -295,7 +297,7 @@ function OrderItem() {
 
 
                 <div className={'orderD'} style={{marginTop: 7}}>
-                    <Text strong style={{fontSize: 18}}>订单详情</Text>
+                    <Text strong style={{fontSize: 14}}>订单详情</Text>
                     <Divider/>
                     <div className={'row'}>
                         <Text type="secondary">订单号码</Text>

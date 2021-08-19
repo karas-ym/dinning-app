@@ -133,9 +133,8 @@ function Home(props) {
                     </div>
                 </Carousel>
             </div>
+
             <div className={'content-home'}>
-
-
                 <Space direction="vertical" align="center" size={30}>
                     <div style={{fontSize: '18px', fontWeight: 700}}>食堂订餐</div>
                     <div className={'date'}>
@@ -238,7 +237,6 @@ function Home(props) {
                             </div>
                         </div>
                     </div>
-
                 </Space>
             </div>
         </div>

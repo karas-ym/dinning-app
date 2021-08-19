@@ -1,8 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 import {render} from "react-dom";
-import {message} from 'antd'
+import {ConfigProvider, message} from 'antd'
 import './index.css';
+import zhCN from 'antd/lib/locale/zh_CN';
 import App from './App';
 
 
@@ -19,4 +20,9 @@ axios.interceptors.response.use(function (response) {
     return Promise.reject(error);
 });
 
-render(<App/>, document.getElementById("root"))
+render(
+    <ConfigProvider
+        locale={zhCN}>
+        <App/>
+    </ConfigProvider>
+    , document.getElementById("root"))
