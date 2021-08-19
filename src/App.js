@@ -26,6 +26,7 @@ function App() {
     let [weekday, setWeekday] = useState(null)
     let [orderDetail, setOrderDetail] = useState({})
     let [shop, setShop] = useState(null)
+    const [number, setNumber] = useState(1)
 
     return (
         <OrderContext.Provider value={{orderDetail, setOrderDetail}}>
@@ -56,22 +57,28 @@ function App() {
                         </Switch>
 
                         <div className="footer">
-                            <Link to={'/'}>
-                                <div style={{display: 'flex', flexDirection: 'column'}}>
-                                    <HomeOutlined style={{color: '#a3a3a3', fontSize: 24}}/>
-                                    <span style={{color: '#a3a3a3', fontSize: 14}}> 首页</span>
+                            <Link to={'/'} onClick={() => {
+                                setNumber(1)
+                            }}>
+                                <div key={1} className={number === 1 ? 'footer-block footer-one' : 'footer-block'}>
+                                    <HomeOutlined className={'footer-icon'}/>
+                                    <span className={number === 1 ? 'footer-name footer-one' : 'footer-name'}>首页</span>
                                 </div>
                             </Link>
-                            <Link to={'/order'}>
-                                <div style={{display: 'flex', flexDirection: 'column'}}>
-                                    <ContainerOutlined style={{color: '#a3a3a3', fontSize: 24}}/>
-                                    <span style={{color: '#a3a3a3', fontSize: 14}}>订单</span>
+                            <Link to={'/order'} onClick={() => {
+                                setNumber(2)
+                            }}>
+                                <div className={number === 2 ? 'footer-block footer-one' : 'footer-block'}>
+                                    <ContainerOutlined className={'footer-icon'}/>
+                                    <span className={number === 2 ? 'footer-name footer-one' : 'footer-name'}>订单</span>
                                 </div>
                             </Link>
-                            <Link to={'/profile'}>
-                                <div style={{display: 'flex', flexDirection: 'column'}}>
-                                    <UserOutlined style={{color: '#a3a3a3', fontSize: 24}}/>
-                                    <span style={{color: '#a3a3a3', fontSize: 14}}>我的</span>
+                            <Link to={'/profile'} onClick={() => {
+                                setNumber(3)
+                            }}>
+                                <div className={number === 3 ? 'footer-block footer-one' : 'footer-block'}>
+                                    <UserOutlined className={'footer-icon'}/>
+                                    <span className={number === 3 ? 'footer-name footer-one' : 'footer-name'}>我的</span>
                                 </div>
                             </Link>
                         </div>

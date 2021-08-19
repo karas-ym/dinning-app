@@ -8,7 +8,6 @@ import url from '../../api'
 
 
 function Order(props) {
-    let history = useHistory()
     let token = window.localStorage.getItem('token')
 
     const [listData, setListData] = useState([])
@@ -16,6 +15,8 @@ function Order(props) {
     useEffect(() => {
         if (token !== null) {
             getOrderList()
+        } else {
+            props.history.push('/login')
         }
     }, [])
 
@@ -68,86 +69,61 @@ function Order(props) {
                 <div>订单</div>
             </div>
 
-            {
-                token === null ?
-                    <>
-                        <Result
-                            status={'error'}
-                            title="您还未登录,请登录"
-                            extra={[
-                                <div className={'buttons'}>
-                                    <button className={'button'} type='primary' key='login' onClick={() => {
-                                        history.push('/login')
-                                    }}>登录
-                                    </button>
-
-                                    <button className={'button1'} type='default' key='register' onClick={() => {
-                                        history.push('/register')
-                                    }}>注册
-                                    </button>
-                                </div>
-                            ]}
-                        />
-                    </>
-                    :
-                    <div className="Order">
-                        {
-                            listData.map((item, index) => {
-                                return (
-                                    <div className={'order-item'} key={index}>
-                                        <div className={'order-item-message'}>
-                                            <div className={'order-item-message-name'}>
-                                                <div className={'order-item-message-img'}>
-                                                    <img
-                                                        src="https://cdn.pixabay.com/photo/2021/06/27/14/32/raspberry-6368999_960_720.png"
-                                                        alt=""/>
-                                                </div>
-                                                <span style={{
-                                                    fontSize: '16px',
-                                                    fontWeight: 'bold'
-                                                }}>{item.shop.name}</span>
-                                            </div>
-                                            <div className={'order-item-message-status'}>
+            <div className="Order">
+                {
+                    listData.map((item, index) => {
+                        return (
+                            <div className={'order-item'} key={index}>
+                                <div className={'order-item-message'}>
+                                    <div className={'order-item-message-name'}>
+                                        <div className={'order-item-message-img'}>
+                                            <img
+                                                src="https://cdn.pixabay.com/photo/2021/06/27/14/32/raspberry-6368999_960_720.png"
+                                                alt=""/>
+                                        </div>
+                                        <span style={{
+                                            fontSize: '16px',
+                                            fontWeight: 'bold'
+                                        }}>{item.shop.name}</span>
+                                    </div>
+                                    <div className={'order-item-message-status'}>
                                                 <span style={{
                                                     color: '#a1a1a1',
                                                     fontSize: '15px'
                                                 }}>{orderStatus(item)}</span>
-                                            </div>
-                                        </div>
-
-                                        <div className={'order-item-product'}>
-                                            <div style={{display: 'flex',}}>
-                                                {
-                                                    item.orderItemDtoList.map((item, index) => {
-                                                        return (
-                                                            <div className={'order-item-product-img'} key={index}>
-                                                                <img src={'http://' + item.cover} alt=""/>
-                                                            </div>
-                                                        )
-                                                    })
-                                                }
-
-                                            </div>
-                                            <div className={'total'}>
-                                                <span>￥{item.total}</span>
-                                                <span style={{
-                                                    color: '#a1a1a1',
-                                                    fontSize: '13px'
-                                                }}>共{item.orderItemDtoList.length}件</span>
-                                            </div>
-                                        </div>
-
-                                        <div className={'order-item-btn'}>
-                                            <button onClick={() => props.history.push("/order/" + item.id)}>查看订单
-                                            </button>
-                                        </div>
                                     </div>
-                                )
-                            })
-                        }
+                                </div>
 
-                    </div>
-            }
+                                <div className={'order-item-product'}>
+                                    <div style={{display: 'flex',}}>
+                                        {
+                                            item.orderItemDtoList.map((item, index) => {
+                                                return (
+                                                    <div className={'order-item-product-img'} key={index}>
+                                                        <img src={'http://' + item.cover} alt=""/>
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                    <div className={'total'}>
+                                        <span>￥{item.total}</span>
+                                        <span style={{
+                                            color: '#a1a1a1',
+                                            fontSize: '13px'
+                                        }}>共{item.orderItemDtoList.length}件</span>
+                                    </div>
+                                </div>
+
+                                <div className={'order-item-btn'}>
+                                    <button onClick={() => props.history.push("/order/" + item.id)}>查看订单
+                                    </button>
+                                </div>
+                            </div>
+                        )
+                    })
+                }
+            </div>
         </>
 
     )

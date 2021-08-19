@@ -48,12 +48,16 @@ function Login() {
             </div>
 
 
-            <Card
+            <Card style={{paddingTop:'46px'}}
                 cover={
-                    <img
-                        alt="example"
-                        src="https://res.cloudinary.com/dgmilxzy7/image/upload/c_scale,w_500,o_75,b_rgb:07beb8/v1506735375/CodePen/ViddenPixel.jpg"
-                    />
+                    <div style={{width:'100vw',height:'250px'}}>
+                        <img
+                            style={{width:'100%',height:'100%',objectFit:"cover"}}
+                            alt="example"
+                            src="https://s.haohuoshi.net/uploads/images/20210304/9ced0fddd29bceb8201f08c97a1aebfb0c1a90cf.jpg"
+                        />
+                    </div>
+
                 }>
                 <div className="main">
                     <div className="card-container">

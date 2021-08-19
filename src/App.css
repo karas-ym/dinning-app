@@ -11,8 +11,27 @@
 .App .footer a {
     display: inline-block;
     width: 100px;
-    padding:8px 20px;
+    padding: 8px 20px;
     text-align: center;
     text-decoration: none;
     color: #333;
+}
+
+.footer-one {
+    color: #ff4200 !important;
+}
+
+.footer-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-name {
+    color: #a3a3a3;
+    font-size: 14px;
+}
+
+.footer-icon {
+    color: #a3a3a3;
+    font-size: 24px;
 }

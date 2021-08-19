@@ -7,9 +7,7 @@
     margin-bottom: 20px;
 }
 
-/* .Login .card-container .ant-form-item .ant-btn{
-    left: 28px;
-} */
+
 
 .Login .card-container .option {
     color: #666;
@@ -25,6 +23,9 @@
 }
 
 .title5 {
+    position:fixed;
+    top: 0;
+    z-index: 99;
     width: 100vw;
     padding: 10px;
     display: flex;

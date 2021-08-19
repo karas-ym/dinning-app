@@ -135,23 +135,24 @@ function Home(props) {
             </div>
 
             <div className={'content-home'}>
-                <Space direction="vertical" align="center" size={30}>
+                <Space direction="vertical" align="center" size={20}>
                     <div style={{fontSize: '18px', fontWeight: 700}}>食堂订餐</div>
-                    <div className={'date'}>
-                        <>
-                            <button className={'date-btn'} onClick={() => {
-                                if (new Date().getTime() >= (new Date(date).getTime() - 12 * 60 * 60 * 1000)) {
-                                    message.warn('昨天不可预定')
-                                } else {
-                                    setDate(moment(new Date(date).getTime() - 24 * 60 * 60 * 1000).format('YYYY-MM-DD'))
-                                    setWeekday(moment(new Date(date).getTime() - 24 * 60 * 60 * 1000).format('dddd'))
-                                }
-                            }}>
-                                <LeftOutlined style={{color: '#fff'}}/>
-                            </button>
-                        </>
+                    <Space direction="vertical" align="center" size={10}>
+                        <div className={'date'}>
+                            <>
+                                <button className={'date-btn'} onClick={() => {
+                                    if (new Date().getTime() >= (new Date(date).getTime() - 12 * 60 * 60 * 1000)) {
+                                        message.warn('昨天不可预定')
+                                    } else {
+                                        setDate(moment(new Date(date).getTime() - 24 * 60 * 60 * 1000).format('YYYY-MM-DD'))
+                                        setWeekday(moment(new Date(date).getTime() - 24 * 60 * 60 * 1000).format('dddd'))
+                                    }
+                                }}>
+                                    <LeftOutlined style={{color: '#fff'}}/>
+                                </button>
+                            </>
 
-                        <span style={{color: 'red'}}>
+                            <span style={{color: 'red'}}>
                                 预定日期：
                             <Space>
                                 <>{date}</>
@@ -159,84 +160,86 @@ function Home(props) {
                             </Space>
                         </span>
 
-                        <>
-                            <button className={'date-btn'} onClick={() => {
-                                if ((new Date(date).getTime() + 24 * 60 * 60 * 1000) - new Date().getTime() > 24 * 60 * 60 * 1000 * 2.5) {
-                                    message.warn('预定不可超过两天')
-                                } else {
-                                    setDate(moment(new Date(date).getTime() + 24 * 60 * 60 * 1000).format('YYYY-MM-DD'))
-                                    setWeekday(moment(new Date(date).getTime() + 24 * 60 * 60 * 1000).format('dddd'))
-                                }
-                            }}>
-                                <RightOutlined style={{color: '#fff'}}/>
-                            </button>
-                        </>
-                    </div>
-
-
-                    <div className={'period'}>
-                        <div className={'time-one'} onClick={breakfast}>
-                            <div className={'time-two-first'}>
-                                <img className={'picture-home-img'}
-                                     src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                                     alt=""/>
-                            </div>
-                            <div className={'time-two'}>
-                                <div className={'time-bulletin'}>
-                                    <Space>
-                                        <span className={'title'}>早餐</span>
-                                        {
-                                            orderBr() ? <span className={'Display'}>今日不可预定</span> : null
-                                        }
-                                    </Space>
-                                    <span>预定时间：当日6:00前</span>
-                                    <span>统一配送：当日6:40-7:00</span>
-                                </div>
-                                <RightOutlined style={{fontSize: '15px', color: '#8c8080'}}/>
-                            </div>
+                            <>
+                                <button className={'date-btn'} onClick={() => {
+                                    if ((new Date(date).getTime() + 24 * 60 * 60 * 1000) - new Date().getTime() > 24 * 60 * 60 * 1000 * 2.5) {
+                                        message.warn('预定不可超过两天')
+                                    } else {
+                                        setDate(moment(new Date(date).getTime() + 24 * 60 * 60 * 1000).format('YYYY-MM-DD'))
+                                        setWeekday(moment(new Date(date).getTime() + 24 * 60 * 60 * 1000).format('dddd'))
+                                    }
+                                }}>
+                                    <RightOutlined style={{color: '#fff'}}/>
+                                </button>
+                            </>
                         </div>
 
-                        <div className={'time-one'} onClick={lunch}>
-                            <div className={'time-two-first'}>
-                                <img className={'picture-home-img'}
-                                     src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                                     alt=""/>
-                            </div>
-                            <div className={'time-two'}>
-                                <div className={'time-bulletin'}>
-                                    <Space>
-                                        <span className={'title'}>午餐</span>
-                                        {
-                                            orderLu() ? <span className={'Display'}>今日不可预定</span> : null
-                                        }
-                                    </Space>
-                                    <span>预定时间：当日11:00前</span>
-                                    <span>统一配送：当日11:40-12:00</span>
+                        <div className={'string'}/>
+
+                        <div className={'period'}>
+                            <div className={'time-one'} onClick={breakfast}>
+                                <div className={'time-two-first'}>
+                                    <img className={'picture-home-img1'}
+                                         src="https://s.haohuoshi.net/uploads/images/20210304/2a4688bdaca9485c0a3506ce33fb635159f50d7b.jpg"
+                                         alt=""/>
                                 </div>
-                                <RightOutlined style={{fontSize: '15px', color: '#8c8080'}}/>
+                                <div className={'time-two'}>
+                                    <div className={'time-bulletin'}>
+                                        <Space>
+                                            <span className={'title'}>早餐</span>
+                                            {
+                                                orderBr() ? <span className={'Display'}>今日不可预定</span> : null
+                                            }
+                                        </Space>
+                                        <span style={{color: "grey"}}>预定时间：当日6:00前</span>
+                                        <span style={{color: "grey"}}>统一配送：当日6:40-7:00</span>
+                                    </div>
+                                    <RightOutlined style={{fontSize: '15px', color: '#8c8080'}}/>
+                                </div>
+                            </div>
+
+                            <div className={'time-one'} onClick={lunch}>
+                                <div className={'time-two-first'}>
+                                    <img className={'picture-home-img1'}
+                                         src="https://s.haohuoshi.net/uploads/images/20210304/7e601ac29504f6d976481af5d2f4617b48a4d005.jpg"
+                                         alt=""/>
+                                </div>
+                                <div className={'time-two'}>
+                                    <div className={'time-bulletin'}>
+                                        <Space>
+                                            <span className={'title'}>午餐</span>
+                                            {
+                                                orderLu() ? <span className={'Display'}>今日不可预定</span> : null
+                                            }
+                                        </Space>
+                                        <span style={{color: "grey"}}>预定时间：当日11:00前</span>
+                                        <span style={{color: "grey"}}>统一配送：当日11:40-12:00</span>
+                                    </div>
+                                    <RightOutlined style={{fontSize: '15px', color: '#8c8080'}}/>
+                                </div>
+                            </div>
+                            <div className={'time-one'}>
+                                <div className={'time-two-first'}>
+                                    <img className={'picture-home-img1'}
+                                         src="https://s.haohuoshi.net/uploads/images/20210304/c18cd836a0efa683da37fbdd77ce7f616ac72471.jpg"
+                                         alt=""/>
+                                </div>
+                                <div className={'time-two'} onClick={dinner}>
+                                    <div className={'time-bulletin'}>
+                                        <Space>
+                                            <span className={'title'}>晚餐</span>
+                                            {
+                                                orderDi() ? <span className={'Display'}>今日不可预定</span> : null
+                                            }
+                                        </Space>
+                                        <span style={{color: "grey"}}>预定时间：当日17:00前</span>
+                                        <span style={{color: "grey"}}>统一配送：当日17:40-18:00</span>
+                                    </div>
+                                    <RightOutlined style={{fontSize: '15px', color: '#8c8080'}}/>
+                                </div>
                             </div>
                         </div>
-                        <div className={'time-one'}>
-                            <div className={'time-two-first'}>
-                                <img className={'picture-home-img'}
-                                     src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                                     alt=""/>
-                            </div>
-                            <div className={'time-two'} onClick={dinner}>
-                                <div className={'time-bulletin'}>
-                                    <Space>
-                                        <span className={'title'}>晚餐</span>
-                                        {
-                                            orderDi() ? <span className={'Display'}>今日不可预定</span> : null
-                                        }
-                                    </Space>
-                                    <span>预定时间：当日17:00前</span>
-                                    <span>统一配送：当日17:40-18:00</span>
-                                </div>
-                                <RightOutlined style={{fontSize: '15px', color: '#8c8080'}}/>
-                            </div>
-                        </div>
-                    </div>
+                    </Space>
                 </Space>
             </div>
         </div>
