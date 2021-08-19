@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Form, Space} from 'antd';
+import {message, Space} from 'antd';
 import './style.css'
 
 import {LeftOutlined} from "@ant-design/icons";
@@ -12,15 +12,19 @@ function Register(props) {
     let nickname = searchParams.get("nickname")
     let password = searchParams.get("password")
 
-    const[mobile,setMobile]=useState()
+    const [mobile, setMobile] = useState('')
+    const [code, setCode] = useState('')
 
 
-    const onFinish = (values) => {
-        setMobile(values.mobile)
-        if (nickname === null && password === null) {
-            props.history.push('/userinfo?mobile=' + values.mobile + '&code=' + values.code)
-        } else {
-            props.history.push('/userinfo?mobile=' + values.mobile + '&code=' + values.code + '&nickname=' + nickname + '&password=' + password)
+    const onFinish = () => {
+        if (mobile !== '' && code !== '') {
+            if (nickname === null && password === null) {
+                props.history.push('/userinfo?mobile=' + mobile + '&code=' + code)
+            } else {
+                props.history.push('/userinfo?mobile=' + mobile + '&code=' + code + '&nickname=' + nickname + '&password=' + password)
+            }
+        }else {
+            message.info('请将信息输入完整')
         }
     };
 
@@ -39,41 +43,29 @@ function Register(props) {
                         src="https://s.haohuoshi.net/uploads/images/20210304/9ced0fddd29bceb8201f08c97a1aebfb0c1a90cf.jpg"
                         alt=""/>
                 </div>
+                <div
+                    style={{display: 'flex', flexDirection: 'column', height: '230px', justifyContent: 'space-evenly'}}>
+                    <input type="text"
+                           style={{width: '100%'}}
+                           value={mobile}
+                           className={'input-phone'}
+                           onChange={(e) => {
+                               setMobile(e.target.value)
+                           }}
+                           placeholder={'请输入手机号码'}/>
+                    <Space size={18}>
+                        <input type="text"
+                               value={code}
+                               className={'input-phone'}
+                               onChange={(e) => {
+                                   setCode(e.target.value)
+                               }}
+                               placeholder={'请输入手机验证码'}/>
+                        <Captcha value={mobile}></Captcha>
+                    </Space>
 
-                <Form
-                    onFinish={onFinish}
-                    name="phone">
-                    <Form.Item
-                        name="mobile"
-                        rules={[{required: true, message: '请输入手机号'},
-                            {
-                                pattern: /^[1][0-9]{10}$/,
-                                message: '请输入正确手机号!',
-                            },]}>
-                        <input type="text" style={{width: '100%'}} className={'input-phone'} placeholder={'请输入手机号码'}/>
-                    </Form.Item>
-                    <Form.Item>
-                        <Space size={18}>
-                            <Form.Item
-                                name="code"
-                                noStyle>
-                                <input type="text" className={'input-phone'} placeholder={'请输入手机验证码'}/>
-                            </Form.Item>
-                            <Captcha value={mobile}></Captcha>
-
-                            <button
-
-                                onClick={() => {
-                                    console.log(11111)
-                                }}
-                                className={'button-code'}>发送验证码
-                            </button>
-                        </Space>
-                    </Form.Item>
-                    <Form.Item>
-                        <button className={'button-next'} type={'submit'}>下一步</button>
-                    </Form.Item>
-                </Form>
+                    <button className={'button-next'} onClick={onFinish}>下一步</button>
+                </div>
 
 
                 {/*<Form*/}

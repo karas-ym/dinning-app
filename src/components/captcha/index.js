@@ -49,8 +49,7 @@ function Captcha(props) {
     let [cd, setCd] = useState(10)
     let [smsStatus, setSmsStaus] = useState(true)//短信发送状态 true 已发送 false 未发送
 
-    const sendSms = () => {
-
+    const sendSms = (e) => {
         axios({
             method: "post",
             url: url + '/api/sms',
@@ -98,17 +97,19 @@ function Captcha(props) {
             console.log(res.data)
             if (res.data.code !== 'SUCCESS') {
                 history.push('/register')
+                message.error(res.data.message)
             } else {
-                console.log(res.data.mesasge)
+                message.success('验证成功')
+                setIsModalVisible(false)
             }
         }).catch((error) => {
-            console.log(error)
+            message.error(error.toString())
         })
     }
 
     return (
         <span>
-            <button className={'button-code'} disabled={!smsStatus} onClick={sendSms}>
+            <button  className={'button-code'} disabled={!smsStatus} onClick={sendSms}>
                 {!smsStatus ? cd + "s 后重新发送" : '发送验证码'}
             </button>
             <Modal title="图片验证" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}
